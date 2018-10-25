@@ -12,21 +12,19 @@ import java.util.Set;
 public class FSM 
 {
     String name;
-    State startState;
     State currentState;
     List<Transition> transitions;
     
     FSM(String name, State start)
     {
         this.name = name;
-        this.startState = start;
         this.currentState = start;
         transitions = new LinkedList<>();
     }
     
     FSM(State start, List<Transition> transitions)
     {
-        this.startState = start;
+        this.currentState = start;
         this.transitions = transitions;
     }
     
