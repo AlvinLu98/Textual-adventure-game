@@ -13,12 +13,14 @@ public class FSM
 {
     String name;
     State startState;
+    State currentState;
     List<Transition> transitions;
     
     FSM(String name, State start)
     {
         this.name = name;
         this.startState = start;
+        this.currentState = start;
         transitions = new LinkedList<>();
     }
     
@@ -33,6 +35,11 @@ public class FSM
         return name;
     }
     
+    State getCurrentState()
+    {
+       return currentState; 
+    }
+    
     boolean addTransistion(Transition t)
     {
         return transitions.add(t);
@@ -42,6 +49,22 @@ public class FSM
     {
         Transition t = new Transition(fromName, c, action, toName);
         return transitions.add(t);
+    }
+    
+    State changeState(String action)
+    {
+        for(Transition t: transitions)
+        {
+            if(t.getFrom().getName().equals(currentState.getName()))
+            {
+                if(t.getAction().equals(action))
+                {
+                    currentState = t.getTo();
+                    return t.getTo();
+                }
+            }
+        }
+        return null;
     }
     
     void listAllTransitions()

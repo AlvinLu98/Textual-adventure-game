@@ -26,6 +26,21 @@ public class Transition
         this.to = new State(t);
     }
     
+    State getFrom()
+    {
+        return from;
+    }
+    
+    State getTo()
+    {
+        return to;
+    }
+    
+    String getAction()
+    {
+        return action;
+    }
+    
     @Override
     public String toString()
     {

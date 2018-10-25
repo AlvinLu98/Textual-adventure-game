@@ -73,11 +73,11 @@ public class StateMachineTest {
     {   
         ArrayList<Room> roomList = new ArrayList<>();
         ArrayList<FSM> objectList = new ArrayList<>();
+        Scanner scan = new Scanner(System.in);
         boolean end = false;
         while(!end)
         {
-            Scanner scan = new Scanner(System.in);
-            System.out.println("What do you want to create?");
+            System.out.println("What do you want to create? 'Object'/'room', 'no' to end creation");
             String input = scan.nextLine();
             input = input.toLowerCase();
             switch(input)
@@ -94,6 +94,7 @@ public class StateMachineTest {
                 
                 case "no":
                     end = true;
+                    break;
                     
                 default:
                     System.out.println("Invalid!");
@@ -110,6 +111,16 @@ public class StateMachineTest {
         for(FSM o: objectList)
         {
             System.out.println("Object: " + o.getName());
+        }
+        
+        if(!objectList.isEmpty())
+        {
+            System.out.println("Try changing the state of " + objectList.get(0).getName());
+            System.out.println("Current state is: " + objectList.get(0).getCurrentState().getName());
+            System.out.println("Type an action to change it");
+            String action = scan.nextLine();
+            objectList.get(0).changeState(action);
+            System.out.println("Current state is: " + objectList.get(0).getCurrentState().getName());
         }
     }
     
