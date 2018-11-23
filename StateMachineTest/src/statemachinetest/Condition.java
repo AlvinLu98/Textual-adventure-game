@@ -12,14 +12,22 @@ package statemachinetest;
 public class Condition 
 {
     private String condition;
+    private boolean state;
    
     Condition(String c)
     {
         condition = c;
+        state = true;
     }
     
     String getCondition()
     {
         return condition;
+    }
+    
+    boolean changeState()
+    {
+        state = !state;
+        return state;
     }
 }
