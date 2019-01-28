@@ -17,7 +17,25 @@ public abstract class Object
     
     public abstract boolean sendAction();
     
-    public abstract void setAttribute(String n, double value);
+    public void setAttribute(String n, double value){
+        for(Attribute att:attribute){
+            if(att.getName().equals(n)){
+                if(att instanceof Number_Attribute){
+                    Number_Attribute num_att = (Number_Attribute)att;
+                    num_att.setValue(value);
+                }
+            }
+        }
+    }
     
-    public abstract void setAttribute(String n, boolean b);
+    public void setAttribute(String n, boolean b){
+        for(Attribute att:attribute){
+            if(att.getName().equals(n)){
+                if(att instanceof Boolean_Attribute){
+                    Boolean_Attribute bol_att = (Boolean_Attribute)att;
+                    bol_att.explicitChange(b);
+                }
+            }
+        }
+    }
 }

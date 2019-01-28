@@ -4,8 +4,16 @@ package fsmprototype;
  *
  * @author Alvin Lu
  */
-public class Attribute 
+public abstract class Attribute 
 {
     private String name;
     private String verb;
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getVerb(){
+        return this.verb;
+    }
 }

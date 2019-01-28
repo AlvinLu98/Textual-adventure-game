@@ -9,7 +9,7 @@ package fsmprototype;
  *
  * @author Alvin Lu
  */
-public class Number_Attribute 
+public class Number_Attribute extends Attribute
 {
     private double value = 0;
     

@@ -5,17 +5,43 @@
  */
 package fsmprototype;
 
-/**
- *
- * @author Alvin Lu
- */
+import java.util.Scanner;
+
 public class FSMPrototype {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void determineAction(String action){
+        action = action.toLowerCase();
+        switch(action){
+            case "room":
+                System.out.println("----- Creating room -----");
+                //do something
+                break;
+            case "item":
+                System.out.println("----- Creating item -----");
+                //do something
+                break;
+            case "player":
+                System.out.println("----- Creating player -----");
+                //do something
+                break;
+            default:
+                System.out.println("----- Apaansih -----");
+                break;
+        }
+    }
+    
+    public static Object createRoom(){
+        Object room = new Room("test");
+        return room;
+    }
+    
+    public static void main(String[] args) 
+    {
+        Scanner item = new Scanner(System.in);
+        System.out.println("What do you want to create?");
+        String object = item.next();
+        
+        determineAction(object);
     }
     
 }

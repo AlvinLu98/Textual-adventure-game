@@ -20,4 +20,9 @@ public class Boolean_Attribute extends Attribute
         this.condition = !this.condition;
         return this.condition;
     }
+    
+    public boolean explicitChange(boolean b){
+        this.condition = b;
+        return this.condition;
+    }
 }
