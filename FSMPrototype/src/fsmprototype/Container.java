@@ -11,8 +11,10 @@ import java.util.ArrayList;
  *
  * @author Alvin Lu
  */
-public class Verb 
-{
-    String name;
-    ArrayList<String> alias;
+public class Container extends Object{
+    ArrayList<Object> objects;
+    
+    public ArrayList<Object> getObjects(){
+        return objects;
+    }
 }

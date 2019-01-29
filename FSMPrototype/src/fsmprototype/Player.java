@@ -11,8 +11,15 @@ import java.util.ArrayList;
  *
  * @author Alvin Lu
  */
-public class Verb 
-{
-    String name;
-    ArrayList<String> alias;
+public class Player extends Living_Objects{
+    Container inventory;
+    Room currentLocation;
+    
+    public Room getLocation(){
+     return currentLocation;
+    }
+    
+    public ArrayList<Object> getItems(){
+        return inventory.getObjects();
+    }
 }

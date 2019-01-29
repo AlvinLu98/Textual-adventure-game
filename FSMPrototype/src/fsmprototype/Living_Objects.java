@@ -5,14 +5,14 @@
  */
 package fsmprototype;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Alvin Lu
  */
-public class Verb 
-{
-    String name;
-    ArrayList<String> alias;
+public class Living_Objects extends Object{
+    private char gender;
+    private String prefix;
+    private String suffix;
+    private String article;
+    private String possesive;
 }

@@ -10,12 +10,22 @@ import java.util.LinkedList;
 public abstract class Object 
 {
     private String name;
-    private ArrayList<String> verbList;
+    private ArrayList<Verb> verbList;
     private State currentState;
     private LinkedList<Attribute> attribute;
     private ArrayList<String> alias;
     
-    public abstract boolean sendAction();
+    public boolean sendAction(String verb){
+        for(Verb v:verbList){
+            
+        }
+        State s = currentState.changeState(verb);
+        if(s != null){
+            currentState = s;
+            return true;
+        }
+        return false;
+    }
     
     public void setAttribute(String n, double value){
         for(Attribute att:attribute){

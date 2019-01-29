@@ -40,11 +40,6 @@ public class Room extends Object{
     public void addObject(Object obj){
         this.objects.add(obj);
     }
-    
-    @Override
-    public boolean sendAction() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void setAttribute(String n, double value) {

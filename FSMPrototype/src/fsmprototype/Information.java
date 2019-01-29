@@ -5,14 +5,19 @@
  */
 package fsmprototype;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Alvin Lu
  */
-public class Verb 
-{
-    String name;
-    ArrayList<String> alias;
+public class Information {
+    private String prompt;
+    private String answer;
+    
+    public String getPrompt(){
+        return this.prompt;
+    }
+    
+    public String getAnswer(){
+        return this.answer;
+    }
 }
