@@ -9,30 +9,30 @@ package fsmprototype;
  *
  * @author Alvin Lu
  */
-public class Pick_Able_Object extends Object{
-    private boolean is_Picked_Up = false;
+public class Wearable extends Object{
+    private boolean is_Worn = false;
     private Living_Objects owner;
     
-    public Pick_Able_Object(){}
+    public Wearable(){}
     
-    public Pick_Able_Object(Living_Objects owner){
+    public Wearable(Living_Objects owner){
         this.owner = owner;
-        this.is_Picked_Up =true;
+        this.is_Worn = true;
     }
     
-    public boolean pickUp(){
-        if(this.is_Picked_Up){
+    public boolean wear(){
+        if(this.is_Worn){
             return false;
         }
-        this.is_Picked_Up = true;
+        this.is_Worn = true;
         return true;
     }
     
-    public boolean drop(){
-        if(!this.is_Picked_Up){
+    public boolean takeOff(){
+        if(!this.is_Worn){
             return false;
         }
-        this.is_Picked_Up = false;
+        this.is_Worn = false;
         return true;
     }
     
