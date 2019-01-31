@@ -5,17 +5,13 @@
  */
 package fsmprototype;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Edible extends Limited_Use_Object{ 
-    public Edible(String name){
-        super(name);
-        super.uses_Left = 1; 
-    }
-    
-    public boolean eat(){
-        return super.use();
-    }
+public class Game_Player {
+    private ArrayList<Room> rooms;
+    private Player player;
 }

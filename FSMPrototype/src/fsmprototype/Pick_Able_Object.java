@@ -13,9 +13,12 @@ public class Pick_Able_Object extends Object{
     private boolean is_Picked_Up = false;
     private Living_Objects owner;
     
-    public Pick_Able_Object(){}
+    public Pick_Able_Object(String name){
+        super(name);
+    }
     
-    public Pick_Able_Object(Living_Objects owner){
+    public Pick_Able_Object(String name, Living_Objects owner){
+        super(name);
         this.owner = owner;
         this.is_Picked_Up =true;
     }

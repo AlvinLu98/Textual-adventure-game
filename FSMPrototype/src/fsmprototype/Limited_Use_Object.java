@@ -12,9 +12,12 @@ package fsmprototype;
 public class Limited_Use_Object extends Usable_Object{
     protected int uses_Left;
     
-    public Limited_Use_Object(){}
+    public Limited_Use_Object(String name){
+        super(name);
+    }
     
-    public Limited_Use_Object(int uses){
+    public Limited_Use_Object(String name, int uses){
+        super(name);
         this.uses_Left = uses;
     }
     

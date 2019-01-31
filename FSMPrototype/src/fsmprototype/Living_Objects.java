@@ -15,4 +15,8 @@ public class Living_Objects extends Object{
     private String suffix;
     private String article;
     private String possesive;
+    
+    public Living_Objects(String name){
+        super(name);
+    }
 }

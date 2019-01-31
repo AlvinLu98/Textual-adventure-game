@@ -12,7 +12,9 @@ package fsmprototype;
 public abstract class Usable_Object extends Object{
     private boolean is_Usable = true;
     
-    public Usable_Object(){}
+    public Usable_Object(String name){
+        super(name);
+    }
     
     public void make_Unusable(){
         this.is_Usable = false;

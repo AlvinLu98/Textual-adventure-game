@@ -13,32 +13,41 @@ import java.util.LinkedList;
  * @author Alvin Lu
  */
 public class Room extends Object{
-    private String name;
     private ArrayList<Object> objects;
     private LinkedList<Exit> exits;
     
     public Room(String name){
-        this.name = name;
+        super(name);
+        this.objects = new ArrayList();
+        this.exits = new LinkedList();
     }
     
     public Room(String name, ArrayList<Object> objects){
-        this.name = name;
+        super(name);
         this.objects = objects;
     }
     
     public Room(String name, LinkedList<Exit> exits){
-        this.name = name;
+        super(name);
         this.exits = exits;
     }
     
     public Room(String name, ArrayList<Object> objects, LinkedList<Exit> exits){
-        this.name = name;
+        super(name);
         this.objects = objects;
         this.exits = exits;
     }
     
     public String getName(){
-        return this.name;
+        return super.getName();
+    }
+    
+    public LinkedList<Exit> getExit(){
+        return this.exits;
+    }
+    
+    public ArrayList<Object> getObject(){
+        return this.objects;
     }
     
     public boolean addObject(Object obj){

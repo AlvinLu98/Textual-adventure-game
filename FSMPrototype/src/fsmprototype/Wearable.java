@@ -13,9 +13,12 @@ public class Wearable extends Object{
     private boolean is_Worn = false;
     private Living_Objects owner;
     
-    public Wearable(){}
+    public Wearable(String name){
+        super(name);
+    }
     
-    public Wearable(Living_Objects owner){
+    public Wearable(String name, Living_Objects owner){
+        super(name);
         this.owner = owner;
         this.is_Worn = true;
     }

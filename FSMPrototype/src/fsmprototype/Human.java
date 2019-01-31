@@ -15,6 +15,10 @@ public class Human extends Living_Objects{
     ArrayList<Information> informations;
     Container inventory;
     
+    public Human(String name){
+        super(name);
+    }
+    
     public String ask(String prompt){
         for(Information i: informations){
             if(i.getPrompt().equals(prompt)){

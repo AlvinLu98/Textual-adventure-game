@@ -14,7 +14,16 @@ import java.util.ArrayList;
 public class Container extends Object{
     ArrayList<Object> objects;
     
+    public Container(String name){
+        super(name);
+        objects = new ArrayList();
+    }
+    
     public ArrayList<Object> getObjects(){
         return objects;
+    }
+    
+    public void addObjects(Object o){
+        objects.add(o);
     }
 }

@@ -9,11 +9,23 @@ import java.util.LinkedList;
  */
 public abstract class Object 
 {
-    private String name;
+    protected String name;
     private ArrayList<Verb> verbList;
     private State currentState;
     private LinkedList<Attribute> attribute;
     private ArrayList<String> alias;
+    
+//    public Object(){
+//        
+//    }
+    
+    public Object(String name){
+        this.name = name;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
     
     public boolean sendAction(String verb){
         for(Verb v:verbList){

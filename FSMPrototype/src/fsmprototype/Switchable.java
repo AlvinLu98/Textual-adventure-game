@@ -12,7 +12,9 @@ package fsmprototype;
 public class Switchable extends Object{
     private boolean is_Switched_On = false;
     
-    public Switchable(){}
+    public Switchable(String name){
+        super(name);
+    }
     
     public boolean switchOn(){
         if(this.is_Switched_On){
