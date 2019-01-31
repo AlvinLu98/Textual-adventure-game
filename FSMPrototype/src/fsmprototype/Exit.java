@@ -10,5 +10,19 @@ package fsmprototype;
  * @author Alvin Lu
  */
 public class Exit {
+    private String name;
+    private Room exitRoom;
     
+    public Exit(String name, Room exit){
+        this.name = name;
+        this.exitRoom = exit;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public Room takeExit(){
+        return this.exitRoom;
+    }
 }

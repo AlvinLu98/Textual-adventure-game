@@ -48,4 +48,9 @@ public abstract class Object
             }
         }
     }
+ 
+    public Object destroy(){
+        Object j = new Room("test");
+        return j;
+    }
 }

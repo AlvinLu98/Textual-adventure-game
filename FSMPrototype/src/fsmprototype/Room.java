@@ -37,8 +37,17 @@ public class Room extends Object{
         this.exits = exits;
     }
     
-    public void addObject(Object obj){
-        this.objects.add(obj);
+    public String getName(){
+        return this.name;
+    }
+    
+    public boolean addObject(Object obj){
+        return this.objects.add(obj);
+    }
+    
+    public boolean addExit(String name, Room exit){
+        Exit e = new Exit(name, exit);
+        return this.exits.add(e);
     }
 
     @Override

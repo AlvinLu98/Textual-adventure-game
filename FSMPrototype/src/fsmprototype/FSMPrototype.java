@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 public class FSMPrototype {
 
+    Room_Creator rooms = new Room_Creator();
+    
     public static void determineAction(String action){
         action = action.toLowerCase();
         switch(action){
@@ -30,9 +32,14 @@ public class FSMPrototype {
         }
     }
     
-    public static Object createRoom(){
-        Object room = new Room("test");
-        return room;
+    public static void roomPrompt(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the name of the room?");
+        String name = scan.next();
+    }
+    
+    public static void objectPrompt(){
+        
     }
     
     public static void main(String[] args) 
