@@ -26,4 +26,11 @@ public class Container extends Object{
     public void addObjects(Object o){
         objects.add(o);
     }
+    
+    public Object dropObject(Object o){
+        if(objects.remove(o)){
+            return o;
+        }
+        return null;
+    }
 }

@@ -11,6 +11,9 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import javax.xml.transform.OutputKeys;
 
@@ -100,7 +103,7 @@ public class Game_Saver {
                 
                 for(Object o: r.getObject()){
                     Element object = createObject(doc, o);
-                    asl.appendChild(object);
+                    rooms.appendChild(object);
                 }
                 asl.appendChild(rooms);
             }
@@ -121,6 +124,20 @@ public class Game_Saver {
         catch(Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void save_Created_Game(Game g){
+        try {
+            FileOutputStream fileOut =
+            new FileOutputStream("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(g);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved");
+         } catch (IOException i) {
+            i.printStackTrace();
+         }
     }
     
     public static void main(String[] args) {
@@ -154,6 +171,9 @@ public class Game_Saver {
         r.add(r1);
         r.add(r2);
         
-        saveFile(r);
+        Game g = new Game(r,p);
+        save_Created_Game(g);
+        
+        //saveFile(r);
     }
 }

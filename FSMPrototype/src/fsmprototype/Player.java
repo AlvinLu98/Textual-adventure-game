@@ -6,6 +6,7 @@
 package fsmprototype;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -37,5 +38,27 @@ public class Player extends Living_Objects{
     
     public void pickup(Object o){
         inventory.addObjects(o);
+    }
+    
+    public Object drop(String name){
+        Object obj = null;
+        for(Object o:inventory.getObjects()){
+            if(o.getName().equals(name)){
+                obj = o;
+            }
+        }
+        return inventory.dropObject(obj);
+    }
+    
+    public Room move(String direction){
+        LinkedList<Exit> exit = this.currentLocation.getExit();
+        for(Exit e: exit){
+            System.out.println(e.getName());
+            if(e.getName().equals(direction)){
+                this.currentLocation = e.takeExit();
+                return e.takeExit();
+            }
+        }
+        return null;
     }
 }

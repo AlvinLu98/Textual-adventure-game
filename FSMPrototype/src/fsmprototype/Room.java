@@ -58,6 +58,18 @@ public class Room extends Object{
         Exit e = new Exit(name, exit);
         return this.exits.add(e);
     }
+    
+    public Object pickedUp(String name){
+        Object obj = null;
+        for(Object o: objects){
+            if(o.getName().equals(name)){
+                obj = o;
+                break;
+            }
+        }
+        objects.remove(obj);
+        return obj;
+    }
 
     @Override
     public void setAttribute(String n, double value) {
