@@ -5,6 +5,7 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -12,7 +13,7 @@ import java.util.LinkedList;
  *
  * @author Alvin Lu
  */
-public class Room extends Object{
+public class Room extends Object implements Serializable{
     private ArrayList<Object> objects;
     private LinkedList<Exit> exits;
     

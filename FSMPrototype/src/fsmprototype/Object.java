@@ -1,5 +1,6 @@
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -7,7 +8,7 @@ import java.util.LinkedList;
  *
  * @author Alvin Lu
  */
-public abstract class Object 
+public abstract class Object implements Serializable
 {
     protected String name;
     private ArrayList<Verb> verbList;

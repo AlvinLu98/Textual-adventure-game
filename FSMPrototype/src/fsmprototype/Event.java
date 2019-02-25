@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Event 
+public class Event implements Serializable 
 {
     private String name;
     private String message;

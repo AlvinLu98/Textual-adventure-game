@@ -1,5 +1,6 @@
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ import java.util.Set;
  *
  * @author Alvin Lu
  */
-public class State 
+public class State implements Serializable 
 {
     private String name;
     private LinkedList<Transition> transitions;

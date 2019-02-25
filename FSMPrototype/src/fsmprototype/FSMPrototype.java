@@ -5,50 +5,102 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class FSMPrototype {
+public class FSMPrototype implements Serializable{
 
-    Room_Creator rooms = new Room_Creator();
+    static Game g = new Game();
     
-    public static void determineAction(String action){
-        action = action.toLowerCase();
-        switch(action){
-            case "room":
-                System.out.println("----- Creating room -----");
-                //do something
-                break;
-            case "item":
-                System.out.println("----- Creating item -----");
-                //do something
-                break;
+    public static Room roomPrompt(){
+        Scanner scan = new Scanner(System.in);
+        Room r = new Room("start");
+        System.out.println("What is the name of the room?");
+        String name = scan.nextLine();
+        r = new Room(name);
+        System.out.println("Any objects? y/n");
+        String obj = scan.nextLine();
+
+        while(obj.equals("y")){
+            r.addObject(objectPrompt(r));
+            System.out.println("Any more objects? y/n");
+            obj = scan.next();
+        }
+        g.addRoom(r);
+        System.out.println("Any exit? y/n");
+        String ex = scan.next();
+        while(ex.equals("y")){
+            System.out.println("Exit name?");
+            String exName = scan.next();
+            System.out.println("Exit room");
+            Room exit = roomPrompt();
+            exit.addExit(r.getName(), r);
+            r.addExit(name, exit);
+            System.out.println("Any more exit? y/n");
+            ex = scan.next();
+        }
+        return r;
+    }
+    
+    public static Object objectPrompt(Room r){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the name of the object?");
+        String name = scan.next();
+        System.out.println("What is the type of the object?");
+        String type = scan.next();
+        Object o;
+        String obj;
+        switch(type){
             case "player":
-                System.out.println("----- Creating player -----");
-                //do something
+                o = playerPrompt(name, r);
+                break;
+            case "container":
+                Container c = new Container(name);
+                System.out.println("Any objects? y/n");
+                obj = scan.next();
+                while(obj.equals("y")){
+                    c.addObjects(objectPrompt(r));
+                    System.out.println("Any more objects? y/n");
+                    obj = scan.next();
+                }
+                o = c;
                 break;
             default:
-                System.out.println("----- Apaansih -----");
+                o = new Pick_Able_Object(name);
                 break;
-        }
+        }  
+        return o;
     }
     
-    public static void roomPrompt(){
+    public static Player playerPrompt(String name, Room r){
         Scanner scan = new Scanner(System.in);
-        System.out.println("What is the name of the room?");
-        String name = scan.next();
-    }
-    
-    public static void objectPrompt(){
-        
+        String obj;
+        Player p= new Player(name);
+        p.setLocation(r);
+            System.out.println("Any objects? y/n");
+            obj = scan.next();
+            while(obj.equals("y")){
+                p.pickup(objectPrompt(r));
+                System.out.println("Any more objects? y/n");
+                obj = scan.next();
+            }
+            g.addPlayer(p);
+        return p;
     }
     
     public static void main(String[] args) 
     {
         Scanner item = new Scanner(System.in);
-        System.out.println("What do you want to create?");
-        String object = item.next();
+        roomPrompt();
         
-        determineAction(object);
+        Game_Saver.save_Created_Game(g);
+        g = Game_Saver.load_Created_Game();
+        
+        
+        Game_Player gp = new Game_Player(g);
+        
+        
+        gp.playGame();
     }
     
 }

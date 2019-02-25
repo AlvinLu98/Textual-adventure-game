@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Information {
+public class Information implements Serializable {
     private String prompt;
     private String answer;
     

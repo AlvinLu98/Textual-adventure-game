@@ -1,10 +1,12 @@
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Condition {
+public class Condition implements Serializable {
     private String name;
     private boolean condition;
     

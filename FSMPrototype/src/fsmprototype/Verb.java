@@ -5,13 +5,14 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Alvin Lu
  */
-public class Verb 
+public class Verb implements Serializable 
 {
     String name;
     ArrayList<String> alias;

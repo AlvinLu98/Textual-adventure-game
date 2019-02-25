@@ -5,13 +5,14 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Alvin Lu
  */
-public class Human extends Living_Objects{
+public class Human extends Living_Objects implements Serializable{
     ArrayList<Information> informations;
     Container inventory;
     

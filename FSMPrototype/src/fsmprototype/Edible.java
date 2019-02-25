@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Edible extends Limited_Use_Object{ 
+public class Edible extends Limited_Use_Object implements Serializable{ 
     public Edible(String name){
         super(name);
         super.uses_Left = 1; 

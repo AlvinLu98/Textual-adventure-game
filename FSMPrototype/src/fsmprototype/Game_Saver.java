@@ -11,8 +11,10 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import javax.xml.transform.OutputKeys;
@@ -129,15 +131,56 @@ public class Game_Saver {
     public static void save_Created_Game(Game g){
         try {
             FileOutputStream fileOut =
-            new FileOutputStream("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project");
+            new FileOutputStream("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(g);
             out.close();
             fileOut.close();
-            System.out.printf("Serialized data is saved");
+            System.out.println("Serialized data is saved");
          } catch (IOException i) {
             i.printStackTrace();
          }
+    }
+    
+    public static Game load_Created_Game(){
+        Game g = null;
+        try {
+            FileInputStream fileIn = new FileInputStream("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            g = (Game) in.readObject();
+            in.close();
+            fileIn.close();
+         } catch (IOException i) {
+            i.printStackTrace();
+            return null;
+         } catch (ClassNotFoundException c) {
+            System.out.println("Employee class not found");
+            c.printStackTrace();
+            return null;
+         }
+        
+        for(Room r:g.getRooms()){
+            System.out.println(r.getName());
+            for(Object o:r.getObject()){
+                System.out.printf("   > ");
+                System.out.println(o.getName());
+                if(o instanceof Container){
+                    Container cont = (Container)o;
+                    for(Object c:cont.getObjects()){
+                        System.out.printf("       > ");
+                        System.out.println(c.getName());
+                    }
+                }
+                else if(o instanceof Player || o instanceof Human){
+                    Player ply = (Player) o;
+                    for(Object p: ply.getItems()){
+                        System.out.printf("       > ");
+                        System.out.println(p.getName());
+                    }
+                }
+            }
+        }
+        return g;
     }
     
     public static void main(String[] args) {
@@ -173,7 +216,7 @@ public class Game_Saver {
         
         Game g = new Game(r,p);
         save_Created_Game(g);
-        
+        load_Created_Game();
         //saveFile(r);
     }
 }

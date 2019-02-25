@@ -5,6 +5,7 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -13,15 +14,8 @@ import java.util.Scanner;
  *
  * @author Alvin Lu
  */
-public class Game_Player {
+public class Game_Player implements Serializable{
     private Game currentGame;
-    private ArrayList<Room> rooms;
-    private Player player;
-    
-    public Game_Player(ArrayList<Room> r, Player p){
-        this.rooms = r;
-        this.player = p;
-    }
     
     public Game_Player(Game g){
         this.currentGame = g;
@@ -31,67 +25,60 @@ public class Game_Player {
         boolean play = true;
         while(play)
         {
-            System.out.println("You're in " + player.getLocation().getName());
+            System.out.println("You're in " + currentGame.getPlayer().getLocation().getName());
             System.out.print("There's...");
             displayItem();
             Scanner scan = new Scanner(System.in);
             System.out.println("What do you want to do?");
             String input = scan.nextLine();
             input = input.toLowerCase();
-            switch(input)
+            String[] inp = input.split(" ", 2);
+            System.out.println(inp[1]);
+            switch(inp[0])
             {
-                case "take wallet":
-                    player.pickup(player.getLocation().pickedUp("Wallet"));
-                    System.out.println("You've picked up wallet");
-                    System.out.println("***Inventory***");
-                    for(Object o: player.getItems()){
-                        System.out.print(o.getName() + ", ");
+                case "take":
+                    Object take = currentGame.getPlayer().getLocation().pickedUp(inp[1]);
+                    if(take == null){
+                        System.out.println("No such item");
+                        break;
                     }
-                    System.out.println("");
+                    else{
+                        currentGame.givePlayer(take);
+                        System.out.println("You've picked up " + inp[1]);
+                        System.out.println("***Inventory***");
+                        for(Object o: currentGame.getPlayerObject()){
+                            System.out.print(o.getName() + ", ");
+                        }
+                        System.out.println("");
+                    }
                     break;
 
-                case "take phone":
-                    player.pickup(player.getLocation().pickedUp("Phone"));
-                    System.out.println("You've picked up phone");
-                    System.out.println("***Inventory***");
-                    for(Object o: player.getItems()){
-                        System.out.print(o.getName() + ", ");
+                case "drop":
+                    Room r = currentGame.getRooms().get(currentGame.getRooms().indexOf(currentGame.getPlayer().getLocation()));
+                    Object drop = currentGame.getPlayer().drop(inp[1]);
+                    if(drop == null){
+                        System.out.println("No such item");
+                        break;
                     }
-                    System.out.println("");
+                    else{
+                        r.addObject(drop);
+                        System.out.println(inp[1] + " dropped");
+                        System.out.println("***Inventory***");
+                        for(Object o: currentGame.getPlayer().getItems()){
+                            System.out.print(o.getName() + ", ");
+                        }
+                        System.out.println("");
+                    }
                     break;
 
-                case "drop phone":
-                    Room r = rooms.get(rooms.indexOf(player.getLocation()));
-                    r.addObject(player.drop("Phone"));
-                    System.out.println("Phone dropped");
-                    System.out.println("***Inventory***");
-                    for(Object o: player.getItems()){
-                        System.out.print(o.getName() + ", ");
+                case "go":
+                    if(currentGame.getPlayer().move(inp[1]) == null){
+                        System.out.println("No such room");
+                        break;
                     }
-                    System.out.println("");
+                    System.out.println("You're currently in: " +currentGame.getPlayer().getLocation().getName());
                     break;
                     
-                case "drop wallet":
-                    Room r1 = rooms.get(rooms.indexOf(player.getLocation()));
-                    r1.addObject(player.drop("Wallet"));
-                    System.out.println("Wallet dropped");
-                    System.out.println("***Inventory***");
-                    for(Object o: player.getItems()){
-                        System.out.print(o.getName() + ", ");
-                    }
-                    System.out.println("");
-                    break;
-
-                case "go living room":
-                    player.move("South");
-                    System.out.println("You're currently in: " + player.getLocation().getName());
-                    break;
-
-                case "go garden":
-                    player.move("North");
-                    System.out.println("You're currently in: " + player.getLocation().getName());
-                    break;
-
                 default:
                     play = false;
             }
@@ -99,8 +86,10 @@ public class Game_Player {
         }
     }
     
+    
+    
     public ArrayList<Object> displayItem(){
-        ArrayList<Object> items = player.getLocation().getObject();
+        ArrayList<Object> items = currentGame.getRoomObjects();
         for(Object p:items){
             System.out.print(p.name + ", ");
         }
@@ -114,32 +103,32 @@ public class Game_Player {
         ArrayList<Room> r = new ArrayList();
         
         
-        Pick_Able_Object o1 = new Pick_Able_Object("Rock");
-        Edible o2 = new Edible("Bread");
-        Unlimited_Use_Object o3 = new Unlimited_Use_Object("Mirror");
+        Pick_Able_Object o1 = new Pick_Able_Object("rock");
+        Edible o2 = new Edible("bread");
+        Unlimited_Use_Object o3 = new Unlimited_Use_Object("mirror");
         
-        Pick_Able_Object o4 = new Pick_Able_Object("Phone");
-        Pick_Able_Object o5 = new Pick_Able_Object("Wallet");
+        Pick_Able_Object o4 = new Pick_Able_Object("phone");
+        Pick_Able_Object o5 = new Pick_Able_Object("wallet");
         
-        Room r1 = new Room("Living Room");
-        Room r2 = new Room("Garden");
+        Room r1 = new Room("living room");
+        Room r2 = new Room("garden");
         
-        Player p = new Player("Player", r1);
+        Player p = new Player("player", r1);
         p.pickup(o4);
         
         r1.addObject(p);
         r1.addObject(o3);
         r1.addObject(o5);
-        r1.addExit("North", r2);
+        r1.addExit("north", r2);
         
         r2.addObject(o2);
         r2.addObject(o1);
-        r2.addExit("South", r1);
+        r2.addExit("south", r1);
         
         r.add(r1);
         r.add(r2);
-        
-        Game_Player gp = new Game_Player(r, p);
+        Game g = new Game(r,p);
+        Game_Player gp = new Game_Player(g);
         gp.playGame();
     }
 }

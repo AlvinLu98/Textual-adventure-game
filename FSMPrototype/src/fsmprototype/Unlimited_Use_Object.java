@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Unlimited_Use_Object extends Usable_Object{
+public class Unlimited_Use_Object extends Usable_Object implements Serializable{
     private int use_Count = 0;
     
     public Unlimited_Use_Object(String name){

@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Number_Attribute extends Attribute
+public class Number_Attribute extends Attribute implements Serializable
 {
     private double value = 0;
     

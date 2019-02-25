@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Boolean_Attribute extends Attribute 
+public class Boolean_Attribute extends Attribute implements Serializable 
 {
     private boolean condition;
     

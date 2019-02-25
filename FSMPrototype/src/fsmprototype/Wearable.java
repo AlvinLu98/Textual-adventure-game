@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Wearable extends Object{
+public class Wearable extends Object implements Serializable{
     private boolean is_Worn = false;
     private Living_Objects owner;
     

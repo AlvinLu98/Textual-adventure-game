@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Living_Objects extends Object{
+public class Living_Objects extends Object implements Serializable{
     private char gender;
     private String prefix;
     private String suffix;

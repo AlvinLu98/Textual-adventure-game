@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Limited_Use_Object extends Usable_Object{
+public class Limited_Use_Object extends Usable_Object implements Serializable{
     protected int uses_Left;
     
     public Limited_Use_Object(String name){

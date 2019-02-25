@@ -5,13 +5,14 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Alvin Lu
  */
-public class Room_Creator {
+public class Room_Creator implements Serializable{
     
     private ArrayList<Room> room_List;
     

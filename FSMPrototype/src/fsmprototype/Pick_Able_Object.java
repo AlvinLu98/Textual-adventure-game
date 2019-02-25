@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Pick_Able_Object extends Object{
+public class Pick_Able_Object extends Object implements Serializable{
     private boolean is_Picked_Up = false;
     private Living_Objects owner;
     

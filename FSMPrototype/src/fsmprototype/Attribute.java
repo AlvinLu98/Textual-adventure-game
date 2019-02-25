@@ -1,10 +1,12 @@
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public abstract class Attribute 
+public abstract class Attribute implements Serializable 
 {
     private String name;
     private String verb;

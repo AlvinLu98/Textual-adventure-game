@@ -5,13 +5,14 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Alvin Lu
  */
-public class Container extends Object{
+public class Container extends Object implements Serializable{
     ArrayList<Object> objects;
     
     public Container(String name){

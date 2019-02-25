@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Switchable extends Object{
+public class Switchable extends Object implements Serializable{
     private boolean is_Switched_On = false;
     
     public Switchable(String name){

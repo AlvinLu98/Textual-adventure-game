@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Exit {
+public class Exit implements Serializable{
     private String name;
     private Room exitRoom;
     

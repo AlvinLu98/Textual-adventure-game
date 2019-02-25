@@ -5,10 +5,12 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public class Game_Editor {
+public class Game_Editor implements Serializable {
     Game currentGame;
 }

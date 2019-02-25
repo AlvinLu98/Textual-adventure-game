@@ -5,6 +5,7 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -12,9 +13,14 @@ import java.util.LinkedList;
  *
  * @author Alvin Lu
  */
-public class Player extends Living_Objects{
+public class Player extends Living_Objects implements Serializable{
     private Container inventory;
     private Room currentLocation;
+    
+    public Player(String name){
+        super(name);
+        this.inventory = new Container("Inventory");
+    }
     
     public Player(String name, Room r){
         super(name);
@@ -34,6 +40,10 @@ public class Player extends Living_Objects{
     
     public ArrayList<Object> getItems(){
         return inventory.getObjects();
+    }
+    
+    public void setLocation(Room r){
+        this.currentLocation = r;
     }
     
     public void pickup(Object o){

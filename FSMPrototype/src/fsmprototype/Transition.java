@@ -5,6 +5,7 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
  *
  * @author Alvin Lu
  */
-public class Transition 
+public class Transition implements Serializable 
 {
     private String action;
     private State endState;

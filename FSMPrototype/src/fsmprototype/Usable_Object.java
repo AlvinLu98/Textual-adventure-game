@@ -5,11 +5,13 @@
  */
 package fsmprototype;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvin Lu
  */
-public abstract class Usable_Object extends Object{
+public abstract class Usable_Object extends Object implements Serializable{
     private boolean is_Usable = true;
     
     public Usable_Object(String name){
