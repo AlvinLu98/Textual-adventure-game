@@ -66,4 +66,9 @@ public abstract class Object implements Serializable
         Object j = new Room("test");
         return j;
     }
+    
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

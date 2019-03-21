@@ -3,18 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Room.java</file>
-            <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Exit.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Game_Editor.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Game.java</file>
-            <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Attribute.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Container.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Player.java</file>
+            <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Main_Edit.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Game_Player.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/FSMPrototype.java</file>
-            <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Object.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Game_Saver.java</file>
             <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/Room_Creator.java</file>
+            <file>file:/C:/Users/Alvin%20Lu/Documents/GitHub/Textual-adventure-game/FSMPrototype/src/fsmprototype/MainMenu.java</file>
         </group>
     </open-files>
 </project-private>

@@ -18,25 +18,23 @@ public class FSMPrototype implements Serializable{
         System.out.println("What is the name of the room?");
         String name = scan.nextLine();
         r = new Room(name);
-        System.out.println("Any objects? y/n");
+        System.out.println("Any objects in " + r.getName() + " ? y/n");
         String obj = scan.nextLine();
 
         while(obj.equals("y")){
             r.addObject(objectPrompt(r));
-            System.out.println("Any more objects? y/n");
+            System.out.println("Any more objects in " + r.getName() + " ? y/n");
             obj = scan.next();
         }
         g.addRoom(r);
-        System.out.println("Any exit? y/n");
+        System.out.println("Any exit in " + r.getName() + " ? y/n");
         String ex = scan.next();
         while(ex.equals("y")){
-            System.out.println("Exit name?");
-            String exName = scan.next();
             System.out.println("Exit room");
             Room exit = roomPrompt();
             exit.addExit(r.getName(), r);
-            r.addExit(name, exit);
-            System.out.println("Any more exit? y/n");
+            r.addExit(exit.getName(), exit);
+            System.out.println("Any more exit in " + r.getName() + " ? y/n");
             ex = scan.next();
         }
         return r;
@@ -56,11 +54,11 @@ public class FSMPrototype implements Serializable{
                 break;
             case "container":
                 Container c = new Container(name);
-                System.out.println("Any objects? y/n");
+                System.out.println("Any objects in " + c.getName() + " ? y/n");
                 obj = scan.next();
                 while(obj.equals("y")){
                     c.addObjects(objectPrompt(r));
-                    System.out.println("Any more objects? y/n");
+                    System.out.println("Any more objects in " + c.getName() + " ? y/n");
                     obj = scan.next();
                 }
                 o = c;
@@ -77,11 +75,11 @@ public class FSMPrototype implements Serializable{
         String obj;
         Player p= new Player(name);
         p.setLocation(r);
-            System.out.println("Any objects? y/n");
+            System.out.println("Any objects on player? y/n");
             obj = scan.next();
             while(obj.equals("y")){
                 p.pickup(objectPrompt(r));
-                System.out.println("Any more objects? y/n");
+                System.out.println("Any more objects on player? y/n");
                 obj = scan.next();
             }
             g.addPlayer(p);
@@ -90,7 +88,6 @@ public class FSMPrototype implements Serializable{
     
     public static void main(String[] args) 
     {
-        Scanner item = new Scanner(System.in);
         roomPrompt();
         
         Game_Saver.save_Created_Game(g);
@@ -98,7 +95,7 @@ public class FSMPrototype implements Serializable{
         
         
         Game_Player gp = new Game_Player(g);
-        
+        System.out.println("------------------------------------");
         
         gp.playGame();
     }

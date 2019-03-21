@@ -25,9 +25,15 @@ public class Game_Player implements Serializable{
         boolean play = true;
         while(play)
         {
+            Room current = currentGame.getPlayer().getLocation();
             System.out.println("You're in " + currentGame.getPlayer().getLocation().getName());
             System.out.print("There's...");
             displayItem();
+            System.out.print("You can go: ");
+            for(Exit e: current.getExit()){
+                System.out.print(e.getName() + ", ");
+            }
+            System.out.println("");
             Scanner scan = new Scanner(System.in);
             System.out.println("What do you want to do?");
             String input = scan.nextLine();

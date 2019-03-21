@@ -51,6 +51,10 @@ public class Room extends Object implements Serializable{
         return this.objects;
     }
     
+    public void setName(String s){
+        this.name = s;
+    }
+    
     public boolean addObject(Object obj){
         return this.objects.add(obj);
     }
