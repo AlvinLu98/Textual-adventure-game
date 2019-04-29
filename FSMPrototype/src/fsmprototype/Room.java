@@ -28,6 +28,11 @@ public class Room extends Object implements Serializable{
         this.objects = objects;
     }
     
+    public Room(String name, String desc, ArrayList<Object> objects){
+        super(name, desc);
+        this.objects = objects;
+    }
+    
     public Room(String name, LinkedList<Exit> exits){
         super(name);
         this.exits = exits;
@@ -43,6 +48,14 @@ public class Room extends Object implements Serializable{
         return super.getName();
     }
     
+    public String getDescription(){
+        return super.getDesc();
+    }
+    
+    public void setDescription(String d){
+        this.description = d;
+    }
+    
     public LinkedList<Exit> getExit(){
         return this.exits;
     }
@@ -51,17 +64,36 @@ public class Room extends Object implements Serializable{
         return this.objects;
     }
     
-    public void setName(String s){
-        this.name = s;
-    }
-    
     public boolean addObject(Object obj){
         return this.objects.add(obj);
     }
     
     public boolean addExit(String name, Room exit){
         Exit e = new Exit(name, exit);
-        return this.exits.add(e);
+        if(!exits.contains(e)){
+            return this.exits.add(e);
+        }
+        return false;
+    }
+    
+    public void removeExit(String n){
+        for(Exit e: exits){
+            if(e.getName().equals(n)){
+                exits.remove(e);
+            }
+        }
+    }
+    
+    public boolean removeObject(Object o){
+        for(Object obj: this.objects){
+            if(obj.getName().equals(o.getName())){
+                return this.objects.remove(o);
+            }    
+            else if(obj instanceof Container){
+                return ((Container) obj).removeObject(o);
+            }
+        }
+        return false;
     }
     
     public Object pickedUp(String name){
@@ -74,6 +106,18 @@ public class Room extends Object implements Serializable{
         }
         objects.remove(obj);
         return obj;
+    }
+    
+    public Object findObject(Object o){
+        for(Object obj: this.objects){
+            if(obj.getName().equals(o.getName())){
+                return obj;
+            }    
+            else if(obj instanceof Container){
+                return ((Container) obj).findObject(o);
+            }
+        }
+        return null;
     }
 
     @Override

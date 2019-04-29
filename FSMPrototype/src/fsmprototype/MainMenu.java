@@ -5,13 +5,16 @@
  */
 package fsmprototype;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alvin Lu
  */
 public class MainMenu extends javax.swing.JFrame {
 
-    public static Game game;
+    protected static Game game;
     /**
      * Creates new form MainMenu
      */
@@ -29,35 +32,35 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        createGame = new javax.swing.JButton();
+        playGame = new javax.swing.JButton();
+        loadGame = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Game Creator", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 25))); // NOI18N
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton3.setText("CreateGame");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        createGame.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        createGame.setText("Create Game");
+        createGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                createGameActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton1.setText("Play Game");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        playGame.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        playGame.setText("Play Game");
+        playGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                playGameActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton2.setText("Load Game");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        loadGame.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        loadGame.setText("Load Game");
+        loadGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                loadGameActionPerformed(evt);
             }
         });
 
@@ -67,11 +70,11 @@ public class MainMenu extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(createGame, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(219, 219, 219)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(playGame, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loadGame, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(135, 135, 135))
         );
         jPanel1Layout.setVerticalGroup(
@@ -79,9 +82,9 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(282, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(createGame, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playGame, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadGame, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -101,22 +104,42 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        game = Game_Saver.load_Created_Game();
-        Game_Player gp = new Game_Player(game);
-        gp.playGame();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void playGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playGameActionPerformed
+        JFileChooser openFile = new JFileChooser();
+        int returnVal =  openFile.showOpenDialog(null);
+        if(returnVal == JOptionPane.OK_OPTION){
+            String name = openFile.getSelectedFile().toString();
+            name = name + ".ser";
+            game = Game_Saver.load_Created_Game(name);
+            Game_Player gp = new Game_Player(game);
+            gp.playGame();
+        }
+        else if(returnVal == JOptionPane.CANCEL_OPTION){
+            System.out.println("Cancelled");
+            game = new Game();
+        }
+    }//GEN-LAST:event_playGameActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        game = Game_Saver.load_Created_Game();
-         new Main_Edit().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void loadGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameActionPerformed
+        JFileChooser openFile = new JFileChooser();
+        int returnVal =  openFile.showOpenDialog(null);
+        if(returnVal == JOptionPane.OK_OPTION){
+            String name = openFile.getSelectedFile().toString();
+            game = Game_Saver.load_Created_Game(name);
+            new Main_Edit().setVisible(true);
+        }
+        else if(returnVal == JOptionPane.CANCEL_OPTION){
+            System.out.println("Cancelled");
+            game = new Game();
+            new Main_Edit().setVisible(true);
+        }
+    }//GEN-LAST:event_loadGameActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void createGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createGameActionPerformed
         game = new Game();
         this.setVisible(false);
         new Main_Edit().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_createGameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,10 +177,10 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton createGame;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton loadGame;
+    private javax.swing.JButton playGame;
     // End of variables declaration//GEN-END:variables
 
 }

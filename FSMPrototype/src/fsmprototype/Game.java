@@ -53,11 +53,54 @@ public class Game implements Serializable{
         this.player.pickup(o);
     }
     
+    public void removeRoom(Room r){
+        rooms.remove(r);
+    }
+    
     public void addObjectToRoom(String r, Object o){
         for(Room rooms:this.rooms){
             if(rooms.getName().equals(r)){
                 rooms.addObject(o);
             }
         }
+    }
+    
+    public void addObjectToRoom(Room r, Object o){
+        for(Room rooms: this.rooms){
+            if(rooms.getName().equals(r.getName())){
+                rooms.addObject(o);
+            }
+        }
+    }
+    
+    public Room findRoom(Room r){
+        for(Room rooms: this.rooms){
+            if(rooms.getName().equals(r.getName())){
+                return rooms;
+            }
+        }
+        return null;
+    }
+    
+    public Room findRoomByName(String n){
+        for(Room rooms: this.rooms){
+            if(rooms.getName().equals(n)){
+                return rooms;
+            }
+        }
+        return null;
+    }
+    
+    public Object findObject(Room r, Object o){
+        Room room = findRoom(r);
+        for(Object obj: room.getObject()){
+            if(obj.getName().equals(o.getName())){
+                return obj;
+            }    
+            else if(obj instanceof Container){
+                return ((Container) obj).findObject(o);
+            }
+        }
+        return null;
     }
 }

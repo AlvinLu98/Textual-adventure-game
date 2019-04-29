@@ -44,7 +44,7 @@ public class Game_Saver {
             }
         }
         
-        else if(o instanceof Player || o instanceof Human){
+        else if(o instanceof Player){
             Player ply = (Player) o;
             for(Object p: ply.getItems()){
                 Element ply_obj = createObject(doc, p);
@@ -128,24 +128,23 @@ public class Game_Saver {
         }
     }
     
-    public static void save_Created_Game(Game g){
+    public static void save_Created_Game(Game g, String direct){
         try {
             FileOutputStream fileOut =
-            new FileOutputStream("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
+            new FileOutputStream(direct);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(g);
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved");
          } catch (IOException i) {
             i.printStackTrace();
          }
     }
     
-    public static Game load_Created_Game(){
+    public static Game load_Created_Game(String direct){
         Game g = null;
         try {
-            FileInputStream fileIn = new FileInputStream("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
+            FileInputStream fileIn = new FileInputStream(direct);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             g = (Game) in.readObject();
             in.close();
@@ -154,7 +153,7 @@ public class Game_Saver {
             i.printStackTrace();
             return null;
          } catch (ClassNotFoundException c) {
-            System.out.println("Employee class not found");
+            System.out.println("Not found");
             c.printStackTrace();
             return null;
          }
@@ -215,8 +214,8 @@ public class Game_Saver {
         r.add(r2);
         
         Game g = new Game(r,p);
-        save_Created_Game(g);
-        load_Created_Game();
+        save_Created_Game(g, "C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
+        load_Created_Game("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
         //saveFile(r);
     }
 }

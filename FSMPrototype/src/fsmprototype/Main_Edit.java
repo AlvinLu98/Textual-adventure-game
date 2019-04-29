@@ -5,11 +5,20 @@
  */
 package fsmprototype;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Enumeration;
 import java.util.Scanner;
 import javax.swing.JTree;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -17,7 +26,7 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class Main_Edit extends javax.swing.JFrame {
 
-    private Game g;
+    protected static Game g;
     
     public Main_Edit() {
         DefaultListModel<String> model = new DefaultListModel<>();
@@ -41,29 +50,45 @@ public class Main_Edit extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
+        play_game = new javax.swing.JButton();
         info = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        Main_Panel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         objectName = new javax.swing.JTextPane();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        description = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         exit = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        Exits = new javax.swing.JTable();
+        create_exit_form = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        exit_name = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        exit_room = new javax.swing.JTextField();
+        create_exit = new javax.swing.JButton();
+        create_exit_form1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        remove_exit_name = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        remove_exit = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        Game_Structure = new javax.swing.JTree();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        Current_Game = new javax.swing.JTree();
+        menuBar = new javax.swing.JMenuBar();
+        menuFile = new javax.swing.JMenu();
+        menu_File_Save = new javax.swing.JMenuItem();
+        menu_File_Open = new javax.swing.JMenuItem();
+        menuEdit = new javax.swing.JMenu();
 
         jLabel1.setText("Name:");
 
@@ -72,7 +97,7 @@ public class Main_Edit extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         object.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        object.setText("Create Object");
+        object.setText("Create Object    ");
         object.setFocusable(false);
         object.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         object.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -95,6 +120,30 @@ public class Main_Edit extends javax.swing.JFrame {
         });
         jToolBar1.add(room);
 
+        delete.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        delete.setText("     Delete");
+        delete.setFocusable(false);
+        delete.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        delete.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+        });
+        jToolBar1.add(delete);
+
+        play_game.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        play_game.setText("      Play");
+        play_game.setFocusable(false);
+        play_game.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        play_game.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        play_game.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                play_gameMouseClicked(evt);
+            }
+        });
+        jToolBar1.add(play_game);
+
         jLabel2.setText("Name");
 
         objectName.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -104,9 +153,14 @@ public class Main_Edit extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(objectName);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        description.setColumns(20);
+        description.setRows(5);
+        description.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                descriptionFocusLost(evt);
+            }
+        });
+        jScrollPane3.setViewportView(description);
 
         jLabel3.setText("Description");
 
@@ -125,34 +179,34 @@ public class Main_Edit extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable1);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout Main_PanelLayout = new javax.swing.GroupLayout(Main_Panel);
+        Main_Panel.setLayout(Main_PanelLayout);
+        Main_PanelLayout.setHorizontalGroup(
+            Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Main_PanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(Main_PanelLayout.createSequentialGroup()
+                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)))
                     .addComponent(jLabel4)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE))
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        Main_PanelLayout.setVerticalGroup(
+            Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Main_PanelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
@@ -162,9 +216,9 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        info.addTab("Information", jPanel1);
+        info.addTab("Information", Main_Panel);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        Exits.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -175,20 +229,138 @@ public class Main_Edit extends javax.swing.JFrame {
                 "Room", "Exit name"
             }
         ));
-        jScrollPane6.setViewportView(jTable2);
+        jScrollPane6.setViewportView(Exits);
+
+        jLabel5.setText("Add Exit");
+
+        exit_name.setText("Exit name");
+
+        jLabel6.setText("Exit name");
+
+        jLabel7.setText("Exit room");
+
+        exit_room.setText("Exit room");
+
+        create_exit.setText("Create exit");
+        create_exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                create_exitMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout create_exit_formLayout = new javax.swing.GroupLayout(create_exit_form);
+        create_exit_form.setLayout(create_exit_formLayout);
+        create_exit_formLayout.setHorizontalGroup(
+            create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(create_exit_formLayout.createSequentialGroup()
+                .addGroup(create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(create_exit_formLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel5))
+                    .addGroup(create_exit_formLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exit_name, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(create_exit_formLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(create_exit_formLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(exit_room))
+                            .addComponent(create_exit))))
+                .addContainerGap(292, Short.MAX_VALUE))
+        );
+        create_exit_formLayout.setVerticalGroup(
+            create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(create_exit_formLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addGap(24, 24, 24)
+                .addGroup(create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(exit_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(exit_room, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addComponent(create_exit)
+                .addContainerGap(66, Short.MAX_VALUE))
+        );
+
+        jLabel8.setText("Remove Exit");
+
+        remove_exit_name.setText("Exit name");
+
+        jLabel9.setText("Exit name");
+
+        remove_exit.setText("Remove exit");
+        remove_exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                remove_exitMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout create_exit_form1Layout = new javax.swing.GroupLayout(create_exit_form1);
+        create_exit_form1.setLayout(create_exit_form1Layout);
+        create_exit_form1Layout.setHorizontalGroup(
+            create_exit_form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(create_exit_form1Layout.createSequentialGroup()
+                .addGroup(create_exit_form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(create_exit_form1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel8))
+                    .addGroup(create_exit_form1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(remove_exit_name, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(create_exit_form1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(remove_exit)))
+                .addContainerGap(277, Short.MAX_VALUE))
+        );
+        create_exit_form1Layout.setVerticalGroup(
+            create_exit_form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(create_exit_form1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addGap(24, 24, 24)
+                .addGroup(create_exit_form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(remove_exit_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addComponent(remove_exit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout exitLayout = new javax.swing.GroupLayout(exit);
         exit.setLayout(exitLayout);
         exitLayout.setHorizontalGroup(
             exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1229, Short.MAX_VALUE)
+            .addGroup(exitLayout.createSequentialGroup()
+                .addGroup(exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, exitLayout.createSequentialGroup()
+                        .addComponent(jScrollPane6)
+                        .addGap(49, 49, 49))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, exitLayout.createSequentialGroup()
+                        .addComponent(create_exit_form, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(create_exit_form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
         );
         exitLayout.setVerticalGroup(
             exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(exitLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(create_exit_form, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(create_exit_form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(109, 109, 109))
         );
 
         info.addTab("Exits", exit);
@@ -210,7 +382,7 @@ public class Main_Edit extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1229, Short.MAX_VALUE)
+            .addGap(0, 1213, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -230,36 +402,14 @@ public class Main_Edit extends javax.swing.JFrame {
         info.addTab("States", jPanel4);
 
         DefaultMutableTreeNode game = new DefaultMutableTreeNode("Game");
-        for(Room r: g.getRooms()){
-            DefaultMutableTreeNode roomNode = new DefaultMutableTreeNode(r);
-            game.add(roomNode);
-            DefaultMutableTreeNode objNode;
-            for(Object o: r.getObject()){
-                objNode = new DefaultMutableTreeNode(o);
-                if(o instanceof Container){
-                    Container cont = (Container)o;
-                    for(Object c:cont.getObjects()){
-                        objNode.add(new DefaultMutableTreeNode(c));
-                    }
-                }
-                else if(o instanceof Player || o instanceof Human){
-                    Player ply = (Player) o;
-                    for(Object p: ply.getItems()){
-                        objNode.add(new DefaultMutableTreeNode(p));
-                    }
-                }
-                roomNode.add(objNode);
-            }
-            game.add(roomNode);
-        }
-        Game_Structure = new JTree(game);
-        Game_Structure.setFont(new java.awt.Font("Tahoma", 0, 25)); // NOI18N
-        Game_Structure.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+        updateTree();
+        Current_Game.setFont(new java.awt.Font("Tahoma", 0, 25)); // NOI18N
+        Current_Game.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                Game_StructureValueChanged(evt);
+                Current_GameValueChanged(evt);
             }
         });
-        jScrollPane5.setViewportView(Game_Structure);
+        jScrollPane5.setViewportView(Current_Game);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -267,7 +417,8 @@ public class Main_Edit extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,26 +427,40 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        menuFile.setText("File");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        menu_File_Save.setText("Save");
+        menu_File_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_File_SaveActionPerformed(evt);
+            }
+        });
+        menuFile.add(menu_File_Save);
 
-        setJMenuBar(jMenuBar1);
+        menu_File_Open.setText("Open");
+        menu_File_Open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_File_OpenActionPerformed(evt);
+            }
+        });
+        menuFile.add(menu_File_Open);
+
+        menuBar.add(menuFile);
+
+        menuEdit.setText("Edit");
+        menuBar.add(menuEdit);
+
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1466, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 1466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, 1234, Short.MAX_VALUE)))
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(info))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,72 +479,344 @@ public class Main_Edit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void objectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectMouseClicked
-        System.out.println("Which room?");
-        Scanner scan = new Scanner(System.in);
-        Game g = FSMPrototype.g;
-        boolean found  = false;
-        for(Room r: g.getRooms()){
-            if(r.getName().equals(scan)){
-                FSMPrototype.objectPrompt(r);
-                found = true;
-            }
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        if(selectedNode == null){
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room to create Object!", "Inane warning", JOptionPane.WARNING_MESSAGE);
         }
-        if(!found){
-            System.out.println("No such room!");
-        }
-    }//GEN-LAST:event_objectMouseClicked
-
-    private void roomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomMouseClicked
-        FSMPrototype.roomPrompt();
-        g = FSMPrototype.g;
-        DefaultListModel<String> model = new DefaultListModel<>();
-        
-        for(Room r:g.getRooms()){
-            System.out.println(r.getName());
-            model.addElement(r.getName());
-            String s = "";
-            for(Object o:r.getObject()){
-                s = "    >" + o.getName();
-                model.addElement(s);
-                if(o instanceof Container){
-                    Container cont = (Container)o;
-                    for(Object c:cont.getObjects()){
-                        s = "    >" + c.getName();
-                        model.addElement(s);
-                    }
-                }
-                else if(o instanceof Player || o instanceof Human){
-                    Player ply = (Player) o;
-                    for(Object p: ply.getItems()){
-                        s = "    >" + ply.getName();
-                        model.addElement(s);
-                    }
-                }
-            }
-        }
-    }//GEN-LAST:event_roomMouseClicked
-
-    private void Game_StructureValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_Game_StructureValueChanged
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Game_Structure.getLastSelectedPathComponent();
-        if(selectedNode.getUserObject() instanceof Room){
+        else if(selectedNode.getUserObject() instanceof Room){
+            String[] possibilities = {"Player", "Human", "Pickable object", "Container"};
+            String s = (String)JOptionPane.showInputDialog(
+                    Main_Panel,
+                    "Type of item:\n",
+                    "Choose item type",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    possibilities,
+                    possibilities[2]);
             Room r = (Room)selectedNode.getUserObject();
-            objectName.setText(r.getName());
-            info.setEnabledAt(1, true);
+            switch(s){
+                case "Player":
+                    if(g.getPlayer() == null){
+                        Player p = new Player("Player", r);
+                        g.addPlayer(p);
+                        g.addObjectToRoom(r, p);
+                        updateTree();
+                        break;
+                    } 
+                case "Human":
+                    Human h = new Human("Human");
+                    g.addObjectToRoom(r, h);
+                    updateTree();
+                    break;
+                    
+                case "Pickable object":
+                    Pick_Able_Object o = new Pick_Able_Object("Object");
+                    g.addObjectToRoom(r, o);
+                    updateTree();
+                    break;
+                    
+                case "Container":
+                    Container c = new Container("Object");
+                    g.addObjectToRoom(r, c);
+                    updateTree();
+                    break;
+            }   
         }
-        else if(selectedNode.getUserObject() instanceof String){
-            objectName.setText((String)selectedNode.getUserObject());
+        else if(selectedNode.getUserObject() instanceof Container){
+            String[] possibilities = {"Pickable object", "Container", "Usable object"};
+            String s = (String)JOptionPane.showInputDialog(
+                    Main_Panel,
+                    "Type of item:\n",
+                    "Choose item type",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    possibilities,
+                    "Pickable object");
+            Container con = (Container)selectedNode.getUserObject();
+            switch(s){
+                case "Pickable object":
+                    Pick_Able_Object o = new Pick_Able_Object("Object");
+                    con.addObjects(o);
+                    updateTree();
+                    break;
+                    
+                case "Container":
+                    Container c = new Container("Container");
+                    con.addObjects(c);
+                    updateTree();
+                    break;           
+            }   
+        }
+        
+        else if(selectedNode.getUserObject() instanceof Player){
+            String[] possibilities = {"Pickable object", "Container", "Usable object"};
+            String s = (String)JOptionPane.showInputDialog(
+                    Main_Panel,
+                    "Type of item:\n",
+                    "Choose item type",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    possibilities,
+                    "Pickable object");
+            Player ply = (Player)selectedNode.getUserObject();
+            switch(s){
+                case "Pickable object":
+                    Pick_Able_Object o = new Pick_Able_Object("Object");
+                    ply.pickup(o);
+                    updateTree();
+                    break;
+                    
+                case "Container":
+                    Container c = new Container("Container");
+                    ply.pickup(c);
+                    updateTree();
+                    break;           
+            }   
         }
         else{
-            Object o = (Object)selectedNode.getUserObject();
-            objectName.setText(o.getName());
-            info.setEnabledAt(1, false);
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room, container or player to create Object", "Inane warning", JOptionPane.WARNING_MESSAGE);
         } 
-    }//GEN-LAST:event_Game_StructureValueChanged
+    }//GEN-LAST:event_objectMouseClicked
+
+    
+    private void roomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomMouseClicked
+        Room r = new Room("new room");
+        g.addRoom(r);
+        //select the room?
+        updateTree();
+    }//GEN-LAST:event_roomMouseClicked
+
+    private void Current_GameValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_Current_GameValueChanged
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        if(selectedNode != null){
+           if(selectedNode.getUserObject() instanceof Room){
+                Room r = (Room)selectedNode.getUserObject();
+                objectName.setText(r.getName());
+                description.setText(r.getDescription());
+                updateExitTable(r);
+            }
+            else if(selectedNode.getUserObject() instanceof String){
+                objectName.setText((String)selectedNode.getUserObject());
+            }
+            else{
+                Object o = (Object)selectedNode.getUserObject();
+                objectName.setText(o.getName());
+                description.setText(o.getDesc());
+                info.setEnabledAt(1, false);
+            }  
+        }
+    }//GEN-LAST:event_Current_GameValueChanged
 
     private void objectNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_objectNameFocusLost
-        System.out.println("Working on it!");
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        if(selectedNode != null){
+            if(selectedNode.getUserObject() instanceof Room){
+                Room r = (Room)selectedNode.getUserObject();
+                g.findRoom(r).setName(objectName.getText());
+            }
+            else if(selectedNode.getUserObject() instanceof Container){
+                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                if(parent.getUserObject() instanceof Room){
+                    Object o = (Object)selectedNode.getUserObject();
+                    g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
+                    info.setEnabledAt(1, false);
+                }
+                else{
+                    while(!(parent.getUserObject() instanceof Room)){
+                        parent = (DefaultMutableTreeNode)parent.getParent();
+                    }
+                    Object o = (Object)selectedNode.getUserObject();
+                    g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
+                    info.setEnabledAt(1, false);
+                }
+            } 
+            else{
+                Object o = (Object)selectedNode.getUserObject();
+                g.getPlayer().findObject(o).setName(objectName.getText());
+            }
+            jScrollPane5.setViewportView(Current_Game);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_objectNameFocusLost
 
+    private void menu_File_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_File_SaveActionPerformed
+        JFileChooser saveFile = new JFileChooser();
+        int returnVal = saveFile.showSaveDialog(menuFile);
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            String name = saveFile.getSelectedFile().toString();
+            name = name + ".ser";
+            Game_Saver.save_Created_Game(g, name);
+        }
+        else if(returnVal == JFileChooser.CANCEL_OPTION){
+            saveFile.cancelSelection();
+        }
+    }//GEN-LAST:event_menu_File_SaveActionPerformed
+
+    private void menu_File_OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_File_OpenActionPerformed
+        JFileChooser openFile = new JFileChooser();
+        int returnVal =  openFile.showOpenDialog(menuFile);
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            String name = openFile.getSelectedFile().toString();
+            g = Game_Saver.load_Created_Game(name);
+            updateTree();
+        }
+        else if(returnVal == JFileChooser.CANCEL_OPTION){
+            System.out.println("Cancelled");
+        }
+    }//GEN-LAST:event_menu_File_OpenActionPerformed
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+         DefaultTreeModel model = (DefaultTreeModel)Current_Game.getModel();
+         if(selectedNode != null){
+             if(selectedNode.getUserObject() instanceof Room){
+                 g.removeRoom((Room)selectedNode.getUserObject());
+             }
+             else{
+                    DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                    if(parent != null && parent.getUserObject() instanceof Room){
+                        Object o = (Object)selectedNode.getUserObject();
+                        g.findRoom((Room)parent.getUserObject()).removeObject(o);
+                    }
+                    else{
+                        while(!(parent.getUserObject() instanceof Room)){
+                            parent = (DefaultMutableTreeNode)parent.getParent();
+                        }
+                        Object o = (Object)selectedNode.getUserObject();
+                        g.findRoom((Room)parent.getUserObject()).removeObject(o);
+                    }
+             }
+             model.removeNodeFromParent(selectedNode);
+         }
+    }//GEN-LAST:event_deleteMouseClicked
+
+    private void create_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_create_exitMouseClicked
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        String name = exit_name.getText();
+        String room = exit_room.getText();
+        
+        Room r = g.findRoomByName(room);
+        if(r == null){
+            JOptionPane.showMessageDialog(Main_Panel, "Room not found!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            if(!g.findRoom((Room)selectedNode.getUserObject()).addExit(name, r)){
+                JOptionPane.showMessageDialog(Main_Panel, "Exit already exists!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                exit_name.setText("");
+                exit_room.setText("");
+                updateExitTable(g.findRoom(r));
+            }
+        }
+    }//GEN-LAST:event_create_exitMouseClicked
+
+    private void remove_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_remove_exitMouseClicked
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        String name = remove_exit_name.getText();
+        g.findRoom((Room)selectedNode.getUserObject()).removeExit(name);
+    }//GEN-LAST:event_remove_exitMouseClicked
+
+    private void descriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descriptionFocusLost
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        if(selectedNode != null){
+            if(selectedNode.getUserObject() instanceof Room){
+                Room r = (Room)selectedNode.getUserObject();
+                g.findRoom(r).setDescription(description.getText());
+            }
+            else if(selectedNode.getUserObject() instanceof Container){
+                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                if(parent.getUserObject() instanceof Room){
+                    Object o = (Object)selectedNode.getUserObject();
+                    g.findRoom((Room)parent.getUserObject()).findObject(o).setDesc(description.getText());
+                    info.setEnabledAt(1, false);
+                }
+                else{
+                    while(!(parent.getUserObject() instanceof Room)){
+                        parent = (DefaultMutableTreeNode)parent.getParent();
+                    }
+                    Object o = (Object)selectedNode.getUserObject();
+                    g.findRoom((Room)parent.getUserObject()).findObject(o).setDesc(description.getText());
+                    info.setEnabledAt(1, false);
+                }
+            } 
+            else{
+                Object o = (Object)selectedNode.getUserObject();
+                g.getPlayer().findObject(o).setDesc(description.getText());
+            }
+            jScrollPane5.setViewportView(Current_Game);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_descriptionFocusLost
+
+    private void play_gameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_play_gameMouseClicked
+        new Play_Game().setVisible(true);
+    }//GEN-LAST:event_play_gameMouseClicked
+
+    private void updateExitTable(Room r){
+        DefaultTableModel room_exits = (DefaultTableModel) Exits.getModel();
+        room_exits.setRowCount(0);
+        for(Exit e:r.getExit()){
+            room_exits.addRow(new String[]{e.takeExit().getName(), e.getName()});
+        }
+        jScrollPane6.setViewportView(Exits);
+    }
+    private void updateTree(){
+    DefaultMutableTreeNode game = new DefaultMutableTreeNode("Game");
+    for(Room r: g.getRooms()){
+        DefaultMutableTreeNode roomNode = new DefaultMutableTreeNode(r);
+        game.add(roomNode);
+        DefaultMutableTreeNode objNode;
+        for(Object o: r.getObject()){
+            objNode = new DefaultMutableTreeNode(o);
+            if(o instanceof Container){
+                Container cont = (Container)o;
+                for(Object c:cont.getObjects()){
+                    objNode.add(new DefaultMutableTreeNode(c));
+                }
+            }
+            else if(o instanceof Player){
+                Player ply = (Player) o;
+                for(Object p: ply.getItems()){
+                    objNode.add(new DefaultMutableTreeNode(p));
+                }
+            }
+            roomNode.add(objNode);
+        }
+    game.add(roomNode);
+    }
+    Current_Game = new JTree(game);
+    Current_Game.setFont(new java.awt.Font("Tahoma", 0, 25)); // NOI18N
+        Current_Game.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                Current_GameValueChanged(evt);
+            }
+        });
+    expandAll(Current_Game);
+    jScrollPane5.setViewportView(Current_Game);
+    }
+    
+    public void expandAll(JTree tree) {
+    TreeNode root = (TreeNode) tree.getModel().getRoot();
+    expandAll(tree, new TreePath(root));
+  }
+
+  private void expandAll(JTree tree, TreePath parent) {
+    TreeNode node = (TreeNode) parent.getLastPathComponent();
+    if (node.getChildCount() >= 0) {
+      for (Enumeration e = node.children(); e.hasMoreElements();) {
+        TreeNode n = (TreeNode) e.nextElement();
+        TreePath path = parent.pathByAddingChild(n);
+        expandAll(tree, path);
+      }
+    }
+    tree.expandPath(parent);
+  }
+    
     /**
      * @param args the command line arguments
      */
@@ -416,17 +853,27 @@ public class Main_Edit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTree Game_Structure;
+    private javax.swing.JTree Current_Game;
+    private javax.swing.JTable Exits;
+    private javax.swing.JPanel Main_Panel;
+    private javax.swing.JButton create_exit;
+    private javax.swing.JPanel create_exit_form;
+    private javax.swing.JPanel create_exit_form1;
+    private javax.swing.JButton delete;
+    private javax.swing.JTextArea description;
     private javax.swing.JPanel exit;
+    private javax.swing.JTextField exit_name;
+    private javax.swing.JTextField exit_room;
     private javax.swing.JTabbedPane info;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
@@ -436,12 +883,18 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuEdit;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenuItem menu_File_Open;
+    private javax.swing.JMenuItem menu_File_Save;
     private javax.swing.JButton object;
     private javax.swing.JTextPane objectName;
+    private javax.swing.JButton play_game;
+    private javax.swing.JButton remove_exit;
+    private javax.swing.JTextField remove_exit_name;
     private javax.swing.JButton room;
     // End of variables declaration//GEN-END:variables
 }

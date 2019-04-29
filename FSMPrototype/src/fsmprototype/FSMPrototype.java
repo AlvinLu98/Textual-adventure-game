@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -12,6 +7,10 @@ public class FSMPrototype implements Serializable{
 
     static Game g = new Game();
     
+    /**
+     * Object to create a room
+     * @return room object created
+     */
     public static Room roomPrompt(){
         Scanner scan = new Scanner(System.in);
         Room r = new Room("start");
@@ -40,6 +39,12 @@ public class FSMPrototype implements Serializable{
         return r;
     }
     
+    /**
+     * Prompt to create an object 
+     * All operation in command line
+     * @param r Room the object is in
+     * @return Object
+     */
     public static Object objectPrompt(Room r){
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the name of the object?");
@@ -70,6 +75,13 @@ public class FSMPrototype implements Serializable{
         return o;
     }
     
+    /**
+     * Prompt for user to create a player object
+     * All operation in command line
+     * @param name name of user
+     * @param r which room the user is in
+     * @return player object
+     */
     public static Player playerPrompt(String name, Room r){
         Scanner scan = new Scanner(System.in);
         String obj;
@@ -86,12 +98,16 @@ public class FSMPrototype implements Serializable{
         return p;
     }
     
+    /**
+     * Simple prototype to test the game player and game saver without UI
+     * @param args 
+     */
     public static void main(String[] args) 
     {
         roomPrompt();
         
-        Game_Saver.save_Created_Game(g);
-        g = Game_Saver.load_Created_Game();
+        Game_Saver.save_Created_Game(g, "C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.xml");
+        g = Game_Saver.load_Created_Game("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.xml");
         
         
         Game_Player gp = new Game_Player(g);

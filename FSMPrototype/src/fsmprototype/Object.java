@@ -11,21 +11,51 @@ import java.util.LinkedList;
 public abstract class Object implements Serializable
 {
     protected String name;
+    protected String description;
     private ArrayList<Verb> verbList;
     private State currentState;
     private LinkedList<Attribute> attribute;
     private ArrayList<String> alias;
     
-//    public Object(){
-//        
-//    }
-    
     public Object(String name){
         this.name = name;
     }
     
+    public Object(String name, String desc){
+        this.name = name;
+        this.description = desc;
+    }
+    
     public String getName(){
         return this.name;
+    }
+    
+    public void setName(String s){
+        this.name = s;
+    }
+    
+    public String getDesc(){
+        return this.description;
+    }
+    
+    public void setDesc(String d){
+        this.description = d;
+    }
+    
+    public ArrayList<Verb> getVerbs(){
+        return this.verbList;
+    }
+    
+    public void addVerb(Verb v){
+        this.verbList.add(v);
+    }
+    
+    public State getCurrentState(){
+        return this.currentState;
+    }
+    
+    public LinkedList<Attribute> getAttributes(){
+        return this.attribute;
     }
     
     public boolean sendAction(String verb){

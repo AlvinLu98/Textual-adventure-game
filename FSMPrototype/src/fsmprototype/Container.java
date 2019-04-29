@@ -34,4 +34,30 @@ public class Container extends Object implements Serializable{
         }
         return null;
     }
+    
+    public Object findObject(Object o){
+        for(Object obj: this.objects){
+            if(obj.getName().equals(o.getName())){
+                return obj;
+            }
+            
+            else if(obj instanceof Container){
+                findObject(o);
+            }
+        }
+        return null;
+    }
+    
+    public boolean removeObject(Object o){
+        for(Object obj: this.objects){
+            if(obj.getName().equals(o.getName())){
+                return this.objects.remove(obj);
+            }
+            
+            else if(obj instanceof Container){
+                findObject(o);
+            }
+        }
+        return false;
+    }
 }
