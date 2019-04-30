@@ -18,6 +18,13 @@ public abstract class Usable_Object extends Object implements Serializable{
         super(name);
     }
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Usable_Object u = (Usable_Object) super.clone();
+        return u;
+    } 
+    
     public void make_Unusable(){
         this.is_Usable = false;
     }

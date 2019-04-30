@@ -7,23 +7,24 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  *
  * @author Alvin Lu
  */
-public class Game implements Serializable, Cloneable{
+public class Game implements Serializable{
     private ArrayList<Room> rooms;
     private Player player;
     
      public Game(){
          rooms = new ArrayList<>();
     }
-    
-    @Override
-    public java.lang.Object clone() throws CloneNotSupportedException{
-        return super.clone();
+     
+    public Game(Game g){
+        this.rooms = g.rooms;
+        this.player = g.getPlayer();
     }
      
     public Game(ArrayList<Room> r, Player p){

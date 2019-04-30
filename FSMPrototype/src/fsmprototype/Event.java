@@ -11,10 +11,21 @@ import java.io.Serializable;
  *
  * @author Alvin Lu
  */
-public class Event implements Serializable 
+public class Event implements Serializable, Cloneable
 {
     private String name;
     private String message;
+    
+    public Event(){
+        
+    }
+    
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Event e = (Event)super.clone();
+        return e;
+    } 
     
     public Event(String n, String m)
     {

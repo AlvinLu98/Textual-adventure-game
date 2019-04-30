@@ -7,6 +7,7 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Human extends Living_Objects implements Serializable{
     public Human(String name){
         super(name);
     }
+   
     
     public String ask(String prompt){
         for(Information i: informations){

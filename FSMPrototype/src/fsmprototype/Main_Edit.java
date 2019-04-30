@@ -5,11 +5,7 @@
  */
 package fsmprototype;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.Enumeration;
-import java.util.Scanner;
 import javax.swing.JTree;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -46,7 +42,19 @@ public class Main_Edit extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        Add_Attribute_Window = new javax.swing.JFrame();
+        attribute_label = new javax.swing.JLabel();
+        attribute_Name = new javax.swing.JLabel();
+        num_att_amt = new javax.swing.JTextField();
+        attribute_type_label = new javax.swing.JLabel();
+        attribute_type = new javax.swing.JComboBox<>();
+        num_att_label = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        create_attribute_button = new javax.swing.JButton();
+        associated_verb_label1 = new javax.swing.JLabel();
+        num_att_IncDec = new javax.swing.JComboBox<>();
+        num_att_amt_label = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
@@ -62,7 +70,8 @@ public class Main_Edit extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        att_table = new javax.swing.JTable();
+        add_attribute = new javax.swing.JButton();
         exit = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         Exits = new javax.swing.JTable();
@@ -90,7 +99,110 @@ public class Main_Edit extends javax.swing.JFrame {
         menu_File_Open = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
 
-        jLabel1.setText("Name:");
+        Add_Attribute_Window.setVisible(false);
+        Add_Attribute_Window.setPreferredSize(new java.awt.Dimension(845, 420));
+        Add_Attribute_Window.setSize(new java.awt.Dimension(845, 500));
+
+        attribute_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        attribute_label.setText("Add an Attribute");
+
+        attribute_Name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        attribute_Name.setText("Name");
+
+        num_att_amt.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        num_att_amt.setVisible(false);
+
+        attribute_type_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        attribute_type_label.setText("Attribute type");
+
+        attribute_type.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        attribute_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Boolean", "Number" }));
+        attribute_type.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                attribute_typeItemStateChanged(evt);
+            }
+        });
+
+        num_att_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        num_att_label.setText("Effect");
+        num_att_label.setVisible(false);
+
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        create_attribute_button.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        create_attribute_button.setText("Create");
+
+        associated_verb_label1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        associated_verb_label1.setText("Associated verb");
+
+        num_att_IncDec.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        num_att_IncDec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Increase", "Decrease", " " }));
+        num_att_IncDec.setVisible(false);
+
+        num_att_amt_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        num_att_amt_label.setText("Amount");
+        num_att_amt_label.setVisible(false);
+
+        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        javax.swing.GroupLayout Add_Attribute_WindowLayout = new javax.swing.GroupLayout(Add_Attribute_Window.getContentPane());
+        Add_Attribute_Window.getContentPane().setLayout(Add_Attribute_WindowLayout);
+        Add_Attribute_WindowLayout.setHorizontalGroup(
+            Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(num_att_amt_label)
+                    .addComponent(attribute_label)
+                    .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(attribute_Name)
+                            .addComponent(attribute_type_label)
+                            .addComponent(associated_verb_label1)
+                            .addComponent(num_att_label))
+                        .addGap(33, 33, 33)
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(num_att_IncDec, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(attribute_type, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(num_att_amt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(57, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(create_attribute_button)
+                .addGap(44, 44, 44))
+        );
+        Add_Attribute_WindowLayout.setVerticalGroup(
+            Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(attribute_label)
+                .addGap(54, 54, 54)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(attribute_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(attribute_type_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(associated_verb_label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(num_att_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(num_att_IncDec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(num_att_amt_label, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(num_att_amt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(create_attribute_button)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,8 +256,12 @@ public class Main_Edit extends javax.swing.JFrame {
         });
         jToolBar1.add(play_game);
 
+        info.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setText("Name");
 
+        objectName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         objectName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 objectNameFocusLost(evt);
@@ -154,6 +270,7 @@ public class Main_Edit extends javax.swing.JFrame {
         jScrollPane2.setViewportView(objectName);
 
         description.setColumns(20);
+        description.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         description.setRows(5);
         description.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -162,22 +279,32 @@ public class Main_Edit extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(description);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setText("Description");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setText("Attributes");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        att_table.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
+        att_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Name", "Type", "Default value"
+                "Name", "Type", "Default value", "Verb asscociated"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(att_table);
+
+        add_attribute.setText("Add attribute");
+        add_attribute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_attributeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Main_PanelLayout = new javax.swing.GroupLayout(Main_Panel);
         Main_Panel.setLayout(Main_PanelLayout);
@@ -191,12 +318,15 @@ public class Main_Edit extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(31, 31, 31)
-                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
+                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
                             .addComponent(jScrollPane2)))
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 962, Short.MAX_VALUE))
-                .addContainerGap(230, Short.MAX_VALUE))
+                    .addGroup(Main_PanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(add_attribute))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         Main_PanelLayout.setVerticalGroup(
             Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,15 +339,18 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jLabel4)
+                .addGap(33, 33, 33)
+                .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(add_attribute))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         info.addTab("Information", Main_Panel);
 
+        Exits.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Exits.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -355,7 +488,7 @@ public class Main_Edit extends javax.swing.JFrame {
             exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(exitLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(create_exit_form, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,15 +498,16 @@ public class Main_Edit extends javax.swing.JFrame {
 
         info.addTab("Exits", exit);
 
+        jTable4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Start state", "End state", "Conditions"
+                "Start state", "Action", "End state", "Conditions"
             }
         ));
         jScrollPane8.setViewportView(jTable4);
@@ -782,6 +916,27 @@ public class Main_Edit extends javax.swing.JFrame {
         new Play_Game().setVisible(true);
     }//GEN-LAST:event_play_gameMouseClicked
 
+    private void add_attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_attributeActionPerformed
+        Add_Attribute_Window.setVisible(true);
+    }//GEN-LAST:event_add_attributeActionPerformed
+
+    private void attribute_typeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_attribute_typeItemStateChanged
+        if (evt.getStateChange() == evt.SELECTED) {
+            if(attribute_type.getSelectedItem().toString().equals("Number")){
+                num_att_label.setVisible(true);
+                num_att_IncDec.setVisible(true);
+                num_att_amt_label.setVisible(true);
+                num_att_amt.setVisible(true);
+            }
+            else{
+                num_att_label.setVisible(false);
+                num_att_IncDec.setVisible(false);
+                num_att_amt_label.setVisible(false);
+                num_att_amt.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_attribute_typeItemStateChanged
+
     private void updateExitTable(Room r){
         DefaultTableModel room_exits = (DefaultTableModel) Exits.getModel();
         room_exits.setRowCount(0);
@@ -789,6 +944,15 @@ public class Main_Edit extends javax.swing.JFrame {
             room_exits.addRow(new String[]{e.takeExit().getName(), e.getName()});
         }
         jScrollPane6.setViewportView(Exits);
+    }
+    
+    private void updateAttributeTable(){
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        DefaultTableModel attributes = (DefaultTableModel) att_table.getModel();
+        attributes.setRowCount(0);
+        if(selectedNode.getUserObject() instanceof Room){
+            Room r = (Room)selectedNode.getUserObject();
+        }
     }
     private void updateTree(){
     DefaultMutableTreeNode game = new DefaultMutableTreeNode("Game");
@@ -878,9 +1042,18 @@ public class Main_Edit extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame Add_Attribute_Window;
     private javax.swing.JTree Current_Game;
     private javax.swing.JTable Exits;
     private javax.swing.JPanel Main_Panel;
+    private javax.swing.JButton add_attribute;
+    private javax.swing.JLabel associated_verb_label1;
+    private javax.swing.JTable att_table;
+    private javax.swing.JLabel attribute_Name;
+    private javax.swing.JLabel attribute_label;
+    private javax.swing.JComboBox<String> attribute_type;
+    private javax.swing.JLabel attribute_type_label;
+    private javax.swing.JButton create_attribute_button;
     private javax.swing.JButton create_exit;
     private javax.swing.JPanel create_exit_form;
     private javax.swing.JPanel create_exit_form1;
@@ -890,7 +1063,7 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTextField exit_name;
     private javax.swing.JTextField exit_room;
     private javax.swing.JTabbedPane info;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -907,14 +1080,18 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable4;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menu_File_Open;
     private javax.swing.JMenuItem menu_File_Save;
+    private javax.swing.JComboBox<String> num_att_IncDec;
+    private javax.swing.JTextField num_att_amt;
+    private javax.swing.JLabel num_att_amt_label;
+    private javax.swing.JLabel num_att_label;
     private javax.swing.JButton object;
     private javax.swing.JTextPane objectName;
     private javax.swing.JButton play_game;

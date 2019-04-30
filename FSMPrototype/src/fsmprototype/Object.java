@@ -2,6 +2,7 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -12,20 +13,24 @@ public abstract class Object implements Serializable
 {
     protected String name;
     protected String description;
-    private ArrayList<Verb> verbList;
+    private ArrayList<Verb> verbList = new ArrayList();
     private State currentState;
-    private LinkedList<Attribute> attribute;
-    private ArrayList<String> alias;
+    private LinkedList<Attribute> attribute= new LinkedList();
+    private ArrayList<String> alias = new ArrayList();
     
     public Object(String name){
         this.name = name;
+        verbList = new ArrayList();
+        attribute= new LinkedList();
+        alias = new ArrayList();
+        this.currentState = new State("Initial state");
     }
     
     public Object(String name, String desc){
         this.name = name;
         this.description = desc;
     }
-    
+
     public String getName(){
         return this.name;
     }

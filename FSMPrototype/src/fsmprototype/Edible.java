@@ -11,11 +11,18 @@ import java.io.Serializable;
  *
  * @author Alvin Lu
  */
-public class Edible extends Limited_Use_Object implements Serializable{ 
+public class Edible extends Limited_Use_Object implements Serializable, Cloneable{ 
     public Edible(String name){
         super(name);
         super.uses_Left = 1; 
     }
+    
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Edible e = (Edible) super.clone();
+        return e;
+    } 
     
     public boolean eat(){
         return super.use();

@@ -7,6 +7,7 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -42,7 +43,7 @@ public class Room extends Object implements Serializable{
         super(name);
         this.objects = objects;
         this.exits = exits;
-    }
+    } 
     
     public String getName(){
         return super.getName();

@@ -15,6 +15,13 @@ public class Information implements Serializable {
     private String prompt;
     private String answer;
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Information i = (Information) super.clone();
+        return i;
+    } 
+    
     public String getPrompt(){
         return this.prompt;
     }

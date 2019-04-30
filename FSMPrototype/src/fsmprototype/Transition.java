@@ -33,6 +33,14 @@ public class Transition implements Serializable
         this.conditions = con;
     }
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Transition t = (Transition)super.clone();
+        t.endState = (State) endState.clone();
+        return t;
+    } 
+    
     public String getAction()
     {
         return this.action;

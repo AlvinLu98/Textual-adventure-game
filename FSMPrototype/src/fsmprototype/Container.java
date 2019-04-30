@@ -7,6 +7,7 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Container extends Object implements Serializable{
     public Container(String name){
         super(name);
         objects = new ArrayList();
-    }
+    } 
     
     public ArrayList<Object> getObjects(){
         return objects;

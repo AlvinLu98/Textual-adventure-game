@@ -13,6 +13,10 @@ import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenc
 import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.CoreMap;
 import static fsmprototype.Main_Edit.g;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -41,14 +45,10 @@ public class Play_Game extends javax.swing.JFrame {
     ArrayList<String> dropItem;
     
     public Play_Game() {
+        game = (Game) deepClone(Main_Edit.g);
         initComponents();
         JOptionPane.showMessageDialog(jScrollPane1, "Currently creating your game!");
-        try {
-            //initiate fields
-            game = (Game)Main_Edit.g.clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(Play_Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         movement = new ArrayList();
         observe = new ArrayList();
         takeItem = new ArrayList();
@@ -85,6 +85,21 @@ public class Play_Game extends javax.swing.JFrame {
         
         dropItem.add("drop");
         dropItem.add("throw");
+    }
+    
+    public static java.lang.Object deepClone(java.lang.Object object) {
+        try {
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          ObjectOutputStream oos = new ObjectOutputStream(baos);
+          oos.writeObject(object);
+          ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+          ObjectInputStream ois = new ObjectInputStream(bais);
+          return ois.readObject();
+        }
+        catch (Exception e) {
+          e.printStackTrace();
+          return null;
+        }
     }
     
     private void roomChange(){
@@ -421,7 +436,7 @@ public class Play_Game extends javax.swing.JFrame {
     
     private void updateTree(){
     DefaultMutableTreeNode player = new DefaultMutableTreeNode("Inventory");
-    for(Object o: g.getPlayerObject()){
+    for(Object o: game.getPlayerObject()){
         DefaultMutableTreeNode objNode;
         objNode = new DefaultMutableTreeNode(o);
         

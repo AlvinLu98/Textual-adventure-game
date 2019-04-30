@@ -19,6 +19,13 @@ public class Unlimited_Use_Object extends Usable_Object implements Serializable{
     }
     
     @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Unlimited_Use_Object u = (Unlimited_Use_Object) super.clone();
+        return u;
+    } 
+    
+    @Override
     public boolean use(){
         use_Count++;
         return true;

@@ -18,6 +18,13 @@ public class Switchable extends Object implements Serializable{
         super(name);
     }
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Switchable s = (Switchable) super.clone();
+        return s;
+    } 
+    
     public boolean switchOn(){
         if(this.is_Switched_On){
             return false;

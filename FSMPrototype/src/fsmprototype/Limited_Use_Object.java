@@ -23,6 +23,13 @@ public class Limited_Use_Object extends Usable_Object implements Serializable{
         this.uses_Left = uses;
     }
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+       Limited_Use_Object o = (Limited_Use_Object) super.clone();
+       return o;
+    } 
+    
     public int getUsesLeft(){
         return this.uses_Left;
     }

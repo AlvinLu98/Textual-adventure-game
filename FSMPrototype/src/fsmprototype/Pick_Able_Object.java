@@ -13,17 +13,17 @@ import java.io.Serializable;
  */
 public class Pick_Able_Object extends Object implements Serializable{
     private boolean is_Picked_Up = false;
-    private Living_Objects owner;
     
     public Pick_Able_Object(String name){
         super(name);
     }
     
-    public Pick_Able_Object(String name, Living_Objects owner){
-        super(name);
-        this.owner = owner;
-        this.is_Picked_Up =true;
-    }
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Pick_Able_Object p = (Pick_Able_Object) super.clone();
+        return p;
+    } 
     
     public boolean pickUp(){
         if(this.is_Picked_Up){
@@ -39,9 +39,5 @@ public class Pick_Able_Object extends Object implements Serializable{
         }
         this.is_Picked_Up = false;
         return true;
-    }
-    
-    public void changeOwner(Living_Objects owner){
-        this.owner = owner;
     }
 }

@@ -15,6 +15,13 @@ public class Number_Attribute extends Attribute implements Serializable
 {
     private double value = 0;
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Number_Attribute n = (Number_Attribute) super.clone();
+        return n;
+    } 
+    
     public void setValue(double v)
     {
         this.value  = v;

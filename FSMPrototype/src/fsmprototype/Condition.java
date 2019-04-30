@@ -15,6 +15,13 @@ public class Condition implements Serializable {
         this.name = name;
     }
     
+    @Override
+    protected java.lang.Object clone() throws CloneNotSupportedException
+    {
+        Condition c = (Condition) super.clone();
+        return c;
+    } 
+    
     public boolean changeCondition()
     {
         this.condition = !this.condition;
