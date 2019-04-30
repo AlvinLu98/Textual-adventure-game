@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Alvin Lu
  */
 public class Container extends Object implements Serializable{
-    ArrayList<Object> objects;
+    private ArrayList<Object> objects;
     
     public Container(String name){
         super(name);
@@ -43,6 +43,19 @@ public class Container extends Object implements Serializable{
             
             else if(obj instanceof Container){
                 findObject(o);
+            }
+        }
+        return null;
+    }
+    
+    public Object findObjectByName(String o){
+        for(Object obj: this.objects){
+            if(obj.getName().equals(o)){
+                return obj;
+            }
+            
+            else if(obj instanceof Container){
+                findObjectByName(o);
             }
         }
         return null;

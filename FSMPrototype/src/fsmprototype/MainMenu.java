@@ -112,7 +112,9 @@ public class MainMenu extends javax.swing.JFrame {
             name = name + ".ser";
             game = Game_Saver.load_Created_Game(name);
             Game_Player gp = new Game_Player(game);
-            gp.playGame();
+            this.setVisible(false);
+            new Main_Edit().setVisible(true);
+            new Play_Game().setVisible(true);
         }
         else if(returnVal == JOptionPane.CANCEL_OPTION){
             System.out.println("Cancelled");
@@ -126,7 +128,10 @@ public class MainMenu extends javax.swing.JFrame {
         if(returnVal == JOptionPane.OK_OPTION){
             String name = openFile.getSelectedFile().toString();
             game = Game_Saver.load_Created_Game(name);
-            new Main_Edit().setVisible(true);
+            if(game != null){
+                this.setVisible(false);
+                new Main_Edit().setVisible(true);
+            }
         }
         else if(returnVal == JOptionPane.CANCEL_OPTION){
             System.out.println("Cancelled");

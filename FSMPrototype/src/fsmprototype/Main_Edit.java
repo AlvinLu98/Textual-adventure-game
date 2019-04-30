@@ -494,33 +494,35 @@ public class Main_Edit extends javax.swing.JFrame {
                     possibilities,
                     possibilities[2]);
             Room r = (Room)selectedNode.getUserObject();
-            switch(s){
-                case "Player":
-                    if(g.getPlayer() == null){
-                        Player p = new Player("Player", r);
-                        g.addPlayer(p);
-                        g.addObjectToRoom(r, p);
+            if(s != null){
+                switch(s){
+                    case "Player":
+                        if(g.getPlayer() == null){
+                            Player p = new Player("Player", r);
+                            g.addPlayer(p);
+                            g.addObjectToRoom(r, p);
+                            updateTree();
+                            break;
+                        } 
+                    case "Human":
+                        Human h = new Human("Human");
+                        g.addObjectToRoom(r, h);
                         updateTree();
                         break;
-                    } 
-                case "Human":
-                    Human h = new Human("Human");
-                    g.addObjectToRoom(r, h);
-                    updateTree();
-                    break;
-                    
-                case "Pickable object":
-                    Pick_Able_Object o = new Pick_Able_Object("Object");
-                    g.addObjectToRoom(r, o);
-                    updateTree();
-                    break;
-                    
-                case "Container":
-                    Container c = new Container("Object");
-                    g.addObjectToRoom(r, c);
-                    updateTree();
-                    break;
-            }   
+
+                    case "Pickable object":
+                        Pick_Able_Object o = new Pick_Able_Object("Object");
+                        g.addObjectToRoom(r, o);
+                        updateTree();
+                        break;
+
+                    case "Container":
+                        Container c = new Container("Object");
+                        g.addObjectToRoom(r, c);
+                        updateTree();
+                        break;
+                }
+            }
         }
         else if(selectedNode.getUserObject() instanceof Container){
             String[] possibilities = {"Pickable object", "Container", "Usable object"};
@@ -533,19 +535,21 @@ public class Main_Edit extends javax.swing.JFrame {
                     possibilities,
                     "Pickable object");
             Container con = (Container)selectedNode.getUserObject();
-            switch(s){
-                case "Pickable object":
-                    Pick_Able_Object o = new Pick_Able_Object("Object");
-                    con.addObjects(o);
-                    updateTree();
-                    break;
-                    
-                case "Container":
-                    Container c = new Container("Container");
-                    con.addObjects(c);
-                    updateTree();
-                    break;           
-            }   
+            if(s != null){
+                switch(s){
+                    case "Pickable object":
+                        Pick_Able_Object o = new Pick_Able_Object("Object");
+                        con.addObjects(o);
+                        updateTree();
+                        break;
+
+                    case "Container":
+                        Container c = new Container("Container");
+                        con.addObjects(c);
+                        updateTree();
+                        break;           
+                } 
+            }
         }
         
         else if(selectedNode.getUserObject() instanceof Player){
@@ -559,19 +563,21 @@ public class Main_Edit extends javax.swing.JFrame {
                     possibilities,
                     "Pickable object");
             Player ply = (Player)selectedNode.getUserObject();
-            switch(s){
-                case "Pickable object":
-                    Pick_Able_Object o = new Pick_Able_Object("Object");
-                    ply.pickup(o);
-                    updateTree();
-                    break;
-                    
-                case "Container":
-                    Container c = new Container("Container");
-                    ply.pickup(c);
-                    updateTree();
-                    break;           
-            }   
+            if(s != null){
+                switch(s){
+                    case "Pickable object":
+                        Pick_Able_Object o = new Pick_Able_Object("Object");
+                        ply.pickup(o);
+                        updateTree();
+                        break;
+
+                    case "Container":
+                        Container c = new Container("Container");
+                        ply.pickup(c);
+                        updateTree();
+                        break;           
+                }   
+            }
         }
         else{
             JOptionPane.showMessageDialog(Main_Panel, "Please select a room, container or player to create Object", "Inane warning", JOptionPane.WARNING_MESSAGE);
@@ -590,7 +596,8 @@ public class Main_Edit extends javax.swing.JFrame {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         if(selectedNode != null){
            if(selectedNode.getUserObject() instanceof Room){
-                Room r = (Room)selectedNode.getUserObject();
+               info.setEnabledAt(1, true); 
+               Room r = (Room)selectedNode.getUserObject();
                 objectName.setText(r.getName());
                 description.setText(r.getDescription());
                 updateExitTable(r);
@@ -613,13 +620,14 @@ public class Main_Edit extends javax.swing.JFrame {
             if(selectedNode.getUserObject() instanceof Room){
                 Room r = (Room)selectedNode.getUserObject();
                 g.findRoom(r).setName(objectName.getText());
+                info.setEnabledAt(1, true);
             }
             else if(selectedNode.getUserObject() instanceof Container){
+                info.setEnabledAt(1, false);
                 DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
                 if(parent.getUserObject() instanceof Room){
                     Object o = (Object)selectedNode.getUserObject();
                     g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
-                    info.setEnabledAt(1, false);
                 }
                 else{
                     while(!(parent.getUserObject() instanceof Room)){
@@ -627,9 +635,17 @@ public class Main_Edit extends javax.swing.JFrame {
                     }
                     Object o = (Object)selectedNode.getUserObject();
                     g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
-                    info.setEnabledAt(1, false);
                 }
             } 
+            else if(selectedNode.getUserObject() instanceof Player){
+                info.setEnabledAt(1, false);
+                g.getPlayer().setName(objectName.getText());
+            }
+            else if(((DefaultMutableTreeNode)selectedNode.getParent()).getUserObject() instanceof Room){
+                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                Object o = (Object)selectedNode.getUserObject();
+                g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
+            }
             else{
                 Object o = (Object)selectedNode.getUserObject();
                 g.getPlayer().findObject(o).setName(objectName.getText());
@@ -672,6 +688,7 @@ public class Main_Edit extends javax.swing.JFrame {
          DefaultTreeModel model = (DefaultTreeModel)Current_Game.getModel();
          if(selectedNode != null){
              if(selectedNode.getUserObject() instanceof Room){
+                 info.setEnabledAt(1, true);
                  g.removeRoom((Room)selectedNode.getUserObject());
              }
              else{
@@ -708,7 +725,7 @@ public class Main_Edit extends javax.swing.JFrame {
             else{
                 exit_name.setText("");
                 exit_room.setText("");
-                updateExitTable(g.findRoom(r));
+                updateExitTable((Room)selectedNode.getUserObject());
             }
         }
     }//GEN-LAST:event_create_exitMouseClicked
@@ -742,6 +759,14 @@ public class Main_Edit extends javax.swing.JFrame {
                     info.setEnabledAt(1, false);
                 }
             } 
+            else if(selectedNode.getUserObject() instanceof Player){
+                g.getPlayer().setDesc(description.getText());
+            }
+            else if(((DefaultMutableTreeNode)selectedNode.getParent()).getUserObject() instanceof Room){
+                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                Object o = (Object)selectedNode.getUserObject();
+                g.findRoom((Room)parent.getUserObject()).findObject(o).setDesc(description.getText());
+            }
             else{
                 Object o = (Object)selectedNode.getUserObject();
                 g.getPlayer().findObject(o).setDesc(description.getText());

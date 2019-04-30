@@ -16,4 +16,5 @@ public class Verb implements Serializable
 {
     String name;
     ArrayList<String> alias;
+    Attribute associatedAtt;
 }

@@ -7,12 +7,13 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
  * @author Alvin Lu
  */
-public class Game implements Serializable{
+public class Game implements Serializable, Cloneable{
     private ArrayList<Room> rooms;
     private Player player;
     
@@ -20,6 +21,11 @@ public class Game implements Serializable{
          rooms = new ArrayList<>();
     }
     
+    @Override
+    public java.lang.Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
+     
     public Game(ArrayList<Room> r, Player p){
         this.rooms = r;
         this.player = p;
@@ -51,10 +57,16 @@ public class Game implements Serializable{
     
     public void givePlayer(Object o){
         this.player.pickup(o);
+        removeObjectFromCurrentRoom(o);
     }
     
     public void removeRoom(Room r){
         rooms.remove(r);
+    }
+    
+    public void removeObjectFromCurrentRoom(Object o){
+        Room room = player.getLocation();
+        room.removeObject(o);
     }
     
     public void addObjectToRoom(String r, Object o){
@@ -71,6 +83,10 @@ public class Game implements Serializable{
                 rooms.addObject(o);
             }
         }
+    }
+    
+    public void addObjectToCurrentRoom(Object o){
+        player.getLocation().addObject(o);
     }
     
     public Room findRoom(Room r){
@@ -102,5 +118,28 @@ public class Game implements Serializable{
             }
         }
         return null;
+    }
+    
+    public Object findObjectInRoomByName(String o){
+        for(Object obj: player.getLocation().getObject()){
+            if(obj.getName().equals(o)){
+                return obj;
+            }    
+            else if(obj instanceof Container){
+                return ((Container) obj).findObjectByName(o);
+            }
+        }
+        return null;
+    }
+    
+    public boolean movePlayer(String direction){
+        Room r = findRoom(player.getLocation());
+        r.removeObject(player);
+
+        r = findRoom(player.move(direction));
+        if(r.addObject(player)){
+            return true;
+        }
+        return false;
     }
 }

@@ -58,6 +58,10 @@ public abstract class Object implements Serializable
         return this.attribute;
     }
     
+    public void addAttribute(Attribute a){
+        this.attribute.add(a);
+    }
+    
     public boolean sendAction(String verb){
         for(Verb v:verbList){
             

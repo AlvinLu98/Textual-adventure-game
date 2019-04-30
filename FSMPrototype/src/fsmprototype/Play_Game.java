@@ -1,7 +1,27 @@
 package fsmprototype;
 
+import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.semgraph.SemanticGraph;
+import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenciesAnnotation;
+import edu.stanford.nlp.trees.TypedDependency;
+import edu.stanford.nlp.util.CoreMap;
 import static fsmprototype.Main_Edit.g;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -14,18 +34,72 @@ import javax.swing.tree.TreePath;
 public class Play_Game extends javax.swing.JFrame {
 
     protected Game game;
+    StanfordCoreNLP pipeline;
+    ArrayList<String> movement;
+    ArrayList<String> observe;
+    ArrayList<String> takeItem;
+    ArrayList<String> dropItem;
     
     public Play_Game() {
         initComponents();
-        game = Main_Edit.g;
+        JOptionPane.showMessageDialog(jScrollPane1, "Currently creating your game!");
+        try {
+            //initiate fields
+            game = (Game)Main_Edit.g.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Play_Game.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        movement = new ArrayList();
+        observe = new ArrayList();
+        takeItem = new ArrayList();
+        dropItem = new ArrayList();
+        initWordList();
+        
+        Properties props = new Properties();
+        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+        pipeline = new StanfordCoreNLP(props);
         if(game != null){
             Gameplay.append("Welcome " + game.getPlayer().getName() + "\n");
             Gameplay.append(game.getPlayer().getDesc()+ "\n");
-            Gameplay.append("You are currently at: " + game.getPlayer().getLocation() + "\n");
+            roomChange();
         }
         else{
             Gameplay.append("Your game is currently empty! Please insert a player and room!");
         }
+    }
+    
+    private void initWordList(){
+        movement.add("go");
+        movement.add("run");
+        movement.add("procceed");
+        movement.add("move");
+        movement.add("walk");
+        
+        observe.add("look");
+        observe.add("observe");
+        observe.add("inspect");
+        
+        takeItem.add("take");
+        takeItem.add("grab");
+        takeItem.add("obtain");
+        
+        dropItem.add("drop");
+        dropItem.add("throw");
+    }
+    
+    private void roomChange(){
+        Gameplay.append("---------------------------------------------------\n");
+        Gameplay.append("You are currently at: " + game.getPlayer().getLocation() + "\n");
+        Gameplay.append("You can see... ");
+        for(Object o: game.getPlayer().getLocation().getObject()){
+            Gameplay.append(o.getName() + " ");
+        }
+        Gameplay.append("\n");
+        Gameplay.append("You can go...");
+        for(Exit e: game.getPlayer().getLocation().getExit()){
+            Gameplay.append(e.getName() + " ");
+        }
+        Gameplay.append("\n");
     }
 
     /**
@@ -47,10 +121,15 @@ public class Play_Game extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         inventory = new javax.swing.JTree();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Command.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Command.setText("Enter command");
+        Command.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CommandActionPerformed(evt);
+            }
+        });
 
         Gameplay.setColumns(20);
         Gameplay.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
@@ -133,6 +212,178 @@ public class Play_Game extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void CommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CommandActionPerformed
+        String text = Command.getText();
+        Command.setText("   ");
+        
+        Annotation document = new Annotation(text);
+        pipeline.annotate(document);
+        
+        List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+
+        List<String> words = new ArrayList<>();
+        List<String> posTags = new ArrayList<>();
+        List<String> nerTags = new ArrayList<>();
+        for (CoreMap sentence : sentences) {
+            // traversing the words in the current sentence
+            for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
+                // this is the text of the token
+                String word = token.get(TextAnnotation.class);
+                words.add(word);
+                // this is the POS tag of the token
+                String pos = token.get(PartOfSpeechAnnotation.class);
+                posTags.add(pos);
+                // this is the NER label of the token
+                String ne = token.get(NamedEntityTagAnnotation.class);
+                nerTags.add(ne);
+                System.out.println(word + ", " + pos + ", " + ne);
+            }
+            SemanticGraph dependencies = sentence.get(CollapsedDependenciesAnnotation.class);
+            System.out.println("Dependencies\n:" + dependencies);
+            ArrayList<TypedDependency> dep = (ArrayList)dependencies.typedDependencies();
+            processSentence(dep);
+        }
+    }//GEN-LAST:event_CommandActionPerformed
+
+    private void processSentence(ArrayList<TypedDependency> d){
+        String rel, gov, dep;
+        String compund;
+        for(int i = 0; i < d.size(); i++){
+            rel = d.get(i).reln().toString();
+            gov = d.get(i).gov().word();
+            dep = d.get(i).dep().word();
+            System.out.println(rel + ", "+ gov +", "+ dep);
+            
+            if(isMovement(rel, gov, dep)){
+                if(game.getPlayer().move(dep) == null){
+                    Gameplay.append("No such direction!\n");
+                }
+                else{
+                    roomChange();
+                }
+            }
+            else if(isMovement_dep(rel, gov, dep)){
+                if(game.getPlayer().move(gov) == null){
+                    Gameplay.append("No such direction!\n");
+                }
+                else{
+                    roomChange();
+                }
+            }
+            else if(isObserving(rel, gov, dep)){
+                Gameplay.append(game.findObjectInRoomByName(dep).getDesc());
+            }
+            else if(isTaking(rel, gov, dep)){
+                Object o = game.findObjectInRoomByName(dep);
+                if(o != null){
+                    game.givePlayer(o);
+                    Gameplay.append("Taken " + o.getName() + "\n");
+                    updateTree();
+                }
+                else{
+                    Gameplay.append("No such object!\n");
+                }
+            }
+            else if(isDropping(rel, gov, dep)){
+                Object o = game.getPlayer().drop(dep);
+                if(o != null){
+                    game.addObjectToCurrentRoom(o);
+                    Gameplay.append("Dropped " + o.getName() + "\n");
+                    updateTree();
+                }
+                else{
+                    Gameplay.append("No such object!\n");
+                }
+            }
+            else if(isDropping_dep(rel, gov, dep)){
+                Object o = game.getPlayer().drop(gov);
+                if(o != null){
+                    Gameplay.append("Dropped " + o.getName() + "\n");
+                    game.addObjectToCurrentRoom(o);
+                    updateTree();
+                }
+                else{
+                    Gameplay.append("No such object!\n");
+                }
+            }
+            else if(isAction(rel, gov, dep)){
+                Gameplay.append("Working on it!");
+            }
+        }
+    }
+    
+    private boolean isMovement(String rel, String gov, String dep){
+        if(rel.contains("advmod")){
+            if(movement.contains(gov)){
+                return true;
+            }
+        }
+        else if(rel.contains("dobj")){
+            if(movement.contains(gov)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isMovement_dep(String rel, String gov, String dep){
+        if(rel.contains("nsubj")){
+            if(movement.contains(dep)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isObserving(String rel, String gov, String dep){
+        if(rel.contains("nmod:at")){
+            if(observe.contains(gov)){
+                return true;
+            }
+        }
+        else if(rel.contains("dobj")){
+            if(observe.contains(gov)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isTaking(String rel, String gov, String dep){
+        if(rel.contains("dobj")){
+            if(takeItem.contains(gov)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isDropping(String rel, String gov, String dep){
+        if(rel.contains("dobj")){
+            if(dropItem.contains(gov)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean isDropping_dep(String rel, String gov, String dep){
+        if(rel.contains("compound")){
+            if(dropItem.contains(dep)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isAction(String rel, String gov, String dep){
+        if(rel.contains("dobj") || rel.contains("nmod:npmod") || rel.contains("nmod:on")){
+            return true;
+        }
+        return false;
+    }    
+    
     /**
      * @param args the command line arguments
      */
