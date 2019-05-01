@@ -598,6 +598,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 "Start state", "Action", "End state", "Conditions"
             }
         ));
+        jTable4.setRowHeight(24);
         jScrollPane8.setViewportView(jTable4);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);

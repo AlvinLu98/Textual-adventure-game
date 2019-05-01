@@ -430,7 +430,14 @@ public class Play_Game extends javax.swing.JFrame {
         boolean done = false;
         Object o = game.findAssociatedObjinVerb(gov, dep);
         Attribute att = game.findAttByAssociatedObject(gov, o);
-        att.modify();
+        if(att.inRoom()){
+            if(game.findObjectInRoomByName(att.getVerb().getOwnerObject().getName()) != null){
+                att.modify();
+            }
+            else{
+                Gameplay.append(att.getVerb().getOwnerObject().getName() + " cannot be used here!"); 
+            }
+        }
         if(att instanceof Boolean_Attribute){
            if(((Boolean_Attribute) att).getCondition()){
                Gameplay.append(dep + "is " + att.getName()); 
