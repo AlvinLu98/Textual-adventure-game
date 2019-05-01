@@ -12,15 +12,27 @@ import java.util.ArrayList;
  *
  * @author Alvin Lu
  */
-public class Verb implements Serializable, Cloneable 
+public class Verb implements Serializable
 {
-    String name;
-    ArrayList<String> alias;
+    private String name;
+    private Object associated;
+    private Object owner;
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Verb v = (Verb) super.clone();
-        return v;
-    } 
+    public Verb(String name, Object o, Object own){
+        this.name = name;
+        this.associated = o;
+        this.owner = own;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public Object getAssociatedObject(){
+        return this.associated;
+    }
+    
+    public Object getOwnerObject(){
+        return this.owner;
+    }
 }

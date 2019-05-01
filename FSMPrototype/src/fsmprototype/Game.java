@@ -7,8 +7,6 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  *
@@ -17,14 +15,17 @@ import java.util.LinkedList;
 public class Game implements Serializable{
     private ArrayList<Room> rooms;
     private Player player;
+    private ArrayList<Verb> verbList;
     
      public Game(){
-         rooms = new ArrayList<>();
+         this.rooms = new ArrayList<>();
+         this.verbList = new ArrayList();
     }
      
     public Game(Game g){
         this.rooms = g.rooms;
         this.player = g.getPlayer();
+        this.verbList = new ArrayList();
     }
      
     public Game(ArrayList<Room> r, Player p){
@@ -48,12 +49,20 @@ public class Game implements Serializable{
         this.player = p;
     }
     
+    public void addVerb(Verb v){
+        this.verbList.add(v);
+    }
+    
     public ArrayList<Object> getRoomObjects(){
         return this.player.getLocation().getObject();
     }
     
     public ArrayList<Object> getPlayerObject(){
         return this.player.getItems();
+    }
+    
+    public ArrayList<Verb> getVerbList(){
+        return this.verbList;
     }
     
     public void givePlayer(Object o){
@@ -128,6 +137,49 @@ public class Game implements Serializable{
             }    
             else if(obj instanceof Container){
                 return ((Container) obj).findObjectByName(o);
+            }
+            else{
+                player.findObjectByName(o);
+            }
+        }
+        return null;
+    }
+    
+    public Object findObjectandRoomByName(String r, String o){
+        Room room = findRoomByName(r);
+        for(Object obj: room.getObject()){
+            if(obj.getName().equals(o)){
+                return obj;
+            }    
+            else if(obj instanceof Container){
+                return ((Container) obj).findObjectByName(o);
+            }
+            else{
+                player.findObjectByName(o);
+            }
+        }
+        return null;
+    }
+    
+    public Object findAssociatedObjinVerb(String verb, String dep){
+        for(Verb v: this.verbList){
+            if(v.getName().equals(verb)){
+                if(v.getAssociatedObject().getName().equals(dep)){
+                    return v.getAssociatedObject();
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Attribute findAttByAssociatedObject(String verbName, Object o){
+        for(Verb v: this.verbList){
+            if(v.getAssociatedObject().getName().equals(o.getName())){
+                for(Attribute a: v.getOwnerObject().getAttributes()){
+                    if(a.getVerb().getName().equals(verbName)){
+                        return a;
+                    }
+                }
             }
         }
         return null;

@@ -9,14 +9,14 @@ import java.io.Serializable;
 public abstract class Attribute implements Serializable, Cloneable 
 {
     private String name;
-    private String verb;
+    private Verb verb;
+    private boolean inRoom = false;
     
-    public Attribute(){
-        
-    }
+    public Attribute(){ }
     
-    public Attribute(String name, String verb){
-        
+    public Attribute(String name, String verb, Object o, Object own){
+        this.name = name;
+        this.verb = new Verb(verb, o, own);
     }
     
     @Override
@@ -30,7 +30,17 @@ public abstract class Attribute implements Serializable, Cloneable
         return this.name;
     }
     
-    public String getVerb(){
+    public Verb getVerb(){
         return this.verb;
     }
+    
+    public void usableInSameRoom(){
+        this.inRoom = true;
+    }
+    
+    public boolean inRoom(){
+        return this.inRoom;
+    }
+    
+    public abstract boolean modify();
 }

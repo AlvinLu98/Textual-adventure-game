@@ -6,6 +6,7 @@
 package fsmprototype;
 
 import java.util.Enumeration;
+import java.util.LinkedList;
 import javax.swing.JTree;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -44,17 +45,25 @@ public class Main_Edit extends javax.swing.JFrame {
 
         Add_Attribute_Window = new javax.swing.JFrame();
         attribute_label = new javax.swing.JLabel();
-        attribute_Name = new javax.swing.JLabel();
+        attribute_Name_label = new javax.swing.JLabel();
         num_att_amt = new javax.swing.JTextField();
         attribute_type_label = new javax.swing.JLabel();
         attribute_type = new javax.swing.JComboBox<>();
         num_att_label = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         create_attribute_button = new javax.swing.JButton();
         associated_verb_label1 = new javax.swing.JLabel();
         num_att_IncDec = new javax.swing.JComboBox<>();
         num_att_amt_label = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        attribute_name = new javax.swing.JTextField();
+        verb_name = new javax.swing.JTextField();
+        starting_val = new javax.swing.JLabel();
+        att_def_bool = new javax.swing.JComboBox<>();
+        att_def_num = new javax.swing.JTextField();
+        associated_object_label = new javax.swing.JLabel();
+        object_name = new javax.swing.JTextField();
+        object_room_label = new javax.swing.JLabel();
+        object_room_name = new javax.swing.JTextField();
+        same_room = new javax.swing.JCheckBox();
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
@@ -72,6 +81,7 @@ public class Main_Edit extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         att_table = new javax.swing.JTable();
         add_attribute = new javax.swing.JButton();
+        delete_attribute = new javax.swing.JButton();
         exit = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         Exits = new javax.swing.JTable();
@@ -100,14 +110,14 @@ public class Main_Edit extends javax.swing.JFrame {
         menuEdit = new javax.swing.JMenu();
 
         Add_Attribute_Window.setVisible(false);
-        Add_Attribute_Window.setPreferredSize(new java.awt.Dimension(845, 420));
-        Add_Attribute_Window.setSize(new java.awt.Dimension(845, 500));
+        Add_Attribute_Window.setPreferredSize(new java.awt.Dimension(900, 550));
+        Add_Attribute_Window.setSize(new java.awt.Dimension(950, 800));
 
         attribute_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         attribute_label.setText("Add an Attribute");
 
-        attribute_Name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        attribute_Name.setText("Name");
+        attribute_Name_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        attribute_Name_label.setText("Name");
 
         num_att_amt.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         num_att_amt.setVisible(false);
@@ -127,11 +137,13 @@ public class Main_Edit extends javax.swing.JFrame {
         num_att_label.setText("Effect");
         num_att_label.setVisible(false);
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         create_attribute_button.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         create_attribute_button.setText("Create");
+        create_attribute_button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                create_attribute_buttonMouseClicked(evt);
+            }
+        });
 
         associated_verb_label1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         associated_verb_label1.setText("Associated verb");
@@ -139,12 +151,41 @@ public class Main_Edit extends javax.swing.JFrame {
         num_att_IncDec.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         num_att_IncDec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Increase", "Decrease", " " }));
         num_att_IncDec.setVisible(false);
+        num_att_IncDec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                num_att_IncDecActionPerformed(evt);
+            }
+        });
 
         num_att_amt_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         num_att_amt_label.setText("Amount");
         num_att_amt_label.setVisible(false);
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        attribute_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        verb_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        starting_val.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        starting_val.setText("Starting");
+        num_att_label.setVisible(false);
+
+        att_def_bool.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        att_def_bool.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "true", "false" }));
+
+        att_def_num.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        att_def_num.setVisible(false);
+
+        associated_object_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        associated_object_label.setText("Associated object");
+
+        object_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        object_room_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        object_room_label.setText("Room of object");
+
+        object_room_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        same_room.setText("Only usable in the same room");
 
         javax.swing.GroupLayout Add_Attribute_WindowLayout = new javax.swing.GroupLayout(Add_Attribute_Window.getContentPane());
         Add_Attribute_Window.getContentPane().setLayout(Add_Attribute_WindowLayout);
@@ -153,26 +194,47 @@ public class Main_Edit extends javax.swing.JFrame {
             .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(num_att_amt_label)
+                    .addComponent(starting_val)
                     .addComponent(attribute_label)
-                    .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
-                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(attribute_Name)
-                            .addComponent(attribute_type_label)
-                            .addComponent(associated_verb_label1)
-                            .addComponent(num_att_label))
-                        .addGap(33, 33, 33)
-                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(num_att_IncDec, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(attribute_type, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(num_att_amt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                    .addComponent(attribute_Name_label)
+                    .addComponent(associated_verb_label1)
+                    .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(object_room_label)
+                                .addComponent(attribute_type_label)
+                                .addComponent(associated_object_label))
+                            .addGap(41, 41, 41)
+                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(object_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(attribute_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
+                                    .addComponent(att_def_bool, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18))
+                                .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                                    .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Add_Attribute_WindowLayout.createSequentialGroup()
+                                            .addComponent(num_att_amt_label)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(num_att_amt, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Add_Attribute_WindowLayout.createSequentialGroup()
+                                            .addComponent(num_att_label)
+                                            .addGap(144, 144, 144)
+                                            .addComponent(num_att_IncDec, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(53, 53, 53)))
+                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(same_room)
+                                .addComponent(att_def_num, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(86, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(create_attribute_button)
-                .addGap(44, 44, 44))
+                .addGap(94, 94, 94))
         );
         Add_Attribute_WindowLayout.setVerticalGroup(
             Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,25 +243,39 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addComponent(attribute_label)
                 .addGap(54, 54, 54)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(attribute_Name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(attribute_Name_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(attribute_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(attribute_type_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(associated_verb_label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(associated_verb_label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27)
-                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(num_att_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(num_att_IncDec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(associated_object_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(object_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(num_att_amt_label, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(object_room_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attribute_type_label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(starting_val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(att_def_bool, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(att_def_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(num_att_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(num_att_IncDec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(same_room))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(num_att_amt_label)
                     .addComponent(num_att_amt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(create_attribute_button)
                 .addContainerGap())
         );
@@ -297,12 +373,20 @@ public class Main_Edit extends javax.swing.JFrame {
                 "Name", "Type", "Default value", "Verb asscociated"
             }
         ));
+        att_table.setRowHeight(24);
         jScrollPane4.setViewportView(att_table);
 
         add_attribute.setText("Add attribute");
         add_attribute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_attributeActionPerformed(evt);
+            }
+        });
+
+        delete_attribute.setText("Delete");
+        delete_attribute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_attributeActionPerformed(evt);
             }
         });
 
@@ -324,9 +408,11 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addGroup(Main_PanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delete_attribute)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(add_attribute))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         Main_PanelLayout.setVerticalGroup(
             Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,7 +428,8 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(add_attribute))
+                    .addComponent(add_attribute)
+                    .addComponent(delete_attribute))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addContainerGap())
@@ -362,6 +449,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 "Room", "Exit name"
             }
         ));
+        Exits.setRowHeight(24);
         jScrollPane6.setViewportView(Exits);
 
         jLabel5.setText("Add Exit");
@@ -516,21 +604,17 @@ public class Main_Edit extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1213, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(275, Short.MAX_VALUE))
         );
 
         info.addTab("States", jPanel4);
@@ -744,7 +828,8 @@ public class Main_Edit extends javax.swing.JFrame {
                 objectName.setText(o.getName());
                 description.setText(o.getDesc());
                 info.setEnabledAt(1, false);
-            }  
+            }
+           updateAttributeTable();
         }
     }//GEN-LAST:event_Current_GameValueChanged
 
@@ -850,7 +935,7 @@ public class Main_Edit extends javax.swing.JFrame {
         
         Room r = g.findRoomByName(room);
         if(r == null){
-            JOptionPane.showMessageDialog(Main_Panel, "Room not found!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(Main_Panel, "Room not found!", "Room missing", JOptionPane.WARNING_MESSAGE);
         }
         else{
             if(!g.findRoom((Room)selectedNode.getUserObject()).addExit(name, r)){
@@ -868,6 +953,7 @@ public class Main_Edit extends javax.swing.JFrame {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         String name = remove_exit_name.getText();
         g.findRoom((Room)selectedNode.getUserObject()).removeExit(name);
+        updateExitTable((Room)selectedNode.getUserObject());
     }//GEN-LAST:event_remove_exitMouseClicked
 
     private void descriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descriptionFocusLost
@@ -917,8 +1003,92 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_play_gameMouseClicked
 
     private void add_attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_attributeActionPerformed
-        Add_Attribute_Window.setVisible(true);
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        if(selectedNode != null && !(selectedNode.getUserObject() instanceof String)){
+            Add_Attribute_Window.setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Failed to add Attribute", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_add_attributeActionPerformed
+
+    private void create_attribute_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_create_attribute_buttonMouseClicked
+        String name = attribute_name.getText();
+        String verb = verb_name.getText();
+        String type = attribute_type.getSelectedItem().toString();
+        String obj = object_name.getText();
+        String room = object_room_name.getText();
+        boolean inRoom = same_room.isSelected();
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        Object  o = (Object)selectedNode.getUserObject();
+        Object associated = null;
+        for(Room r: g.getRooms()){
+            if(r.getName().equals(obj)){
+                associated = r;
+            }
+        }
+        if(associated == null){
+           associated = g.findObjectandRoomByName(room, obj); 
+        }
+        if(type.equals("Boolean")){
+            boolean defaultVal;
+            if(att_def_bool.getSelectedItem().toString().equals("true")){
+                defaultVal = true;
+            }
+            else{
+                defaultVal = false;
+            }
+            Boolean_Attribute b = new Boolean_Attribute(name, verb, defaultVal, associated, o);
+            if(inRoom){
+                b.usableInSameRoom();;
+            }
+            o.addAttribute(b);
+            g.addVerb(new Verb(verb, associated, o));
+            attribute_name.setText("");
+            verb_name.setText("");
+            object_name.setText("");
+            object_room_name.setText("");
+            num_att_amt.setText("");
+            att_def_num.setText("");
+            Add_Attribute_Window.setVisible(false);
+        }
+        else if(type.equals("Number")){
+            String val = att_def_num.getText();
+            try{
+                double defaultVal = Double.parseDouble(val);
+                String IncDec = num_att_IncDec.getSelectedItem().toString();
+                String amt = num_att_amt.getText();
+                double amount = Double.parseDouble(amt);
+                if(IncDec.equals("Increase")){
+                    Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, true, associated, o);
+                    if(inRoom){
+                        a.usableInSameRoom();
+                    }
+                    o.addAttribute(a);
+                    g.addVerb(new Verb(verb, associated, o));
+                }
+                else{
+                    Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, false, associated, o);
+                    if(inRoom){
+                        a.usableInSameRoom();
+                    }
+                    o.addAttribute(a);
+                    g.addVerb(new Verb(verb, associated, o));
+                }
+                attribute_name.setText("");
+                verb_name.setText("");
+                object_name.setText("");
+                object_room_name.setText("");
+                num_att_amt.setText("");
+                att_def_num.setText("");
+                Add_Attribute_Window.setVisible(false);
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(Main_Panel, "Value not a number!", "Not a number!", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        updateAttributeTable();
+    }//GEN-LAST:event_create_attribute_buttonMouseClicked
 
     private void attribute_typeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_attribute_typeItemStateChanged
         if (evt.getStateChange() == evt.SELECTED) {
@@ -927,15 +1097,39 @@ public class Main_Edit extends javax.swing.JFrame {
                 num_att_IncDec.setVisible(true);
                 num_att_amt_label.setVisible(true);
                 num_att_amt.setVisible(true);
+                att_def_bool.setVisible(false);
+                att_def_num.setVisible(true);
             }
             else{
                 num_att_label.setVisible(false);
                 num_att_IncDec.setVisible(false);
                 num_att_amt_label.setVisible(false);
                 num_att_amt.setVisible(false);
+                att_def_bool.setVisible(true);
+                att_def_num.setVisible(false);
             }
         }
     }//GEN-LAST:event_attribute_typeItemStateChanged
+
+    private void num_att_IncDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num_att_IncDecActionPerformed
+        
+    }//GEN-LAST:event_num_att_IncDecActionPerformed
+
+    private void delete_attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_attributeActionPerformed
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+            String s = (String)JOptionPane.showInputDialog(
+                    Main_Panel,
+                    "Type of item:\n",
+                    "Choose item type",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    null);
+        Attribute a = ((Object)selectedNode.getUserObject()).deleteAtrributebyName(s);
+        if(a == null){
+            JOptionPane.showMessageDialog(Main_Panel, "Attribute not found!", "Not found!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_delete_attributeActionPerformed
 
     private void updateExitTable(Room r){
         DefaultTableModel room_exits = (DefaultTableModel) Exits.getModel();
@@ -950,10 +1144,18 @@ public class Main_Edit extends javax.swing.JFrame {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         DefaultTableModel attributes = (DefaultTableModel) att_table.getModel();
         attributes.setRowCount(0);
-        if(selectedNode.getUserObject() instanceof Room){
-            Room r = (Room)selectedNode.getUserObject();
+        Object r = (Object)selectedNode.getUserObject();
+        LinkedList<Attribute> a = r.getAttributes();
+        for(Attribute att: a){
+            if(att instanceof Number_Attribute){
+                attributes.addRow(new String[]{att.getName(), "Number", "0", att.getVerb().getName()});
+            }
+            else{
+                attributes.addRow(new String[]{att.getName(), "Boolean", "0", att.getVerb().getName()});
+            }
         }
     }
+    
     private void updateTree(){
     DefaultMutableTreeNode game = new DefaultMutableTreeNode("Game");
     for(Room r: g.getRooms()){
@@ -1047,10 +1249,14 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTable Exits;
     private javax.swing.JPanel Main_Panel;
     private javax.swing.JButton add_attribute;
+    private javax.swing.JLabel associated_object_label;
     private javax.swing.JLabel associated_verb_label1;
+    private javax.swing.JComboBox<String> att_def_bool;
+    private javax.swing.JTextField att_def_num;
     private javax.swing.JTable att_table;
-    private javax.swing.JLabel attribute_Name;
+    private javax.swing.JLabel attribute_Name_label;
     private javax.swing.JLabel attribute_label;
+    private javax.swing.JTextField attribute_name;
     private javax.swing.JComboBox<String> attribute_type;
     private javax.swing.JLabel attribute_type_label;
     private javax.swing.JButton create_attribute_button;
@@ -1058,12 +1264,12 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JPanel create_exit_form;
     private javax.swing.JPanel create_exit_form1;
     private javax.swing.JButton delete;
+    private javax.swing.JButton delete_attribute;
     private javax.swing.JTextArea description;
     private javax.swing.JPanel exit;
     private javax.swing.JTextField exit_name;
     private javax.swing.JTextField exit_room;
     private javax.swing.JTabbedPane info;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1081,7 +1287,6 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuEdit;
@@ -1094,9 +1299,15 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JLabel num_att_label;
     private javax.swing.JButton object;
     private javax.swing.JTextPane objectName;
+    private javax.swing.JTextField object_name;
+    private javax.swing.JLabel object_room_label;
+    private javax.swing.JTextField object_room_name;
     private javax.swing.JButton play_game;
     private javax.swing.JButton remove_exit;
     private javax.swing.JTextField remove_exit_name;
     private javax.swing.JButton room;
+    private javax.swing.JCheckBox same_room;
+    private javax.swing.JLabel starting_val;
+    private javax.swing.JTextField verb_name;
     // End of variables declaration//GEN-END:variables
 }

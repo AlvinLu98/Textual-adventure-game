@@ -67,6 +67,16 @@ public abstract class Object implements Serializable
         this.attribute.add(a);
     }
     
+    public Attribute deleteAtrributebyName(String s){
+        for(Attribute a: this.attribute){
+            if(a.getName().equals(s)){
+                this.attribute.remove(a);
+                return a;
+            }
+        }
+        return null;
+    }
+    
     public boolean sendAction(String verb){
         for(Verb v:verbList){
             

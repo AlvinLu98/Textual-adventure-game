@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -135,6 +137,8 @@ public class Play_Game extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventory = new javax.swing.JTree();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        player_att = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -169,6 +173,30 @@ public class Play_Game extends javax.swing.JFrame {
         updateTree();
         jScrollPane1.setViewportView(inventory);
 
+        player_att.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        player_att.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Name", "Value"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        player_att.setRowHeight(24);
+        jScrollPane3.setViewportView(player_att);
+        updatePlayerAttribute();
+
         javax.swing.GroupLayout InformationLayout = new javax.swing.GroupLayout(Information);
         Information.setLayout(InformationLayout);
         InformationLayout.setHorizontalGroup(
@@ -176,22 +204,23 @@ public class Play_Game extends javax.swing.JFrame {
             .addGroup(InformationLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(InformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(InformationLayout.createSequentialGroup()
-                        .addGroup(InformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addGroup(InformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         InformationLayout.setVerticalGroup(
             InformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(InformationLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -201,16 +230,13 @@ public class Play_Game extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Command, javax.swing.GroupLayout.PREFERRED_SIZE, 1501, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(Command))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Information, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(Information, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +296,8 @@ public class Play_Game extends javax.swing.JFrame {
             System.out.println(rel + ", "+ gov +", "+ dep);
             
             if(isMovement(rel, gov, dep)){
-                if(game.getPlayer().move(dep) == null){
+                Room r = game.getPlayer().move(dep);
+                if(r == null){
                     Gameplay.append("No such direction!\n");
                 }
                 else{
@@ -322,7 +349,7 @@ public class Play_Game extends javax.swing.JFrame {
                 }
             }
             else if(isAction(rel, gov, dep)){
-                Gameplay.append("Working on it!");
+                processVerbs(rel, gov, dep);
             }
         }
     }
@@ -342,7 +369,7 @@ public class Play_Game extends javax.swing.JFrame {
     }
     
     private boolean isMovement_dep(String rel, String gov, String dep){
-        if(rel.contains("nsubj")){
+        if(rel.contains("nsubj") || rel.contains("nmod:to") || rel.contains("nmod")){
             if(movement.contains(dep)){
                 return true;
             }
@@ -399,6 +426,30 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }    
     
+    private void processVerbs(String rel, String gov, String dep){
+        boolean done = false;
+        Object o = game.findAssociatedObjinVerb(gov, dep);
+        Attribute att = game.findAttByAssociatedObject(gov, o);
+        att.modify();
+        if(att instanceof Boolean_Attribute){
+           if(((Boolean_Attribute) att).getCondition()){
+               Gameplay.append(dep + "is " + att.getName()); 
+           }
+           else{
+               Gameplay.append(dep + "is not " + att.getName()); 
+           }
+        }
+        else if(att instanceof Number_Attribute){
+            if(((Number_Attribute) att).isIncrement()){
+                Gameplay.append(dep + "increase by " + ((Number_Attribute) att).getValue()); 
+            }
+            else{
+                Gameplay.append(dep + "decreased by " + ((Number_Attribute) att).getValue()); 
+            }
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -432,6 +483,20 @@ public class Play_Game extends javax.swing.JFrame {
                 new Play_Game().setVisible(true);
             }
         });
+    }
+    
+    private void updatePlayerAttribute(){
+        LinkedList<Attribute> a = game.getPlayer().getAttributes();
+        DefaultTableModel player_attributes = (DefaultTableModel) player_att.getModel();
+        player_attributes.setRowCount(0);
+        for(Attribute att: a){
+            if(att instanceof Number_Attribute){
+                player_attributes.addRow(new String[]{att.getName(), Double.toString(((Number_Attribute) att).getAmount())});
+            }
+            else{
+                player_attributes.addRow(new String[]{att.getName(), Boolean.toString(((Boolean_Attribute)att).getCondition())});
+            }
+        }
     }
     
     private void updateTree(){
@@ -481,5 +546,7 @@ public class Play_Game extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable player_att;
     // End of variables declaration//GEN-END:variables
 }

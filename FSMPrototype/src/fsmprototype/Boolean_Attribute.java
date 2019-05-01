@@ -11,18 +11,20 @@ import java.io.Serializable;
  *
  * @author Alvin Lu
  */
-public class Boolean_Attribute extends Attribute implements Serializable, Cloneable 
+public class Boolean_Attribute extends Attribute implements Serializable
 {
     private boolean condition;
     
     public Boolean_Attribute(){}
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Boolean b = (Boolean) super.clone();
-        return b;
-    } 
+    public Boolean_Attribute(String n, String verb, boolean v, Object o, Object own){
+        super(n, verb, o, own);
+        this.condition = v;
+    }
+    
+    public boolean getCondition(){
+        return this.condition;
+    }
     
     public boolean changeCondition()
     {
@@ -32,6 +34,11 @@ public class Boolean_Attribute extends Attribute implements Serializable, Clonea
     
     public boolean explicitChange(boolean b){
         this.condition = b;
+        return this.condition;
+    }
+    
+    public boolean modify(){
+        this.condition = !this.condition;
         return this.condition;
     }
 }
