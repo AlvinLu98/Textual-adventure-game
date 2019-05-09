@@ -147,15 +147,17 @@ public class Game implements Serializable{
     
     public Object findObjectandRoomByName(String r, String o){
         Room room = findRoomByName(r);
-        for(Object obj: room.getObject()){
-            if(obj.getName().equals(o)){
-                return obj;
-            }    
-            else if(obj instanceof Container){
-                return ((Container) obj).findObjectByName(o);
-            }
-            else{
-                player.findObjectByName(o);
+        if(room != null){
+            for(Object obj: room.getObject()){
+                if(obj.getName().equals(o)){
+                    return obj;
+                }    
+                else if(obj instanceof Container){
+                    return ((Container) obj).findObjectByName(o);
+                }
+                else{
+                    player.findObjectByName(o);
+                }
             }
         }
         return null;
@@ -174,10 +176,12 @@ public class Game implements Serializable{
     
     public Attribute findAttByAssociatedObject(String verbName, Object o){
         for(Verb v: this.verbList){
-            if(v.getAssociatedObject().getName().equals(o.getName())){
-                for(Attribute a: v.getOwnerObject().getAttributes()){
-                    if(a.getVerb().getName().equals(verbName)){
-                        return a;
+            if(v.getAssociatedObject() != null){
+                if(v.getAssociatedObject().getName().equals(o.getName())){
+                    for(Attribute a: v.getOwnerObject().getAttributes()){
+                        if(a.getVerb().getName().equals(verbName)){
+                            return a;
+                        }
                     }
                 }
             }

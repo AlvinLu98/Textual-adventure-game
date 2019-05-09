@@ -12,20 +12,15 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenciesAnnotation;
 import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.CoreMap;
-import static fsmprototype.Main_Edit.g;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
@@ -295,6 +290,10 @@ public class Play_Game extends javax.swing.JFrame {
             dep = d.get(i).dep().word();
             System.out.println(rel + ", "+ gov +", "+ dep);
             
+            if(dep.equals("help") && rel.equals("root")){
+               Gameplay.append("Good luck!");
+            }
+            
             if(isMovement(rel, gov, dep)){
                 Room r = game.getPlayer().move(dep);
                 if(r == null){
@@ -314,6 +313,11 @@ public class Play_Game extends javax.swing.JFrame {
             }
             else if(isObserving(rel, gov, dep)){
                 Gameplay.append(game.findObjectInRoomByName(dep).getDesc());
+                Gameplay.append("You can: ");
+                for(Verb v:game.findObjectInRoomByName(dep).getVerbs()){
+                    Gameplay.append(v.getName() + ", ");
+                }
+                Gameplay.append("\n");
             }
             else if(isTaking(rel, gov, dep)){
                 Object o = game.findObjectInRoomByName(dep);
@@ -429,8 +433,14 @@ public class Play_Game extends javax.swing.JFrame {
     private void processVerbs(String rel, String gov, String dep){
         boolean done = false;
         Object o = game.findAssociatedObjinVerb(gov, dep);
+        System.out.println("gov: " + gov);
         Attribute att = game.findAttByAssociatedObject(gov, o);
-        if(att.inRoom()){
+        if(att == null){
+            JOptionPane.showMessageDialog(jPanel1, 
+                    "Object not found!", 
+                    "Object not found", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(att.inRoom()){
             if(game.findObjectInRoomByName(att.getVerb().getOwnerObject().getName()) != null){
                 att.modify();
             }
@@ -438,20 +448,23 @@ public class Play_Game extends javax.swing.JFrame {
                 Gameplay.append(att.getVerb().getOwnerObject().getName() + " cannot be used here!"); 
             }
         }
+        else{
+            att.modify();
+        }
         if(att instanceof Boolean_Attribute){
            if(((Boolean_Attribute) att).getCondition()){
-               Gameplay.append(dep + "is " + att.getName()); 
+               Gameplay.append(dep + " is " + att.getName()); 
            }
            else{
-               Gameplay.append(dep + "is not " + att.getName()); 
+               Gameplay.append(dep + " is not " + att.getName()); 
            }
         }
         else if(att instanceof Number_Attribute){
             if(((Number_Attribute) att).isIncrement()){
-                Gameplay.append(dep + "increase by " + ((Number_Attribute) att).getValue()); 
+                Gameplay.append(att.getName() + " increase by " + ((Number_Attribute) att).getAmount() + "\n"); 
             }
             else{
-                Gameplay.append(dep + "decreased by " + ((Number_Attribute) att).getValue()); 
+                Gameplay.append(att.getName() + "decreased by " + ((Number_Attribute) att).getAmount() + "\n"); 
             }
         }
         
@@ -498,7 +511,7 @@ public class Play_Game extends javax.swing.JFrame {
         player_attributes.setRowCount(0);
         for(Attribute att: a){
             if(att instanceof Number_Attribute){
-                player_attributes.addRow(new String[]{att.getName(), Double.toString(((Number_Attribute) att).getAmount())});
+                player_attributes.addRow(new String[]{att.getName(), Double.toString(((Number_Attribute) att).getValue())});
             }
             else{
                 player_attributes.addRow(new String[]{att.getName(), Boolean.toString(((Boolean_Attribute)att).getCondition())});

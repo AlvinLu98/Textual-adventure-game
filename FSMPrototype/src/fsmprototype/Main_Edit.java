@@ -86,6 +86,8 @@ public class Main_Edit extends javax.swing.JFrame {
         save_Transition = new javax.swing.JButton();
         previous_Start = new javax.swing.JTextField();
         previous_Verb = new javax.swing.JTextField();
+        object_associated_label_trans = new javax.swing.JLabel();
+        object_Associated_Transition = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
@@ -207,6 +209,7 @@ public class Main_Edit extends javax.swing.JFrame {
 
         object_room_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
+        same_room.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         same_room.setText("Only usable in the same room");
 
         javax.swing.GroupLayout Add_Attribute_WindowLayout = new javax.swing.GroupLayout(Add_Attribute_Window.getContentPane());
@@ -226,7 +229,7 @@ public class Main_Edit extends javax.swing.JFrame {
                                 .addComponent(object_room_label)
                                 .addComponent(attribute_type_label)
                                 .addComponent(associated_object_label))
-                            .addGap(41, 41, 41)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(object_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,7 +255,7 @@ public class Main_Edit extends javax.swing.JFrame {
                             .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(same_room)
                                 .addComponent(att_def_num, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(create_attribute_button)
@@ -272,9 +275,9 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(associated_verb_label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(associated_object_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(object_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(object_name))
                 .addGap(18, 18, 18)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,7 +286,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(attribute_type_label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(21, 21, 21)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(starting_val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(att_def_bool, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -380,6 +383,11 @@ public class Main_Edit extends javax.swing.JFrame {
         previous_Verb.setText("jTextField1");
         previous_Verb.setVisible(false);
 
+        object_associated_label_trans.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        object_associated_label_trans.setText("Object associated");
+
+        object_Associated_Transition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
         Add_Transition_Window.setVisible(false);
 
         javax.swing.GroupLayout Add_Transition_WindowLayout = new javax.swing.GroupLayout(Add_Transition_Window.getContentPane());
@@ -396,12 +404,14 @@ public class Main_Edit extends javax.swing.JFrame {
                                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(start_State_Label)
                                     .addComponent(transition_verb_label)
-                                    .addComponent(end_State_Label))
+                                    .addComponent(end_State_Label)
+                                    .addComponent(object_associated_label_trans))
                                 .addGap(56, 56, 56)
                                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(transition_Verb, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                                     .addComponent(start_State)
-                                    .addComponent(end_State))
+                                    .addComponent(end_State)
+                                    .addComponent(object_Associated_Transition, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -452,13 +462,17 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transition_verb_label)
                     .addComponent(transition_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(object_associated_label_trans)
+                    .addComponent(object_Associated_Transition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
-                        .addGap(78, 78, 78)
+                        .addGap(9, 9, 9)
                         .addComponent(condition_list_label)
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Transition_WindowLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(add_condition)
                             .addComponent(edit_condition)
@@ -470,7 +484,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(create_Transition)
                     .addComponent(cancel_Transition)
                     .addComponent(save_Transition))
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addGap(106, 106, 106))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1254,7 +1268,13 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_descriptionFocusLost
 
     private void play_gameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_play_gameMouseClicked
-        new Play_Game().setVisible(true);
+        if(g.getPlayer() != null){
+            new Play_Game().setVisible(true);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, "Please create a player!",
+                    "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_play_gameMouseClicked
 
     private void add_attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_attributeActionPerformed
@@ -1285,51 +1305,26 @@ public class Main_Edit extends javax.swing.JFrame {
         if(associated == null){
            associated = g.findObjectandRoomByName(room, obj); 
         }
-        if(type.equals("Boolean")){
-            boolean defaultVal;
-            if(att_def_bool.getSelectedItem().toString().equals("true")){
-                defaultVal = true;
-            }
-            else{
-                defaultVal = false;
-            }
-            Boolean_Attribute b = new Boolean_Attribute(name, verb, defaultVal, associated, o);
-            if(inRoom){
-                b.usableInSameRoom();;
-            }
-            o.addAttribute(b);
-            g.addVerb(new Verb(verb, associated, o));
-            attribute_name.setText("");
-            verb_name.setText("");
-            object_name.setText("");
-            object_room_name.setText("");
-            num_att_amt.setText("");
-            att_def_num.setText("");
-            Add_Attribute_Window.setVisible(false);
+        if(associated == null){
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    "Can't find associated object!", 
+                    "Object not found", JOptionPane.WARNING_MESSAGE);
         }
-        else if(type.equals("Number")){
-            String val = att_def_num.getText();
-            try{
-                double defaultVal = Double.parseDouble(val);
-                String IncDec = num_att_IncDec.getSelectedItem().toString();
-                String amt = num_att_amt.getText();
-                double amount = Double.parseDouble(amt);
-                if(IncDec.equals("Increase")){
-                    Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, true, associated, o);
-                    if(inRoom){
-                        a.usableInSameRoom();
-                    }
-                    o.addAttribute(a);
-                    g.addVerb(new Verb(verb, associated, o));
+        else{
+            if(type.equals("Boolean")){
+                boolean defaultVal;
+                if(att_def_bool.getSelectedItem().toString().equals("true")){
+                    defaultVal = true;
                 }
                 else{
-                    Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, false, associated, o);
-                    if(inRoom){
-                        a.usableInSameRoom();
-                    }
-                    o.addAttribute(a);
-                    g.addVerb(new Verb(verb, associated, o));
+                    defaultVal = false;
                 }
+                Boolean_Attribute b = new Boolean_Attribute(name, verb, defaultVal, associated, o);
+                if(inRoom){
+                    b.usableInSameRoom();;
+                }
+                o.addAttribute(b);
+                g.addVerb(new Verb(verb, associated, o));
                 attribute_name.setText("");
                 verb_name.setText("");
                 object_name.setText("");
@@ -1337,12 +1332,46 @@ public class Main_Edit extends javax.swing.JFrame {
                 num_att_amt.setText("");
                 att_def_num.setText("");
                 Add_Attribute_Window.setVisible(false);
-                
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(Main_Panel, "Value not a number!", "Not a number!", JOptionPane.WARNING_MESSAGE);
             }
+            else if(type.equals("Number")){
+                String val = att_def_num.getText();
+                try{
+                    double defaultVal = Double.parseDouble(val);
+                    String IncDec = num_att_IncDec.getSelectedItem().toString();
+                    String amt = num_att_amt.getText();
+                    double amount = Double.parseDouble(amt);
+                    if(IncDec.equals("Increase")){
+                        Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, true, associated, o);
+                        if(inRoom){
+                            a.usableInSameRoom();
+                        }
+                        o.addAttribute(a);
+                        g.addVerb(new Verb(verb, associated, o));
+                    }
+                    else{
+                        Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, false, associated, o);
+                        if(inRoom){
+                            a.usableInSameRoom();
+                        }
+                        o.addAttribute(a);
+                        g.addVerb(new Verb(verb, associated, o));
+                    }
+                    attribute_name.setText("");
+                    verb_name.setText("");
+                    object_name.setText("");
+                    object_room_name.setText("");
+                    num_att_amt.setText("");
+                    att_def_num.setText("");
+                    Add_Attribute_Window.setVisible(false);
+
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(Main_Panel, 
+                            "Value not a number!", "Not a number!", 
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            updateAttributeTable();
         }
-        updateAttributeTable();
     }//GEN-LAST:event_create_attribute_buttonMouseClicked
 
     private void attribute_typeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_attribute_typeItemStateChanged
@@ -1496,6 +1525,9 @@ public class Main_Edit extends javax.swing.JFrame {
                 s.addTransition(transition_Verb.getText(), 
                         new State(end_State.getText()));
             }
+            o.addVerb(new Verb(transition_Verb.getText(), 
+                    g.findObjectInRoomByName(
+                            object_Associated_Transition.getText()), o));
         }
         else if(o.getCurrentState() == null){
            State start = new State(start_State.getText());
@@ -1507,6 +1539,9 @@ public class Main_Edit extends javax.swing.JFrame {
                 start.addTransition(transition_Verb.getText(), 
                         new State(end_State.getText()));
             }
+            o.addVerb(new Verb(transition_Verb.getText(), 
+                    g.findObjectInRoomByName(
+                            object_Associated_Transition.getText()), o));
         }
         else{
             JOptionPane.showMessageDialog(Main_Panel, 
@@ -1799,6 +1834,8 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JLabel num_att_label;
     private javax.swing.JButton object;
     private javax.swing.JTextPane objectName;
+    private javax.swing.JTextField object_Associated_Transition;
+    private javax.swing.JLabel object_associated_label_trans;
     private javax.swing.JTextField object_name;
     private javax.swing.JLabel object_room_label;
     private javax.swing.JTextField object_room_name;
