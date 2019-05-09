@@ -2,8 +2,10 @@ package fsmprototype;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  *
@@ -11,8 +13,8 @@ import java.util.LinkedList;
  */
 public abstract class Object implements Serializable
 {
-    protected String name;
-    protected String description;
+    private String name;
+    private String description;
     private ArrayList<Verb> verbList = new ArrayList();
     private State currentState;
     private LinkedList<Attribute> attribute= new LinkedList();
@@ -20,10 +22,18 @@ public abstract class Object implements Serializable
     
     public Object(String name){
         this.name = name;
+        this.verbList = new ArrayList();
+        this.attribute= new LinkedList();
+        this.alias = new ArrayList();
+        this.currentState = new State("Initial state");
+    }
+    
+    public Object(String name, State s){
+        this.name = name;
         verbList = new ArrayList();
         attribute= new LinkedList();
         alias = new ArrayList();
-        this.currentState = new State("Initial state");
+        this.currentState = s;
     }
     
     public Object(String name, String desc){
@@ -53,6 +63,10 @@ public abstract class Object implements Serializable
     
     public void addVerb(Verb v){
         this.verbList.add(v);
+    }
+    
+    public void setState(State s){
+        this.currentState = s;
     }
     
     public State getCurrentState(){
@@ -110,10 +124,116 @@ public abstract class Object implements Serializable
             }
         }
     }
+    
+    public Transition findTransition(String a, String end){
+        Transition trans;
+        for(Transition t: this.currentState.getTransition()){
+            if(t.getAction().equals(a) && end.equals(t.getEndState().getName())){
+                return t;
+            }
+            else{
+                State e = t.getEndState();
+                trans = findTransition(a, e.getName());
+                if(trans != null){
+                    return trans;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public State findState(String n){
+        if(currentState.getName().equals(n)){
+            return this.currentState;
+        }
+        State st;
+        for(Transition t: this.currentState.getTransition()){
+            if(n.equals(t.getEndState().getName())){
+                return t.getEndState();
+            }
+            else{
+                State e = t.getEndState();
+                st = findState(e, n);
+                if(st != null){
+                    return st;
+                }
+            }
+        }
+        return null;
+    }
+    
+    private State findState(State s, String n){
+        if(s.getName().equals(n)){
+            return s;
+        }
+        State st;
+        for(Transition t: s.getTransition()){
+            if(n.equals(t.getEndState().getName())){
+                return t.getEndState();
+            }
+            else{
+                State e = t.getEndState();
+                st = findState(e, n);
+                if(st != null){
+                    return st;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Set<State> getAllStates(){
+        Set<State> s = new HashSet<>();
+        s.add(this.currentState);
+        for(Transition t: this.currentState.getTransition()){
+            s.addAll(getAllStates(t.getEndState()));
+        }
+        return s;
+    }
+    
+    private Set<State> getAllStates(State s){
+        Set<State> states = new HashSet<State>();
+        states.add(s);
+        for(Transition t: s.getTransition()){
+            states.addAll(getAllStates(t.getEndState()));
+        }
+        return states;
+    }
+    
+    public boolean deleteTransition(String a, String end){
+        Transition trans;
+        if(this.currentState.deleteTransition(a, end)){
+            return true;
+        }
+        else{
+            for(int i = 0; i < this.currentState.getTransition().size(); i++){
+                State e = this.currentState.getTransition().get(i)
+                        .getEndState();
+                return deleteTransition(e, a ,end);
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean deleteTransition(State s, String a, String end){
+        Transition trans;
+        if(s.deleteTransition(a, end)){
+            return true;
+        }
+        else{
+            for(int i = 0; i < this.currentState.getTransition().size(); i++){
+                State e = this.currentState.getTransition().get(i)
+                        .getEndState();
+                return deleteTransition(s, a, end);
+            }
+        }
+        
+        return false;
+    }
  
     public Object destroy(){
-        Object j = new Room("test");
-        return j;
+        return this;
     }
     
     @Override

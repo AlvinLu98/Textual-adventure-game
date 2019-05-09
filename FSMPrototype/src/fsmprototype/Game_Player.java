@@ -97,7 +97,7 @@ public class Game_Player implements Serializable{
     public ArrayList<Object> displayItem(){
         ArrayList<Object> items = currentGame.getRoomObjects();
         for(Object p:items){
-            System.out.print(p.name + ", ");
+            System.out.print(p.getName() + ", ");
         }
         System.out.println("");
         return items;

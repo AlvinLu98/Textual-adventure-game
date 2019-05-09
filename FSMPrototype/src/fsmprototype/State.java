@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author Alvin Lu
  */
-public class State implements Serializable, Cloneable 
+public class State implements Serializable
 {
     private String name;
     private LinkedList<Transition> transitions;
@@ -20,6 +20,7 @@ public class State implements Serializable, Cloneable
     
     public State(String name){
         this.name = name;
+        this.transitions = new LinkedList();
     }
     
     public State(String n, LinkedList<Transition> t)
@@ -28,29 +29,12 @@ public class State implements Serializable, Cloneable
         this.transitions = t;
     }
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        State s = (State) super.clone();
-        if(transitions != null){
-           Iterator<Transition> i1 = transitions.iterator();
-            while(i1.hasNext()){
-                s.transitions.add((Transition) i1.next().clone());
-            } 
-        }
-        
-        if(innerStates != null){
-           Iterator<State> i2 = innerStates.iterator();
-            while(i2.hasNext()){
-                s.innerStates.add((State) i2.next().clone());
-            } 
-        }
-        
-        return s;
-    } 
-    
     public String getName(){
         return this.name;
+    }
+    
+    public LinkedList<Transition> getTransition(){
+        return this.transitions;
     }
     
     public void setName(String name){
@@ -90,5 +74,25 @@ public class State implements Serializable, Cloneable
     {
         //not implemented yet
         return "Not implemented yet";
+    }
+    
+    public Transition findTransition(String act, String end){
+        for(Transition t: this.transitions){
+            if(t.getAction().equals(act) && 
+                    t.getEndState().getName().equals(end)){
+                return t;
+            }
+        }
+        return null;
+    }
+    
+    public boolean deleteTransition(String act, String end){
+        for(Transition t: this.transitions){
+            if(t.getAction().equals(act) && 
+                    t.getEndState().getName().equals(end)){
+                return this.transitions.remove(t);
+            }
+        }
+        return false;
     }
 }

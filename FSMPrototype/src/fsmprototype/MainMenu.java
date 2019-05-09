@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.JFileChooser; //File chooser for saving and opening file
+import javax.swing.JOptionPane; //For pop-up windows
 
 /**
  *

@@ -18,13 +18,6 @@ public class Pick_Able_Object extends Object implements Serializable{
         super(name);
     }
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Pick_Able_Object p = (Pick_Able_Object) super.clone();
-        return p;
-    } 
-    
     public boolean pickUp(){
         if(this.is_Picked_Up){
             return false;
@@ -39,5 +32,11 @@ public class Pick_Able_Object extends Object implements Serializable{
         }
         this.is_Picked_Up = false;
         return true;
+    }
+    
+    private final State createStates(){
+        State initial  = new State("Not picked up");
+        initial.addTransition("take", new State("Picked up"));
+        return initial;
     }
 }

@@ -17,17 +17,33 @@ public class Room extends Object implements Serializable{
     private ArrayList<Object> objects;
     private LinkedList<Exit> exits;
     
+    /**
+     * Constructor for Room, creates a room without exits and objects
+     * @param name Name of the room
+     */
     public Room(String name){
-        super(name);
+        super(name, new State("Unlocked"));
         this.objects = new ArrayList();
         this.exits = new LinkedList();
     }
     
+    /**
+     * Constructor for Room, creates a room with list of objects
+     * @param name Name of the room
+     * @param objects List of objects
+     */
     public Room(String name, ArrayList<Object> objects){
         super(name);
         this.objects = objects;
     }
     
+    /**
+     * Constructor for Room, creates a room with a description and list of
+     * objects
+     * @param name Name of the room
+     * @param desc description of room
+     * @param objects list of objects
+     */
     public Room(String name, String desc, ArrayList<Object> objects){
         super(name, desc);
         this.objects = objects;
@@ -50,10 +66,6 @@ public class Room extends Object implements Serializable{
     
     public String getDescription(){
         return super.getDesc();
-    }
-    
-    public void setDescription(String d){
-        this.description = d;
     }
     
     public LinkedList<Exit> getExit(){

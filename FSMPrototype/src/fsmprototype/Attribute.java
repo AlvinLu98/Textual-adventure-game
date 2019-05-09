@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author Alvin Lu
  */
-public abstract class Attribute implements Serializable, Cloneable 
+public abstract class Attribute implements Serializable
 {
     private String name;
     private Verb verb;
@@ -18,13 +18,6 @@ public abstract class Attribute implements Serializable, Cloneable
         this.name = name;
         this.verb = new Verb(verb, o, own);
     }
-    
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Attribute a = (Attribute)super.clone();
-        return a;
-    } 
     
     public String getName(){
         return this.name;

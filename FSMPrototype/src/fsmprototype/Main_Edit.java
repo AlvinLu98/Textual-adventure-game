@@ -5,6 +5,7 @@
  */
 package fsmprototype;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import javax.swing.JTree;
@@ -16,6 +17,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import fsmprototype.Condition.Type;
+import java.util.Set;
 
 /**
  *
@@ -64,6 +67,25 @@ public class Main_Edit extends javax.swing.JFrame {
         object_room_label = new javax.swing.JLabel();
         object_room_name = new javax.swing.JTextField();
         same_room = new javax.swing.JCheckBox();
+        Add_Transition_Window = new javax.swing.JFrame();
+        state_window_title = new javax.swing.JLabel();
+        start_State_Label = new javax.swing.JLabel();
+        transition_Verb = new javax.swing.JTextField();
+        transition_verb_label = new javax.swing.JLabel();
+        start_State = new javax.swing.JTextField();
+        end_State_Label = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        condition_list_label = new javax.swing.JLabel();
+        create_Transition = new javax.swing.JButton();
+        cancel_Transition = new javax.swing.JButton();
+        add_condition = new javax.swing.JButton();
+        delete_condition = new javax.swing.JButton();
+        edit_condition = new javax.swing.JButton();
+        end_State = new javax.swing.JTextField();
+        save_Transition = new javax.swing.JButton();
+        previous_Start = new javax.swing.JTextField();
+        previous_Verb = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
@@ -99,7 +121,12 @@ public class Main_Edit extends javax.swing.JFrame {
         remove_exit = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        transition_Table = new javax.swing.JTable();
+        addState = new javax.swing.JButton();
+        deleteState = new javax.swing.JButton();
+        edit_State = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        states_Table = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         Current_Game = new javax.swing.JTree();
@@ -151,11 +178,6 @@ public class Main_Edit extends javax.swing.JFrame {
         num_att_IncDec.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         num_att_IncDec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Increase", "Decrease", " " }));
         num_att_IncDec.setVisible(false);
-        num_att_IncDec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                num_att_IncDecActionPerformed(evt);
-            }
-        });
 
         num_att_amt_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         num_att_amt_label.setText("Amount");
@@ -278,6 +300,177 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(create_attribute_button)
                 .addContainerGap())
+        );
+
+        Add_Transition_Window.setPreferredSize(new java.awt.Dimension(1390, 1099));
+        Add_Transition_Window.setSize(new java.awt.Dimension(1400, 1048));
+
+        state_window_title.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        state_window_title.setText("Add Transition window");
+
+        start_State_Label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        start_State_Label.setText("Start state");
+
+        transition_Verb.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        transition_verb_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        transition_verb_label.setText("Verb associated");
+
+        start_State.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        end_State_Label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        end_State_Label.setText("End state");
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Name", "Attribute associated", "Condition"
+            }
+        ));
+        jTable1.setRowHeight(24);
+        jScrollPane1.setViewportView(jTable1);
+
+        condition_list_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        condition_list_label.setText("Condition list");
+
+        create_Transition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        create_Transition.setText("Create");
+        create_Transition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_TransitionActionPerformed(evt);
+            }
+        });
+
+        cancel_Transition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        cancel_Transition.setText("Cancel");
+
+        add_condition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        add_condition.setText("Add condition");
+
+        delete_condition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        delete_condition.setText("Delete condition");
+
+        edit_condition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        edit_condition.setText("Edit condition");
+        edit_condition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_conditionActionPerformed(evt);
+            }
+        });
+
+        end_State.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        save_Transition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        save_Transition.setText("Save");
+        save_Transition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_TransitionActionPerformed(evt);
+            }
+        });
+
+        previous_Start.setText("jTextField1");
+        previous_Start.setVisible(false);
+
+        previous_Verb.setText("jTextField1");
+        previous_Verb.setVisible(false);
+
+        Add_Transition_Window.setVisible(false);
+
+        javax.swing.GroupLayout Add_Transition_WindowLayout = new javax.swing.GroupLayout(Add_Transition_Window.getContentPane());
+        Add_Transition_Window.getContentPane().setLayout(Add_Transition_WindowLayout);
+        Add_Transition_WindowLayout.setHorizontalGroup(
+            Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(state_window_title)
+                            .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(start_State_Label)
+                                    .addComponent(transition_verb_label)
+                                    .addComponent(end_State_Label))
+                                .addGap(56, 56, 56)
+                                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(transition_Verb, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                                    .addComponent(start_State)
+                                    .addComponent(end_State))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(previous_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(142, 142, 142))))
+                    .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(condition_list_label)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(delete_condition)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(edit_condition)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(add_condition))
+                            .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                                    .addComponent(save_Transition)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(cancel_Transition)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(create_Transition))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1294, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(75, Short.MAX_VALUE))
+        );
+        Add_Transition_WindowLayout.setVerticalGroup(
+            Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(state_window_title)
+                .addGap(41, 41, 41)
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(start_State_Label)
+                    .addComponent(start_State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(end_State_Label)
+                            .addComponent(end_State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(previous_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(55, 55, 55)
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(transition_verb_label)
+                    .addComponent(transition_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(condition_list_label)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Transition_WindowLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(add_condition)
+                            .addComponent(edit_condition)
+                            .addComponent(delete_condition))
+                        .addGap(34, 34, 34)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82)
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(create_Transition)
+                    .addComponent(cancel_Transition)
+                    .addComponent(save_Transition))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -431,7 +624,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(add_attribute)
                     .addComponent(delete_attribute))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -576,7 +769,7 @@ public class Main_Edit extends javax.swing.JFrame {
             exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(exitLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(create_exit_form, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -586,36 +779,94 @@ public class Main_Edit extends javax.swing.JFrame {
 
         info.addTab("Exits", exit);
 
-        jTable4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        transition_Table.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        transition_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Start state", "Action", "End state", "Conditions"
+                "Start state", "Verb", "End state"
             }
         ));
-        jTable4.setRowHeight(24);
-        jScrollPane8.setViewportView(jTable4);
+        transition_Table.setRowHeight(24);
+        jScrollPane8.setViewportView(transition_Table);
+
+        addState.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        addState.setText("Add Transition");
+        addState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStateActionPerformed(evt);
+            }
+        });
+
+        deleteState.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        deleteState.setText("Delete Transition");
+        deleteState.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteStateActionPerformed(evt);
+            }
+        });
+
+        edit_State.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        edit_State.setText("Edit Transition");
+        edit_State.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_StateActionPerformed(evt);
+            }
+        });
+
+        states_Table.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        states_Table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Name", "No of Transitions"
+            }
+        ));
+        states_Table.setRowHeight(24);
+        jScrollPane7.setViewportView(states_Table);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 1213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(deleteState)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(edit_State)
+                                .addGap(26, 26, 26)
+                                .addComponent(addState))
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addState)
+                    .addComponent(deleteState)
+                    .addComponent(edit_State))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         info.addTab("States", jPanel4);
@@ -690,8 +941,8 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(info))
+                .addContainerGap())
         );
 
         pack();
@@ -831,6 +1082,8 @@ public class Main_Edit extends javax.swing.JFrame {
                 info.setEnabledAt(1, false);
             }
            updateAttributeTable();
+           updateStateTable();
+           updateTransitionTable();
         }
     }//GEN-LAST:event_Current_GameValueChanged
 
@@ -960,9 +1213,10 @@ public class Main_Edit extends javax.swing.JFrame {
     private void descriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descriptionFocusLost
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         if(selectedNode != null){
-            if(selectedNode.getUserObject() instanceof Room){
+            if(description.getText() == ""){  }
+            else if(selectedNode.getUserObject() instanceof Room){
                 Room r = (Room)selectedNode.getUserObject();
-                g.findRoom(r).setDescription(description.getText());
+                r.setDesc(description.getText());
             }
             else if(selectedNode.getUserObject() instanceof Container){
                 DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
@@ -1112,16 +1366,12 @@ public class Main_Edit extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_attribute_typeItemStateChanged
 
-    private void num_att_IncDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num_att_IncDecActionPerformed
-        
-    }//GEN-LAST:event_num_att_IncDecActionPerformed
-
     private void delete_attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_attributeActionPerformed
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
             String s = (String)JOptionPane.showInputDialog(
                     Main_Panel,
-                    "Type of item:\n",
-                    "Choose item type",
+                    "Enter name\n",
+                    "Attribute name:",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
                     null,
@@ -1130,8 +1380,184 @@ public class Main_Edit extends javax.swing.JFrame {
         if(a == null){
             JOptionPane.showMessageDialog(Main_Panel, "Attribute not found!", "Not found!", JOptionPane.WARNING_MESSAGE);
         }
+        updateAttributeTable();
     }//GEN-LAST:event_delete_attributeActionPerformed
 
+    private void edit_conditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_conditionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edit_conditionActionPerformed
+
+    private void addStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStateActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode != null 
+                && !(selectedNode.getUserObject() instanceof String)){
+            Add_Transition_Window.setVisible(true);
+            create_Transition.setVisible(true);
+            save_Transition.setVisible(false);
+            add_condition.setVisible(false);
+            edit_condition.setVisible(false);
+            delete_condition.setVisible(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Failed to add Attribute", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_addStateActionPerformed
+
+    private void save_TransitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_TransitionActionPerformed
+        String start = start_State.getText();
+        String verb = transition_Verb.getText();
+        String end = end_State.getText();
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode != null 
+                && !(selectedNode.getUserObject() instanceof String)){
+            Object  o = (Object)selectedNode.getUserObject();
+            State prev = o.findState(previous_Start.getText());
+
+            State strt = o.findState(start);
+            if(strt == null){
+                JOptionPane.showMessageDialog(Main_Panel, 
+                    "Please enter an exsiting state for Start state!", 
+                    "Failed to edit Transition", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                Transition cur = prev.findTransition(verb, end);
+                State e = o.findState(end);
+                if(e == null){
+                    strt.addTransition(verb, new State(end));
+                    o.deleteTransition(verb, end);
+                }
+                else{
+                    strt.addTransition(verb, e);
+                    o.deleteTransition(verb, end);
+                }
+            }
+           previous_Start.setText("");
+           previous_Verb.setText("");
+        }
+    }//GEN-LAST:event_save_TransitionActionPerformed
+
+    private void edit_StateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_StateActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode != null 
+                && !(selectedNode.getUserObject() instanceof String)){
+                Add_Transition_Window.setVisible(true);
+                create_Transition.setVisible(false);
+                save_Transition.setVisible(true);
+                add_condition.setVisible(true);
+            edit_condition.setVisible(true);
+            delete_condition.setVisible(true);
+                int row = transition_Table.getSelectedRow();
+                if(row >= 0){
+                    transition_Verb.setText(transition_Table.getValueAt(row, 1)
+                            .toString());
+                    end_State.setText(transition_Table.getValueAt(row, 2)
+                            .toString());
+                    start_State.setText(transition_Table.getValueAt(row, 0)
+                            .toString());
+                    previous_Start.setText(transition_Table.getValueAt(row, 0)
+                            .toString());
+                    previous_Verb.setText(transition_Table.getValueAt(row, 1)
+                            .toString());
+                }
+                else{
+                    JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a transition!",
+                            "Failed to edit Transition",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        else{
+                JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a room or object!",
+                            "Failed to add Attribute",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+    }//GEN-LAST:event_edit_StateActionPerformed
+
+    private void create_TransitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_TransitionActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        Object o = ((Object)selectedNode.getUserObject());
+        State s = o.findState(start_State.getText());
+        State end = o.findState(end_State.getText());
+        
+        if(s != null){
+            if(end != null){
+                s.addTransition(transition_Verb.getText(), end);
+            }
+            else{
+                s.addTransition(transition_Verb.getText(), 
+                        new State(end_State.getText()));
+            }
+        }
+        else if(o.getCurrentState() == null){
+           State start = new State(start_State.getText());
+           if(end != null){
+                start.addTransition(transition_Verb.getText(), end);
+                
+            }
+            else{
+                start.addTransition(transition_Verb.getText(), 
+                        new State(end_State.getText()));
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    "Please enter an exsiting state for Start state!", 
+                    "Failed to add Transition", JOptionPane.WARNING_MESSAGE);
+        }
+        transition_Verb.setText("");
+        end_State.setText("");
+        start_State.setText("");
+        
+        Add_Transition_Window.setVisible(false);
+        updateStateTable();
+        updateTransitionTable();
+    }//GEN-LAST:event_create_TransitionActionPerformed
+
+    private void deleteStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStateActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode != null 
+                && !(selectedNode.getUserObject() instanceof String)){
+                int row = transition_Table.getSelectedRow();
+                if(row >= 0){
+                    String verb = transition_Table.getValueAt(row, 1)
+                            .toString();
+                    String end = transition_Table.getValueAt(row, 2)
+                            .toString();
+                    Object o = (Object)selectedNode.getUserObject();
+                    o.deleteTransition(verb, end);
+                    updateStateTable();
+                    updateTransitionTable();
+                }
+                else{
+                    JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a transition!",
+                            "Failed to edit Transition",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        else{
+                JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a room or object!",
+                            "Failed to add Attribute",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+    }//GEN-LAST:event_deleteStateActionPerformed
+
+    /**
+     * Updates the exit table in the edit screen given the room
+     * @param r Room to list out the exits
+     */
     private void updateExitTable(Room r){
         DefaultTableModel room_exits = (DefaultTableModel) Exits.getModel();
         room_exits.setRowCount(0);
@@ -1141,22 +1567,74 @@ public class Main_Edit extends javax.swing.JFrame {
         jScrollPane6.setViewportView(Exits);
     }
     
+    /**
+     * Outputs the attribute of the most recently selected Object
+     */
     private void updateAttributeTable(){
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
         DefaultTableModel attributes = (DefaultTableModel) att_table.getModel();
         attributes.setRowCount(0);
-        Object r = (Object)selectedNode.getUserObject();
-        LinkedList<Attribute> a = r.getAttributes();
-        for(Attribute att: a){
-            if(att instanceof Number_Attribute){
-                attributes.addRow(new String[]{att.getName(), "Number", "0", att.getVerb().getName()});
-            }
-            else{
-                attributes.addRow(new String[]{att.getName(), "Boolean", "0", att.getVerb().getName()});
+        if(!(selectedNode.getUserObject() instanceof String)){
+            Object r = (Object)selectedNode.getUserObject();
+            LinkedList<Attribute> a = r.getAttributes();
+            for(Attribute att: a){
+                if(att instanceof Number_Attribute){
+                    attributes.addRow(new String[]{att.getName(), "Number", "0", att.getVerb().getName()});
+                }
+                else{
+                    attributes.addRow(new String[]{att.getName(), "Boolean", "0", att.getVerb().getName()});
+                }
             }
         }
     }
     
+    /**
+     * Outputs the states of the most recently selected Object
+     */
+    private void updateStateTable(){
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        DefaultTableModel states = 
+                (DefaultTableModel) states_Table.getModel();
+        states.setRowCount(0);
+        if(!(selectedNode.getUserObject() instanceof String)){
+            Set<State> allState = ((Object)selectedNode.getUserObject())
+                        .getAllStates();
+            for(State s: allState){
+                states.addRow(new String[]{s.getName(), 
+                    Integer.toString(s.getTransition().size())});
+            }
+        }
+    }
+    
+    /**
+     * Outputs the list of transitions of the most recently selected Object
+     */
+    private void updateTransitionTable(){
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        DefaultTableModel transitions = 
+                (DefaultTableModel) transition_Table.getModel();
+        transitions.setRowCount(0);
+        if(!(selectedNode.getUserObject() instanceof String)){
+            Set<State> allState = ((Object)selectedNode.getUserObject())
+                    .getAllStates();
+            for(State s: allState){
+                for(Transition t: s.getTransition()){
+                    transitions.addRow(new String[]{s.getName(), t.getAction(), 
+                        t.getEndState().getName()});
+                }
+            }
+        }
+    }
+    
+    /**
+     * Updates the game structure of all it's objects
+     */
     private void updateTree(){
     DefaultMutableTreeNode game = new DefaultMutableTreeNode("Game");
     for(Room r: g.getRooms()){
@@ -1192,28 +1670,35 @@ public class Main_Edit extends javax.swing.JFrame {
     jScrollPane5.setViewportView(Current_Game);
     }
     
+    /**
+     * Expands a tree
+     * @param tree Tree to be expanded
+     */
     public void expandAll(JTree tree) {
     TreeNode root = (TreeNode) tree.getModel().getRoot();
     expandAll(tree, new TreePath(root));
   }
 
-  private void expandAll(JTree tree, TreePath parent) {
-    TreeNode node = (TreeNode) parent.getLastPathComponent();
-    if (node.getChildCount() >= 0) {
-      for (Enumeration e = node.children(); e.hasMoreElements();) {
-        TreeNode n = (TreeNode) e.nextElement();
-        TreePath path = parent.pathByAddingChild(n);
-        expandAll(tree, path);
-      }
-    }
-    tree.expandPath(parent);
-  }
-    
     /**
-     * @param args the command line arguments
+     * Recursively expands a tree 
+     * @param tree Tree to be expanded
+     * @param parent Parent of the tree path
      */
+    private void expandAll(JTree tree, TreePath parent) {
+        TreeNode node = (TreeNode) parent.getLastPathComponent();
+        if (node.getChildCount() >= 0) {
+          for (Enumeration e = node.children(); e.hasMoreElements();) {
+            TreeNode n = (TreeNode) e.nextElement();
+            TreePath path = parent.pathByAddingChild(n);
+            expandAll(tree, path);
+          }
+        }
+        tree.expandPath(parent);
+      }
+    
+
+   
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -1246,10 +1731,13 @@ public class Main_Edit extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame Add_Attribute_Window;
+    private javax.swing.JFrame Add_Transition_Window;
     private javax.swing.JTree Current_Game;
     private javax.swing.JTable Exits;
     private javax.swing.JPanel Main_Panel;
+    private javax.swing.JButton addState;
     private javax.swing.JButton add_attribute;
+    private javax.swing.JButton add_condition;
     private javax.swing.JLabel associated_object_label;
     private javax.swing.JLabel associated_verb_label1;
     private javax.swing.JComboBox<String> att_def_bool;
@@ -1260,13 +1748,22 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTextField attribute_name;
     private javax.swing.JComboBox<String> attribute_type;
     private javax.swing.JLabel attribute_type_label;
+    private javax.swing.JButton cancel_Transition;
+    private javax.swing.JLabel condition_list_label;
+    private javax.swing.JButton create_Transition;
     private javax.swing.JButton create_attribute_button;
     private javax.swing.JButton create_exit;
     private javax.swing.JPanel create_exit_form;
     private javax.swing.JPanel create_exit_form1;
     private javax.swing.JButton delete;
+    private javax.swing.JButton deleteState;
     private javax.swing.JButton delete_attribute;
+    private javax.swing.JButton delete_condition;
     private javax.swing.JTextArea description;
+    private javax.swing.JButton edit_State;
+    private javax.swing.JButton edit_condition;
+    private javax.swing.JTextField end_State;
+    private javax.swing.JLabel end_State_Label;
     private javax.swing.JPanel exit;
     private javax.swing.JTextField exit_name;
     private javax.swing.JTextField exit_room;
@@ -1281,13 +1778,15 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuEdit;
@@ -1304,11 +1803,21 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JLabel object_room_label;
     private javax.swing.JTextField object_room_name;
     private javax.swing.JButton play_game;
+    private javax.swing.JTextField previous_Start;
+    private javax.swing.JTextField previous_Verb;
     private javax.swing.JButton remove_exit;
     private javax.swing.JTextField remove_exit_name;
     private javax.swing.JButton room;
     private javax.swing.JCheckBox same_room;
+    private javax.swing.JButton save_Transition;
+    private javax.swing.JTextField start_State;
+    private javax.swing.JLabel start_State_Label;
     private javax.swing.JLabel starting_val;
+    private javax.swing.JLabel state_window_title;
+    private javax.swing.JTable states_Table;
+    private javax.swing.JTable transition_Table;
+    private javax.swing.JTextField transition_Verb;
+    private javax.swing.JLabel transition_verb_label;
     private javax.swing.JTextField verb_name;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,17 +33,21 @@ public class Transition implements Serializable
         this.conditions = con;
     }
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Transition t = (Transition)super.clone();
-        t.endState = (State) endState.clone();
-        return t;
-    } 
-    
     public String getAction()
     {
         return this.action;
+    }
+    
+    public State getEndState(){
+        return this.endState;
+    }
+    
+    public void setEndState(State s){
+        this.endState = s;
+    }
+    
+    public Set<Condition> getConditions(){
+        return this.conditions;
     }
    
     public boolean addCondition(Condition c)
@@ -53,7 +57,12 @@ public class Transition implements Serializable
     
     private boolean checkCondition()
     {
-      return false;  
+      for(Condition c: this.conditions){
+          if(!c.checkCondition()){
+              return false;
+          }
+      }
+      return true;
     }
     
     public State executeTrans()
