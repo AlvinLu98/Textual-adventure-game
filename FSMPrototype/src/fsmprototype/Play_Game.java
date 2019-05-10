@@ -65,6 +65,9 @@ public class Play_Game extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Initiate the list of words
+     */
     private void initWordList(){
         movement.add("go");
         movement.add("run");
@@ -84,6 +87,11 @@ public class Play_Game extends javax.swing.JFrame {
         dropItem.add("throw");
     }
     
+    /**
+     * Provides a deep clone of an object
+     * @param object object to be deep cloned
+     * @return deep cloned object
+     */
     public static java.lang.Object deepClone(java.lang.Object object) {
         try {
           ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -99,6 +107,9 @@ public class Play_Game extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Initiates a room change and append new room's information
+     */
     private void roomChange(){
         Gameplay.append("---------------------------------------------------\n");
         Gameplay.append("You are currently at: " + game.getPlayer().getLocation() + "\n");
@@ -281,6 +292,10 @@ public class Play_Game extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CommandActionPerformed
 
+    /**
+     * Given the dependency triple find the verb and subject
+     * @param d List of dependency triple from the sentence
+     */
     private void processSentence(ArrayList<TypedDependency> d){
         String rel, gov, dep;
         String compund;
@@ -358,6 +373,13 @@ public class Play_Game extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Checks if the verb is related to movement
+     * @param rel relationship between the words
+     * @param gov government word 
+     * @param dep dependent word
+     * @return true if the verb is regarding to movement
+     */
     private boolean isMovement(String rel, String gov, String dep){
         if(rel.contains("advmod")){
             if(movement.contains(gov)){
@@ -372,6 +394,13 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Check if the dependent word is movement
+     * @param rel relationship between two words
+     * @param gov government word
+     * @param dep dependent word
+     * @return true if the verb is movement
+     */
     private boolean isMovement_dep(String rel, String gov, String dep){
         if(rel.contains("nsubj") || rel.contains("nmod:to") || rel.contains("nmod")){
             if(movement.contains(dep)){
@@ -381,6 +410,13 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Check if the word is observing word
+     * @param rel relationship between two words
+     * @param gov government word
+     * @param dep dependent word
+     * @return true if the verb is observing word
+     */
     private boolean isObserving(String rel, String gov, String dep){
         if(rel.contains("nmod:at")){
             if(observe.contains(gov)){
@@ -395,6 +431,13 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Check if the word is taking word
+     * @param rel relationship between two words
+     * @param gov government word
+     * @param dep dependent word
+     * @return true if the verb is taking word
+     */
     private boolean isTaking(String rel, String gov, String dep){
         if(rel.contains("dobj")){
             if(takeItem.contains(gov)){
@@ -404,6 +447,13 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Check if the word is dropping word
+     * @param rel relationship between two words
+     * @param gov government word
+     * @param dep dependent word
+     * @return true if the verb is dropping word
+     */
     private boolean isDropping(String rel, String gov, String dep){
         if(rel.contains("dobj")){
             if(dropItem.contains(gov)){
@@ -414,6 +464,13 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Check if the dependent word is dropping word
+     * @param rel relationship between two words
+     * @param gov government word
+     * @param dep dependent word
+     * @return true if the verb is observing word 
+     */
     private boolean isDropping_dep(String rel, String gov, String dep){
         if(rel.contains("compound")){
             if(dropItem.contains(dep)){
@@ -423,6 +480,13 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }
     
+    /**
+     * Check if the dependent word is an action word
+     * @param rel relationship between two words
+     * @param gov government word
+     * @param dep dependent word
+     * @return true if the verb is observing word
+     */
     private boolean isAction(String rel, String gov, String dep){
         if(rel.contains("dobj") || rel.contains("nmod:npmod") || rel.contains("nmod:on")){
             return true;
@@ -430,15 +494,60 @@ public class Play_Game extends javax.swing.JFrame {
         return false;
     }    
     
+    /**
+     * Process the verbs
+     * @param rel relationship
+     * @param gov government word
+     * @param dep dependent word
+     */
     private void processVerbs(String rel, String gov, String dep){
-        boolean done = false;
         Object o = game.findAssociatedObjinVerb(gov, dep);
         System.out.println("gov: " + gov);
         Attribute att = game.findAttByAssociatedObject(gov, o);
         if(att == null){
-            JOptionPane.showMessageDialog(jPanel1, 
-                    "Object not found!", 
-                    "Object not found", JOptionPane.WARNING_MESSAGE);
+            if(!o.sendAction(dep)){
+                boolean found = false;
+                for(Transition t: o.getCurrentState().getTransition()){
+                    if(t.getAction().equalsIgnoreCase(dep)){
+                        Gameplay.append("Condition not met: \n");
+                        for(Condition c: t.getConditions()){
+                            switch (c.getType()) {
+                                case BOOLEAN:
+                                    Gameplay.append(c.getName() + 
+                                            " needs to be "
+                                            + String.valueOf(c.getValueBool()));
+                                    break;
+                                case NUMERICBT:
+                                    Gameplay.append(c.getName()
+                                            + " needs to be bigger than "
+                                            + c.getValueAmt());
+                                    break;
+                                case NUMERICEQ:
+                                    Gameplay.append(c.getName()
+                                            + " needs to be equal to "
+                                            + c.getValueAmt());
+                                    break;
+                                default:
+                                    Gameplay.append(c.getName()
+                                            + " needs to be smaller than "
+                                            + c.getValueAmt());
+                                    break;
+                            }
+                            Gameplay.append("\n");
+                        }
+                        found = true;
+                    }
+                }
+                if(!found){
+                    JOptionPane.showMessageDialog(jPanel1, 
+                        "Object not found!", 
+                        "Object not found", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            else{
+                Gameplay.append(o.getName() + "'s current state is: " 
+                        + o.getCurrentState().getName() + "\n");
+            }
         }
         else if(att.inRoom()){
             if(game.findObjectInRoomByName(att.getVerb().getOwnerObject().getName()) != null){
@@ -467,7 +576,8 @@ public class Play_Game extends javax.swing.JFrame {
                 Gameplay.append(att.getName() + "decreased by " + ((Number_Attribute) att).getAmount() + "\n"); 
             }
         }
-        
+        updatePlayerAttribute();
+        updateTree();
     }
     
     /**

@@ -5,7 +5,6 @@
  */
 package fsmprototype;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import javax.swing.JTree;
@@ -67,6 +66,7 @@ public class Main_Edit extends javax.swing.JFrame {
         object_room_label = new javax.swing.JLabel();
         object_room_name = new javax.swing.JTextField();
         same_room = new javax.swing.JCheckBox();
+        cancel_Attribute = new javax.swing.JButton();
         Add_Transition_Window = new javax.swing.JFrame();
         state_window_title = new javax.swing.JLabel();
         start_State_Label = new javax.swing.JLabel();
@@ -75,19 +75,37 @@ public class Main_Edit extends javax.swing.JFrame {
         start_State = new javax.swing.JTextField();
         end_State_Label = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        condition_Table = new javax.swing.JTable();
         condition_list_label = new javax.swing.JLabel();
         create_Transition = new javax.swing.JButton();
         cancel_Transition = new javax.swing.JButton();
         add_condition = new javax.swing.JButton();
         delete_condition = new javax.swing.JButton();
-        edit_condition = new javax.swing.JButton();
         end_State = new javax.swing.JTextField();
         save_Transition = new javax.swing.JButton();
         previous_Start = new javax.swing.JTextField();
         previous_Verb = new javax.swing.JTextField();
         object_associated_label_trans = new javax.swing.JLabel();
         object_Associated_Transition = new javax.swing.JTextField();
+        Object_Type = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        Add_Condition_Window = new javax.swing.JFrame();
+        jLabel10 = new javax.swing.JLabel();
+        condition_name_label = new javax.swing.JLabel();
+        condition_type_label = new javax.swing.JLabel();
+        condition_attribute_label = new javax.swing.JLabel();
+        condition_value_label = new javax.swing.JLabel();
+        condition_Name = new javax.swing.JTextField();
+        condition_Value = new javax.swing.JTextField();
+        condition_Attribute = new javax.swing.JTextField();
+        condition_Create = new javax.swing.JButton();
+        condition_Cancel = new javax.swing.JButton();
+        condition_Save = new javax.swing.JButton();
+        condition_attribute_object_label = new javax.swing.JLabel();
+        condition_Associated_Object = new javax.swing.JTextField();
+        condition_Type = new javax.swing.JComboBox<>();
+        condition_value_bool = new javax.swing.JComboBox<>();
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
@@ -212,6 +230,9 @@ public class Main_Edit extends javax.swing.JFrame {
         same_room.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         same_room.setText("Only usable in the same room");
 
+        cancel_Attribute.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        cancel_Attribute.setText("Cancel");
+
         javax.swing.GroupLayout Add_Attribute_WindowLayout = new javax.swing.GroupLayout(Add_Attribute_Window.getContentPane());
         Add_Attribute_Window.getContentPane().setLayout(Add_Attribute_WindowLayout);
         Add_Attribute_WindowLayout.setHorizontalGroup(
@@ -219,74 +240,84 @@ public class Main_Edit extends javax.swing.JFrame {
             .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(starting_val)
-                    .addComponent(attribute_label)
-                    .addComponent(attribute_Name_label)
-                    .addComponent(associated_verb_label1)
-                    .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
-                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(object_room_label)
-                                .addComponent(attribute_type_label)
-                                .addComponent(associated_object_label))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(object_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(attribute_label)
+                            .addComponent(object_room_label))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(attribute_Name_label)
+                            .addComponent(associated_verb_label1)
+                            .addComponent(associated_object_label))
+                        .addGap(80, 80, 80)
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(object_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(attribute_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(127, 127, 127))
+                    .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
+                                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(num_att_amt_label, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(num_att_label, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(183, 183, 183))
+                            .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(starting_val)
+                                    .addComponent(attribute_type_label))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
+                                        .addComponent(att_def_bool, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                                        .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(num_att_amt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(num_att_IncDec, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(53, 53, 53)))
+                                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(same_room)
+                                    .addComponent(att_def_num, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
                                 .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(attribute_name, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
-                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
-                                    .addComponent(att_def_bool, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18))
-                                .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
-                                    .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Add_Attribute_WindowLayout.createSequentialGroup()
-                                            .addComponent(num_att_amt_label)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(num_att_amt, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Add_Attribute_WindowLayout.createSequentialGroup()
-                                            .addComponent(num_att_label)
-                                            .addGap(144, 144, 144)
-                                            .addComponent(num_att_IncDec, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(53, 53, 53)))
-                            .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(same_room)
-                                .addComponent(att_def_num, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(48, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Attribute_WindowLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(create_attribute_button)
-                .addGap(94, 94, 94))
+                                .addGap(58, 58, 58))
+                            .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
+                                .addComponent(cancel_Attribute)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(create_attribute_button)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         Add_Attribute_WindowLayout.setVerticalGroup(
             Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Add_Attribute_WindowLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(attribute_label)
-                .addGap(54, 54, 54)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(attribute_Name_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(attribute_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(attribute_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(attribute_Name_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(associated_verb_label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(associated_object_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(object_name))
-                .addGap(18, 18, 18)
+                    .addComponent(verb_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(associated_verb_label1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(object_room_label))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(object_name)
+                    .addComponent(associated_object_label, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(object_room_label)
+                    .addComponent(object_room_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(attribute_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(attribute_type_label))
-                .addGap(21, 21, 21)
+                .addGap(24, 24, 24)
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(starting_val, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(att_def_bool, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,8 +331,10 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(num_att_amt_label)
                     .addComponent(num_att_amt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(create_attribute_button)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Add_Attribute_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(create_attribute_button)
+                    .addComponent(cancel_Attribute))
                 .addContainerGap())
         );
 
@@ -324,8 +357,8 @@ public class Main_Edit extends javax.swing.JFrame {
         end_State_Label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         end_State_Label.setText("End state");
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        condition_Table.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -336,8 +369,8 @@ public class Main_Edit extends javax.swing.JFrame {
                 "Name", "Attribute associated", "Condition"
             }
         ));
-        jTable1.setRowHeight(24);
-        jScrollPane1.setViewportView(jTable1);
+        condition_Table.setRowHeight(24);
+        jScrollPane1.setViewportView(condition_Table);
 
         condition_list_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         condition_list_label.setText("Condition list");
@@ -352,18 +385,25 @@ public class Main_Edit extends javax.swing.JFrame {
 
         cancel_Transition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         cancel_Transition.setText("Cancel");
+        cancel_Transition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel_TransitionActionPerformed(evt);
+            }
+        });
 
         add_condition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         add_condition.setText("Add condition");
+        add_condition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_conditionActionPerformed(evt);
+            }
+        });
 
         delete_condition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         delete_condition.setText("Delete condition");
-
-        edit_condition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        edit_condition.setText("Edit condition");
-        edit_condition.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edit_conditionActionPerformed(evt);
+        delete_condition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delete_conditionMouseClicked(evt);
             }
         });
 
@@ -426,8 +466,6 @@ public class Main_Edit extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(delete_condition)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(edit_condition)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(add_condition))
                             .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
@@ -475,7 +513,6 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Add_Transition_WindowLayout.createSequentialGroup()
                         .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(add_condition)
-                            .addComponent(edit_condition)
                             .addComponent(delete_condition))
                         .addGap(34, 34, 34)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -485,6 +522,161 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(cancel_Transition)
                     .addComponent(save_Transition))
                 .addGap(106, 106, 106))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setText("Select Object type");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Container", "Edible", "Human", "Limited use object", "Pickable object", "Player", "Switchable", "Unlimited use", "Wearable", " " }));
+
+        javax.swing.GroupLayout Object_TypeLayout = new javax.swing.GroupLayout(Object_Type.getContentPane());
+        Object_Type.getContentPane().setLayout(Object_TypeLayout);
+        Object_TypeLayout.setHorizontalGroup(
+            Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Object_TypeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(440, Short.MAX_VALUE))
+        );
+        Object_TypeLayout.setVerticalGroup(
+            Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Object_TypeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(45, 45, 45)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+
+        Add_Condition_Window.setSize(new java.awt.Dimension(1040, 600));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel10.setText("Condition window");
+
+        condition_name_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_name_label.setText("Name");
+
+        condition_type_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_type_label.setText("Type");
+
+        condition_attribute_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_attribute_label.setText("Attribute associated");
+
+        condition_value_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_value_label.setText("Value");
+
+        condition_Name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        condition_Value.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Value.setVisible(false);
+
+        condition_Attribute.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        condition_Create.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Create.setText("Create");
+        condition_Create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                condition_CreateActionPerformed(evt);
+            }
+        });
+
+        condition_Cancel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Cancel.setText("Cancel");
+
+        condition_Save.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Save.setText("Save");
+        condition_Save.setVisible(false);
+
+        condition_attribute_object_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_attribute_object_label.setText("Owner of attribute");
+
+        condition_Associated_Object.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        condition_Type.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Boolean", "Numeric equal", "Numeric bigger than", "Numeric smaller than" }));
+        condition_Type.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                condition_TypeActionPerformed(evt);
+            }
+        });
+
+        condition_value_bool.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_value_bool.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "true", "false" }));
+
+        Add_Condition_Window.setVisible(false);
+
+        javax.swing.GroupLayout Add_Condition_WindowLayout = new javax.swing.GroupLayout(Add_Condition_Window.getContentPane());
+        Add_Condition_Window.getContentPane().setLayout(Add_Condition_WindowLayout);
+        Add_Condition_WindowLayout.setHorizontalGroup(
+            Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_Condition_WindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Add_Condition_WindowLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(condition_Save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(condition_Cancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(condition_Create)
+                        .addGap(21, 21, 21))
+                    .addGroup(Add_Condition_WindowLayout.createSequentialGroup()
+                        .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addGroup(Add_Condition_WindowLayout.createSequentialGroup()
+                                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(condition_name_label)
+                                    .addComponent(condition_type_label)
+                                    .addComponent(condition_value_label)
+                                    .addComponent(condition_attribute_label)
+                                    .addComponent(condition_attribute_object_label))
+                                .addGap(48, 48, 48)
+                                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(condition_Associated_Object, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(condition_Attribute, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(Add_Condition_WindowLayout.createSequentialGroup()
+                                        .addComponent(condition_Value, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(condition_value_bool, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(condition_Type, javax.swing.GroupLayout.Alignment.LEADING, 0, 338, Short.MAX_VALUE)
+                                        .addComponent(condition_Name, javax.swing.GroupLayout.Alignment.LEADING)))))
+                        .addGap(381, 446, Short.MAX_VALUE))))
+        );
+        Add_Condition_WindowLayout.setVerticalGroup(
+            Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Add_Condition_WindowLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addGap(55, 55, 55)
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(condition_name_label)
+                    .addComponent(condition_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(condition_type_label)
+                    .addComponent(condition_Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54)
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(condition_value_label)
+                    .addComponent(condition_Value, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(condition_value_bool, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(condition_attribute_label)
+                    .addComponent(condition_Attribute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(condition_attribute_object_label)
+                    .addComponent(condition_Associated_Object, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGroup(Add_Condition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(condition_Create)
+                    .addComponent(condition_Cancel)
+                    .addComponent(condition_Save))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -583,6 +775,7 @@ public class Main_Edit extends javax.swing.JFrame {
         att_table.setRowHeight(24);
         jScrollPane4.setViewportView(att_table);
 
+        add_attribute.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         add_attribute.setText("Add attribute");
         add_attribute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -590,6 +783,7 @@ public class Main_Edit extends javax.swing.JFrame {
             }
         });
 
+        delete_attribute.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         delete_attribute.setText("Delete");
         delete_attribute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -638,7 +832,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(add_attribute)
                     .addComponent(delete_attribute))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -965,7 +1159,9 @@ public class Main_Edit extends javax.swing.JFrame {
     private void objectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectMouseClicked
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         if(selectedNode == null){
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room to create Object!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    "Please select a room to create Object!", 
+                    "Inane warning", JOptionPane.WARNING_MESSAGE);
         }
         else if(selectedNode.getUserObject() instanceof Room){
             String[] possibilities = {"Player", "Human", "Pickable object", "Container"};
@@ -1412,10 +1608,6 @@ public class Main_Edit extends javax.swing.JFrame {
         updateAttributeTable();
     }//GEN-LAST:event_delete_attributeActionPerformed
 
-    private void edit_conditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_conditionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit_conditionActionPerformed
-
     private void addStateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStateActionPerformed
         DefaultMutableTreeNode selectedNode = 
                 (DefaultMutableTreeNode)Current_Game
@@ -1426,7 +1618,6 @@ public class Main_Edit extends javax.swing.JFrame {
             create_Transition.setVisible(true);
             save_Transition.setVisible(false);
             add_condition.setVisible(false);
-            edit_condition.setVisible(false);
             delete_condition.setVisible(false);
         }
         else{
@@ -1445,7 +1636,6 @@ public class Main_Edit extends javax.swing.JFrame {
                 && !(selectedNode.getUserObject() instanceof String)){
             Object  o = (Object)selectedNode.getUserObject();
             State prev = o.findState(previous_Start.getText());
-
             State strt = o.findState(start);
             if(strt == null){
                 JOptionPane.showMessageDialog(Main_Panel, 
@@ -1466,6 +1656,7 @@ public class Main_Edit extends javax.swing.JFrame {
             }
            previous_Start.setText("");
            previous_Verb.setText("");
+           Add_Transition_Window.setVisible(false);
         }
     }//GEN-LAST:event_save_TransitionActionPerformed
 
@@ -1479,10 +1670,13 @@ public class Main_Edit extends javax.swing.JFrame {
                 create_Transition.setVisible(false);
                 save_Transition.setVisible(true);
                 add_condition.setVisible(true);
-            edit_condition.setVisible(true);
-            delete_condition.setVisible(true);
+                delete_condition.setVisible(true);
                 int row = transition_Table.getSelectedRow();
-                if(row >= 0){
+                Transition t = ((Object)selectedNode.getUserObject())
+                        .findTransition(transition_Table.getValueAt(row, 1)
+                            .toString(), transition_Table.getValueAt(row, 2)
+                            .toString());
+                if(row >= 0 && t != null){
                     transition_Verb.setText(transition_Table.getValueAt(row, 1)
                             .toString());
                     end_State.setText(transition_Table.getValueAt(row, 2)
@@ -1493,6 +1687,7 @@ public class Main_Edit extends javax.swing.JFrame {
                             .toString());
                     previous_Verb.setText(transition_Table.getValueAt(row, 1)
                             .toString());
+                    updateConditionTable(t);
                 }
                 else{
                     JOptionPane.showMessageDialog(Main_Panel,
@@ -1514,8 +1709,17 @@ public class Main_Edit extends javax.swing.JFrame {
                 (DefaultMutableTreeNode)Current_Game
                         .getLastSelectedPathComponent();
         Object o = ((Object)selectedNode.getUserObject());
-        State s = o.findState(start_State.getText());
-        State end = o.findState(end_State.getText());
+        State end = null;
+        State s = null;
+        if(o.getCurrentState() == null){
+            o.setState(new State(start_State.getText()));
+            s = o.getCurrentState();
+            end = o.findState(end_State.getText());
+        }
+        else{
+            s = o.findState(start_State.getText());
+            end = o.findState(end_State.getText());
+        }
         
         if(s != null){
             if(end != null){
@@ -1525,9 +1729,16 @@ public class Main_Edit extends javax.swing.JFrame {
                 s.addTransition(transition_Verb.getText(), 
                         new State(end_State.getText()));
             }
-            o.addVerb(new Verb(transition_Verb.getText(), 
-                    g.findObjectInRoomByName(
-                            object_Associated_Transition.getText()), o));
+            if(o instanceof Room){
+                o.addVerb(new Verb(transition_Verb.getText(),
+                    g.findRoomByName(object_Associated_Transition.getText()),
+                    o));
+            }
+            else{
+                o.addVerb(new Verb(transition_Verb.getText(), 
+                        g.findObjectInRoomByName(
+                        object_Associated_Transition.getText()), o));
+            }
         }
         else if(o.getCurrentState() == null){
            State start = new State(start_State.getText());
@@ -1539,9 +1750,16 @@ public class Main_Edit extends javax.swing.JFrame {
                 start.addTransition(transition_Verb.getText(), 
                         new State(end_State.getText()));
             }
-            o.addVerb(new Verb(transition_Verb.getText(), 
-                    g.findObjectInRoomByName(
-                            object_Associated_Transition.getText()), o));
+            if(o instanceof Room){
+                o.addVerb(new Verb(transition_Verb.getText(),
+                    g.findRoomByName(object_Associated_Transition.getText()),
+                    o));
+            }
+            else{
+                o.addVerb(new Verb(transition_Verb.getText(), 
+                        g.findObjectInRoomByName(
+                        object_Associated_Transition.getText()), o));
+            }
         }
         else{
             JOptionPane.showMessageDialog(Main_Panel, 
@@ -1589,6 +1807,166 @@ public class Main_Edit extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_deleteStateActionPerformed
 
+    private void add_conditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_conditionActionPerformed
+        Add_Condition_Window.setVisible(true);
+        condition_Create.setVisible(true);
+        condition_Save.setVisible(false);
+    }//GEN-LAST:event_add_conditionActionPerformed
+
+    private void cancel_TransitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_TransitionActionPerformed
+        transition_Verb.setText("");
+        end_State.setText("");
+        start_State.setText("");
+        object_Associated_Transition.setText("");
+        previous_Start.setText("");
+        previous_Verb.setText("");
+        Add_Transition_Window.setVisible(false);
+    }//GEN-LAST:event_cancel_TransitionActionPerformed
+
+    private void condition_CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_condition_CreateActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode != null 
+                && !(selectedNode.getUserObject() instanceof String)){
+            int row = transition_Table.getSelectedRow();
+            condition_Attribute.setVisible(true);
+            condition_Associated_Object.setVisible(true);
+            Object  o = (Object)selectedNode.getUserObject();
+            Transition t = o.findTransition(transition_Table.getValueAt(row, 1)
+                    .toString(), transition_Table.getValueAt(row, 2)
+                            .toString());
+            
+            String name = condition_Name.getText();
+            String type = condition_Type.getSelectedItem().toString();
+            String att = condition_Attribute.getText();
+            double value;
+            Object owner = null;
+            for(Room r: g.getRooms()){
+                owner = g.findObject(r, o);
+                if(owner != null){
+                    break;
+                }
+            }
+            
+            if(owner == null){
+                JOptionPane.showMessageDialog(Main_Panel,
+                            "Please re-enter associated object!",
+                            "Failed to find associated object",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                Attribute a = owner.findAttribute(att);
+                if(a == null){
+                    JOptionPane.showMessageDialog(Main_Panel,
+                            "Please re-enter the attribute!",
+                            "Failed to find attribute",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    Condition.Type con_type;
+                    Condition c = null;
+                    switch(type){
+                        case "Boolean":
+                            con_type = Condition.Type.BOOLEAN;
+                            String bool_con = condition_value_bool
+                                    .getSelectedItem().toString();
+                            if(bool_con.equals("true")){
+                                c = new Condition(name, a, true);
+                            }
+                            else{
+                                c = new Condition(name, a, false);
+                            }
+                            break;
+                            
+                        case "Numeric equal":
+                            value = Double.parseDouble(
+                                condition_Value.getText());
+                            con_type = Condition.Type.NUMERICEQ;
+                            c = new Condition(name, a, value, 0);
+                            break;
+                        case "Numeric bigger than":
+                            value = Double.parseDouble(
+                                condition_Value.getText());
+                            con_type = Condition.Type.NUMERICBT;
+                            c = new Condition(name, a, value, 1);
+                            break;
+                        case "Numeric smaller than":
+                            value = Double.parseDouble(
+                                condition_Value.getText());
+                            con_type = Condition.Type.NUMERICST;
+                            c = new Condition(name, a, value, -1);
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(Main_Panel,
+                                "Please re-enter the condition type!",
+                                "Failed to recognise type",
+                                JOptionPane.WARNING_MESSAGE);
+                            break;
+                    }
+                    t.addCondition(c);
+                    updateConditionTable(t);
+                    Add_Condition_Window.setVisible(false);
+                    condition_Name.setText("");
+                    condition_Value.setText("");
+                    condition_Attribute.setText("");
+                    condition_Associated_Object.setText("");
+                }
+            }
+            updateConditionTable(t);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a room or object!",
+                            "No object found!",
+                            JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_condition_CreateActionPerformed
+
+    private void condition_TypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_condition_TypeActionPerformed
+        String type = condition_Type.getSelectedItem().toString();
+        if(type.equals("Boolean")){
+            condition_Value.setVisible(false);
+            condition_value_bool.setVisible(true);
+        }
+        else{
+            condition_Value.setVisible(true);
+            condition_value_bool.setVisible(false);
+        }
+    }//GEN-LAST:event_condition_TypeActionPerformed
+
+    private void delete_conditionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete_conditionMouseClicked
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode != null 
+                && !(selectedNode.getUserObject() instanceof String)){
+            int row = condition_Table.getSelectedRow();
+            Object o = (Object)selectedNode.getUserObject();
+            Transition t = o.findTransition(transition_Table.getValueAt(row, 1)
+                            .toString(), transition_Table.getValueAt(row, 2)
+                            .toString());
+            if(row >= 0 && t != null){
+                if(!t.deleteCondition(condition_Table.getValueAt(row, 0)
+                        .toString())){
+                    JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a condition not found!",
+                            "Failed to delete condition",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    updateConditionTable(t);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(Main_Panel,
+                            "Please select a condition to delete!",
+                            "Failed to delete condition",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_delete_conditionMouseClicked
+
     /**
      * Updates the exit table in the edit screen given the room
      * @param r Room to list out the exits
@@ -1600,6 +1978,22 @@ public class Main_Edit extends javax.swing.JFrame {
             room_exits.addRow(new String[]{e.takeExit().getName(), e.getName()});
         }
         jScrollPane6.setViewportView(Exits);
+    }
+    
+    private void updateConditionTable(Transition t){
+        DefaultTableModel conditions = (DefaultTableModel) 
+                condition_Table.getModel();
+        conditions.setRowCount(0);
+        for(Condition c: t.getConditions()){
+            if(c.getType() == Condition.Type.BOOLEAN){
+                conditions.addRow(new String[]{c.getName(), 
+                    c.getAtt().getName(), String.valueOf(c.getValueBool())});
+            }
+            else{
+                conditions.addRow(new String[]{c.getName(), 
+                    c.getAtt().getName(), String.valueOf(c.getValueAmt())});
+            }
+        }
     }
     
     /**
@@ -1616,10 +2010,12 @@ public class Main_Edit extends javax.swing.JFrame {
             LinkedList<Attribute> a = r.getAttributes();
             for(Attribute att: a){
                 if(att instanceof Number_Attribute){
-                    attributes.addRow(new String[]{att.getName(), "Number", "0", att.getVerb().getName()});
+                    attributes.addRow(new String[]{att.getName(), "Number", "0",
+                        att.getVerb().getName()});
                 }
                 else{
-                    attributes.addRow(new String[]{att.getName(), "Boolean", "0", att.getVerb().getName()});
+                    attributes.addRow(new String[]{att.getName(), 
+                        "Boolean", "0", att.getVerb().getName()});
                 }
             }
         }
@@ -1766,10 +2162,12 @@ public class Main_Edit extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame Add_Attribute_Window;
+    private javax.swing.JFrame Add_Condition_Window;
     private javax.swing.JFrame Add_Transition_Window;
     private javax.swing.JTree Current_Game;
     private javax.swing.JTable Exits;
     private javax.swing.JPanel Main_Panel;
+    private javax.swing.JDialog Object_Type;
     private javax.swing.JButton addState;
     private javax.swing.JButton add_attribute;
     private javax.swing.JButton add_condition;
@@ -1783,8 +2181,24 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTextField attribute_name;
     private javax.swing.JComboBox<String> attribute_type;
     private javax.swing.JLabel attribute_type_label;
+    private javax.swing.JButton cancel_Attribute;
     private javax.swing.JButton cancel_Transition;
+    private javax.swing.JTextField condition_Associated_Object;
+    private javax.swing.JTextField condition_Attribute;
+    private javax.swing.JButton condition_Cancel;
+    private javax.swing.JButton condition_Create;
+    private javax.swing.JTextField condition_Name;
+    private javax.swing.JButton condition_Save;
+    private javax.swing.JTable condition_Table;
+    private javax.swing.JComboBox<String> condition_Type;
+    private javax.swing.JTextField condition_Value;
+    private javax.swing.JLabel condition_attribute_label;
+    private javax.swing.JLabel condition_attribute_object_label;
     private javax.swing.JLabel condition_list_label;
+    private javax.swing.JLabel condition_name_label;
+    private javax.swing.JLabel condition_type_label;
+    private javax.swing.JComboBox<String> condition_value_bool;
+    private javax.swing.JLabel condition_value_label;
     private javax.swing.JButton create_Transition;
     private javax.swing.JButton create_attribute_button;
     private javax.swing.JButton create_exit;
@@ -1796,13 +2210,15 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JButton delete_condition;
     private javax.swing.JTextArea description;
     private javax.swing.JButton edit_State;
-    private javax.swing.JButton edit_condition;
     private javax.swing.JTextField end_State;
     private javax.swing.JLabel end_State_Label;
     private javax.swing.JPanel exit;
     private javax.swing.JTextField exit_name;
     private javax.swing.JTextField exit_room;
     private javax.swing.JTabbedPane info;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1821,7 +2237,6 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuEdit;

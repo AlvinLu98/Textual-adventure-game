@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -10,7 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- *
+ * Player object, users will control this object for movement
  * @author Alvin Lu
  */
 public class Player extends Living_Objects implements Serializable{
@@ -74,7 +69,7 @@ public class Player extends Living_Objects implements Serializable{
      
      public Object findObjectByName(String o){
         for(Object obj: this.inventory.getObjects()){
-            if(obj.getName().equals(o)){
+            if(obj.getName().equalsIgnoreCase(o)){
                 return obj;
             }    
             else if(obj instanceof Container){

@@ -28,7 +28,7 @@ public abstract class Object implements Serializable
         this.verbList = new ArrayList();
         this.attribute= new LinkedList();
         this.alias = new ArrayList();
-        this.currentState = new State("Initial state");
+        this.currentState = null;
     }
     
     /**
@@ -155,9 +155,6 @@ public abstract class Object implements Serializable
      * @return true if transition successful
      */
     public boolean sendAction(String verb){
-        for(Verb v:verbList){
-            
-        }
         State s = currentState.changeState(verb);
         if(s != null){
             currentState = s;
@@ -227,7 +224,7 @@ public abstract class Object implements Serializable
      * @return state that fits the name in State object
      */
     public State findState(String n){
-        if(currentState.getName().equals(n)){
+        if(currentState.getName().equalsIgnoreCase(n)){
             return this.currentState;
         }
         State st;
@@ -278,9 +275,11 @@ public abstract class Object implements Serializable
      */
     public Set<State> getAllStates(){
         Set<State> s = new HashSet<>();
-        s.add(this.currentState);
-        for(Transition t: this.currentState.getTransition()){
-            s.addAll(getAllStates(t.getEndState()));
+        if(this.currentState != null){
+            s.add(this.currentState);
+            for(Transition t: this.currentState.getTransition()){
+                s.addAll(getAllStates(t.getEndState()));
+            }
         }
         return s;
     }
@@ -297,6 +296,37 @@ public abstract class Object implements Serializable
             states.addAll(getAllStates(t.getEndState()));
         }
         return states;
+    }
+    
+    /**
+     * Returns all transitions in the object
+     * @return list of transitions in ArrayList
+     */
+    public ArrayList<Transition> getAllTransitions(){
+        ArrayList<Transition> transitions = new ArrayList<>();
+        if(this.currentState != null){
+            for(Transition t: this.currentState.getTransition()){
+                transitions.add(t);
+                transitions.addAll(getAllTransitions(t.getEndState()));
+            }
+        }
+        return transitions;
+    }
+    
+    /**
+     * Recursively adds in the state to the list
+     * @param s current state
+     * @return list of Transitions in ArrayList
+     */
+    private ArrayList<Transition> getAllTransitions(State s){
+        ArrayList<Transition> transitions = new ArrayList<>();
+        if(s != null){
+            for(Transition t: s.getTransition()){
+                transitions.add(t);
+                transitions.addAll(getAllTransitions(t.getEndState()));
+            }
+        }
+        return transitions;
     }
     
     /**
@@ -342,6 +372,19 @@ public abstract class Object implements Serializable
         }
         
         return false;
+    }
+    
+    /**
+     * Find the attribute given the name
+     * @return Attribute with the matching name
+     */
+    public Attribute findAttribute(String name){
+        for(Attribute a: this.attribute){
+            if(name.equalsIgnoreCase(a.getName())){
+                return a;
+            }
+        }
+        return null;
     }
     
     /**
