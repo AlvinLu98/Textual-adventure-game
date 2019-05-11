@@ -316,20 +316,36 @@ public class Play_Game extends javax.swing.JFrame {
             }
             
             if(isMovement(rel, gov, dep)){
-                Room r = game.getPlayer().move(dep);
-                if(r == null){
-                    Gameplay.append("No such direction!\n");
+                Room r = game.findRoomByName(gov);
+                System.out.println(r.getName());
+                if(!r.getCurrentState().allowMovement()){
+                    Gameplay.append("Can't enter room!"+ 
+                            r.getCurrentState().getName() + 
+                            " doesn't allow movement\n");
                 }
                 else{
-                    roomChange();
+                   if(game.getPlayer().move(gov) == null){
+                    Gameplay.append("No such direction!\n");
+                    }
+                    else{
+                        roomChange();
+                    } 
                 }
             }
             else if(isMovement_dep(rel, gov, dep)){
-                if(game.getPlayer().move(gov) == null){
-                    Gameplay.append("No such direction!\n");
+                Room r = game.findRoomByName(gov);
+                if(!r.getCurrentState().allowMovement()){
+                    Gameplay.append("Can't enter room!"+ 
+                            r.getCurrentState().getName() + 
+                            " doesn't allow movement\n");
                 }
                 else{
-                    roomChange();
+                   if(game.getPlayer().move(gov) == null){
+                    Gameplay.append("No such direction!\n");
+                    }
+                    else{
+                        roomChange();
+                    } 
                 }
             }
             else if(isObserving(rel, gov, dep)){
@@ -512,37 +528,31 @@ public class Play_Game extends javax.swing.JFrame {
      * @param dep dependent word
      */
     private void processVerbs(String rel, String gov, String dep){
+        System.out.println(gov + " " + dep);
         Object o = game.findAssociatedObjinVerb(gov, dep);
         boolean done = false;
         if(o != null){
             Attribute att = game.findAttByAssociatedObject(gov, o);
             if(att == null){
-                if(att.inRoom() && game.findObjectInRoomByName(att.getVerb()
-                        .getAssociatedObject().getName()) != null){
-                    if(!o.sendAction(gov)){
-                        boolean found = false;
-                        for(Transition t: o.getCurrentState().getTransition()){
-                            if(t.getAction().equalsIgnoreCase(gov)){
-                                conditionNotMet(t);
-                                found = true;
-                            }
-                        }
-                        if(!found){
-                            JLabel label = new JLabel("Object not found!");
-                            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
-                            JOptionPane.showMessageDialog(jPanel1, 
-                                label, 
-                                "Object not found", JOptionPane.WARNING_MESSAGE);
+                if(!o.sendAction(gov)){
+                    boolean found = false;
+                    for(Transition t: o.getCurrentState().getTransition()){
+                        if(t.getAction().equalsIgnoreCase(gov)){
+                            conditionNotMet(t);
+                            found = true;
                         }
                     }
-                    else{
-                        Gameplay.append(o.getName() + "'s current state is: " 
-                                + o.getCurrentState().getName() + "\n");
+                    if(!found){
+                        JLabel label = new JLabel("Object not found!");
+                        label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                        JOptionPane.showMessageDialog(jPanel1, 
+                            label, 
+                            "Object not found", JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 else{
-                    Gameplay.append(att.getVerb().getAssociatedObject()
-                            .getName() + " cannot be used here!\n"); 
+                    Gameplay.append(o.getName() + "'s current state is: " 
+                            + o.getCurrentState().getName() + "\n");
                 }
             }
             else if(att.inRoom()){

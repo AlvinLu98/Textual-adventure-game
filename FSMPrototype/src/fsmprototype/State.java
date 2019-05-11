@@ -12,6 +12,7 @@ public class State implements Serializable
 {
     private String name;
     private LinkedList<Transition> transitions;
+    private boolean allowMovement = true;
     
     /**
      * Empty constructor for state
@@ -62,6 +63,28 @@ public class State implements Serializable
      */
     public void setName(String name){
         this.name = name;
+    }
+    
+    /**
+     * Returns whether this state allows movement
+     * @return true if allows movement
+     */
+    public boolean allowMovement(){
+        return this.allowMovement;
+    }
+    
+    /**
+     * This state will not allow movement 
+     */
+    public void lock(){
+        this.allowMovement = false;
+    }
+    
+    /**
+     * This state will allow movement
+     */
+    public void unlock(){
+        this.allowMovement = true;
     }
     
     /**

@@ -85,6 +85,8 @@ public class Main_Edit extends javax.swing.JFrame {
         previous_Verb = new javax.swing.JTextField();
         object_associated_label_trans = new javax.swing.JLabel();
         object_Associated_Transition = new javax.swing.JTextField();
+        start_movement = new javax.swing.JCheckBox();
+        end_movement = new javax.swing.JCheckBox();
         Object_Type = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         Object_Selection = new javax.swing.JComboBox<>();
@@ -436,6 +438,12 @@ public class Main_Edit extends javax.swing.JFrame {
 
         object_Associated_Transition.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
+        start_movement.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        start_movement.setText("Disable movement");
+
+        end_movement.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        end_movement.setText("Disable movement");
+
         Add_Transition_Window.setVisible(false);
 
         javax.swing.GroupLayout Add_Transition_WindowLayout = new javax.swing.GroupLayout(Add_Transition_Window.getContentPane());
@@ -460,6 +468,10 @@ public class Main_Edit extends javax.swing.JFrame {
                                     .addComponent(start_State)
                                     .addComponent(end_State)
                                     .addComponent(object_Associated_Transition, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(start_movement)
+                                    .addComponent(end_movement))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -494,17 +506,19 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(start_State_Label)
                     .addComponent(start_State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(start_movement))
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                        .addGap(47, 47, 47)
                         .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(end_State_Label)
-                            .addComponent(end_State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(end_State, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(end_movement)))
                     .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addComponent(previous_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(55, 55, 55)
+                .addGap(54, 54, 54)
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(transition_verb_label)
                     .addComponent(transition_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -512,7 +526,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(object_associated_label_trans)
                     .addComponent(object_Associated_Transition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -1749,6 +1763,14 @@ public class Main_Edit extends javax.swing.JFrame {
             save_Transition.setVisible(false);
             add_condition.setVisible(false);
             delete_condition.setVisible(false);
+            if(selectedNode.getUserObject() instanceof Room){
+                start_movement.setVisible(true);
+                end_movement.setVisible(true);
+            }
+            else{
+                start_movement.setVisible(false);
+                end_movement.setVisible(false);
+            }
         }
         else{
             JLabel label = new JLabel("Please select a room or object!");
@@ -1783,12 +1805,24 @@ public class Main_Edit extends javax.swing.JFrame {
                 Transition cur = prev.findTransition(prevVerb, end);
                 State e = o.findState(end);
                 if(e == null){
-                    strt.addTransition(verb, new State(end), 
-                            cur.getConditions());
+                    e = new State(end);
+                    strt.addTransition(verb, e, cur.getConditions());
+                    if(start_movement.isSelected()){
+                        strt.lock();
+                    }
+                    if(end_movement.isSelected()){
+                        e.lock();
+                    }
                     o.deleteTransition(prevVerb, end);
                 }
                 else{
                     strt.addTransition(verb, e, cur.getConditions());
+                    if(start_movement.isSelected()){
+                        strt.lock();
+                    }
+                    if(end_movement.isSelected()){
+                        e.lock();
+                    }
                     o.deleteTransition(prevVerb, end);
                 }
                 if(!verb.equalsIgnoreCase(prevVerb)){
@@ -1828,6 +1862,14 @@ public class Main_Edit extends javax.swing.JFrame {
                 save_Transition.setVisible(true);
                 add_condition.setVisible(true);
                 delete_condition.setVisible(true);
+                if(selectedNode.getUserObject() instanceof Room){
+                    start_movement.setVisible(true);
+                    end_movement.setVisible(true);
+                }
+                else{
+                    start_movement.setVisible(false);
+                    end_movement.setVisible(false);
+                }
                 int row = transition_Table.getSelectedRow();
                 Object o = (Object)selectedNode.getUserObject();
                 Transition t = null;
@@ -1851,6 +1893,16 @@ public class Main_Edit extends javax.swing.JFrame {
                             .toString());
                     if(v != null){
                         object_Associated_Transition.setText(v.getName());
+                    }
+                    if(!t.getEndState().allowMovement()){
+                        end_movement.setSelected(true);
+                    }
+                    State s = o.findState(transition_Table.getValueAt(row, 0)
+                            .toString());
+                    if(s != null){
+                        if(s.allowMovement()){
+                            start_movement.setSelected(true);
+                        }
                     }
                     updateConditionTable(t);
                 }
@@ -1888,13 +1940,16 @@ public class Main_Edit extends javax.swing.JFrame {
             s = o.findState(start_State.getText());
             end = o.findState(end_State.getText());
         }
+        
         Object associated = null;
         String obj = object_Associated_Transition.getText();
         for(Room r: g.getRooms()){
             if(r.getName().equals(obj)){
                 associated = r;
             }
-            associated = g.findObjectandRoomByName(r.getName(), obj);
+            else if(associated == null){
+                associated = g.findObjectandRoomByName(r.getName(), obj);
+            }
         }
         
         if(associated == null){
@@ -1910,10 +1965,16 @@ public class Main_Edit extends javax.swing.JFrame {
                 s.addTransition(transition_Verb.getText(), end);
             }
             else{
+                end = new State(end_State.getText());
                 s.addTransition(transition_Verb.getText(), 
-                        new State(end_State.getText()));
+                        end);
             }
-            
+            if(start_movement.isSelected()){
+                s.lock();
+            }
+            if(end_movement.isSelected()){
+                end.lock();
+            }
             if(o instanceof Room){
                 o.addVerb(new Verb(transition_Verb.getText(),associated, o));
                 g.addVerb(new Verb(transition_Verb.getText(),associated, o));
@@ -1930,8 +1991,14 @@ public class Main_Edit extends javax.swing.JFrame {
                 
             }
             else{
-                start.addTransition(transition_Verb.getText(), 
-                        new State(end_State.getText()));
+               end = new State(end_State.getText()); 
+               start.addTransition(transition_Verb.getText(), end);
+            }
+            if(start_movement.isSelected()){
+                start.lock();
+            }
+            if(end_movement.isSelected()){
+                end.lock();
             }
             if(o instanceof Room){
                 o.addVerb(new Verb(transition_Verb.getText(),associated, o));
@@ -2635,6 +2702,7 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JButton edit_State;
     private javax.swing.JTextField end_State;
     private javax.swing.JLabel end_State_Label;
+    private javax.swing.JCheckBox end_movement;
     private javax.swing.JPanel exit;
     private javax.swing.JTextField exit_name;
     private javax.swing.JTextField exit_room;
@@ -2686,6 +2754,7 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JButton save_Transition;
     private javax.swing.JTextField start_State;
     private javax.swing.JLabel start_State_Label;
+    private javax.swing.JCheckBox start_movement;
     private javax.swing.JLabel starting_val;
     private javax.swing.JLabel state_window_title;
     private javax.swing.JTable states_Table;
