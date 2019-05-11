@@ -1,5 +1,6 @@
 package fsmprototype;
 
+
 import java.io.Serializable;
 
 /**
@@ -112,23 +113,28 @@ public class Condition implements Serializable {
      */
     public boolean checkCondition(){
         if(this.condition instanceof Number_Attribute){
-            if(this.condType == Type.NUMERICEQ){
-                if(this.defaultAmt == ((Number_Attribute)this.condition)
-                        .getValue()){
-                    return true;
-                }
-            }
-            else if(this.condType == Type.NUMERICBT){
-                if(this.defaultAmt > ((Number_Attribute)this.condition)
-                        .getValue()){
-                    return true;
-                }
-            }
-            else{
+            if(null == this.condType){
                 if(this.defaultAmt < ((Number_Attribute)this.condition)
                         .getValue()){
                     return true;
                 }
+            }
+            else switch (this.condType) {
+                case NUMERICEQ:
+                    if(this.defaultAmt == ((Number_Attribute)this.condition)
+                            .getValue()){
+                        return true;
+                    }   break;
+                case NUMERICBT:
+                    if(this.defaultAmt < ((Number_Attribute)this.condition)
+                            .getValue()){
+                        return true;
+                    }   break;
+                default:
+                    if(this.defaultAmt > ((Number_Attribute)this.condition)
+                            .getValue()){
+                        return true;
+                    }   break;
             }
         }
         else{

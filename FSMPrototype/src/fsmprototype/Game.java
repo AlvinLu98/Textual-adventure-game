@@ -105,6 +105,21 @@ public class Game implements Serializable{
     }
     
     /**
+     * Delete a verb given its name
+     * @param verb name of verb
+     * @return true if verb is deleted
+     */
+    public boolean deleteVerb(String verb){
+        for(int i = 0; i < this.verbList.size(); i++){
+            if(verb.equalsIgnoreCase(this.verbList.get(i).getName())){
+                this.verbList.remove(i);
+                i = this.verbList.size();
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Moves and object into player's inventory
      * @param o 
      */
@@ -256,7 +271,7 @@ public class Game implements Serializable{
     }
     
     /**
-     * Find the object associated with the verb given the verb and 
+     * Find the object associated with the verb given the verb and subject
      * @param verb name of the verb
      * @param dep name of associated object
      * @return Associated object that matches the name and verb

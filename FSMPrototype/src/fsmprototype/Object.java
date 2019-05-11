@@ -103,6 +103,30 @@ public abstract class Object implements Serializable
     }
     
     /**
+     * Delete a verb from the list
+     * @param v verb to be deleted
+     * @return true if verb is deleted
+     */
+    public boolean deleteVerb(Verb v){
+        return this.verbList.remove(v);
+    }
+    
+    /**
+     * Delete a verb from the list given the name
+     * @param v name of verb to be deleted
+     * @return true if verb is deleted
+     */
+    public boolean deleteVerb(String v){
+        for(Verb verb: this.verbList){
+            if(verb.getName().equalsIgnoreCase(v)){
+                this.verbList.remove(verb);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Set the current state to a given state
      * @param s state to be set
      */
@@ -382,6 +406,20 @@ public abstract class Object implements Serializable
         for(Attribute a: this.attribute){
             if(name.equalsIgnoreCase(a.getName())){
                 return a;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Find the verb given the name
+     * @param verb verb name to find
+     * @return Verb with the matching name
+     */
+    public Verb findVerb(String verb){
+        for(Verb v: this.verbList){
+            if(v.getName().equalsIgnoreCase(verb)){
+                return v;
             }
         }
         return null;

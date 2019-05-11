@@ -12,6 +12,7 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedDependenciesAnnotation;
 import edu.stanford.nlp.trees.TypedDependency;
 import edu.stanford.nlp.util.CoreMap;
+import java.awt.Font;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -21,6 +22,7 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
@@ -44,6 +46,7 @@ public class Play_Game extends javax.swing.JFrame {
     public Play_Game() {
         game = (Game) deepClone(Main_Edit.g);
         initComponents();
+        setLocationRelativeTo(null);
         JOptionPane.showMessageDialog(jScrollPane1, "Currently creating your game!");
         
         movement = new ArrayList();
@@ -283,10 +286,10 @@ public class Play_Game extends javax.swing.JFrame {
                 // this is the NER label of the token
                 String ne = token.get(NamedEntityTagAnnotation.class);
                 nerTags.add(ne);
-                System.out.println(word + ", " + pos + ", " + ne);
+//                System.out.println(word + ", " + pos + ", " + ne);
             }
             SemanticGraph dependencies = sentence.get(CollapsedDependenciesAnnotation.class);
-            System.out.println("Dependencies\n:" + dependencies);
+//            System.out.println("Dependencies\n:" + dependencies);
             ArrayList<TypedDependency> dep = (ArrayList)dependencies.typedDependencies();
             processSentence(dep);
         }
@@ -306,7 +309,13 @@ public class Play_Game extends javax.swing.JFrame {
             System.out.println(rel + ", "+ gov +", "+ dep);
             
             if(dep.equals("help") && rel.equals("root")){
-               Gameplay.append("Good luck!");
+               Gameplay.append("You can move around by entering 'go' followed "
+                       + "by the location \n");
+               Gameplay.append("You can look at objects by entering 'look' "
+                       + "followed by the object\n");
+               Gameplay.append("You can interact with different objects with "
+                       + "their specific verbs, enter 'look' to learn what you "
+                       + "can do with them!\n");
             }
             
             if(isMovement(rel, gov, dep)){
@@ -337,9 +346,14 @@ public class Play_Game extends javax.swing.JFrame {
             else if(isTaking(rel, gov, dep)){
                 Object o = game.findObjectInRoomByName(dep);
                 if(o != null){
-                    game.givePlayer(o);
-                    Gameplay.append("Taken " + o.getName() + "\n");
-                    updateTree();
+                    if(o instanceof Pick_Able_Object){
+                        game.givePlayer(o);
+                        Gameplay.append("Taken " + o.getName() + "\n");
+                        updateTree();
+                    }
+                    else{
+                        Gameplay.append(o.getName() + " can't be picked up\n");
+                    }
                 }
                 else{
                     Gameplay.append("No such object!\n");
@@ -502,64 +516,123 @@ public class Play_Game extends javax.swing.JFrame {
      */
     private void processVerbs(String rel, String gov, String dep){
         Object o = game.findAssociatedObjinVerb(gov, dep);
-        System.out.println("gov: " + gov);
-        Attribute att = game.findAttByAssociatedObject(gov, o);
-        if(att == null){
-            if(!o.sendAction(dep)){
-                boolean found = false;
-                for(Transition t: o.getCurrentState().getTransition()){
-                    if(t.getAction().equalsIgnoreCase(dep)){
-                        Gameplay.append("Condition not met: \n");
-                        for(Condition c: t.getConditions()){
-                            switch (c.getType()) {
-                                case BOOLEAN:
-                                    Gameplay.append(c.getName() + 
-                                            " needs to be "
-                                            + String.valueOf(c.getValueBool()));
-                                    break;
-                                case NUMERICBT:
-                                    Gameplay.append(c.getName()
-                                            + " needs to be bigger than "
-                                            + c.getValueAmt());
-                                    break;
-                                case NUMERICEQ:
-                                    Gameplay.append(c.getName()
-                                            + " needs to be equal to "
-                                            + c.getValueAmt());
-                                    break;
-                                default:
-                                    Gameplay.append(c.getName()
-                                            + " needs to be smaller than "
-                                            + c.getValueAmt());
-                                    break;
-                            }
-                            Gameplay.append("\n");
+        boolean done = false;
+        if(o != null){
+            Attribute att = game.findAttByAssociatedObject(gov, o);
+            if(att == null){
+                if(!o.sendAction(gov)){
+                    boolean found = false;
+                    for(Transition t: o.getCurrentState().getTransition()){
+                        if(t.getAction().equalsIgnoreCase(gov)){
+                            conditionNotMet(t);
+                            found = true;
                         }
-                        found = true;
+                    }
+                    if(!found){
+                        JLabel label = new JLabel("Object not found!");
+                        label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                        JOptionPane.showMessageDialog(jPanel1, 
+                            label, 
+                            "Object not found", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                if(!found){
-                    JOptionPane.showMessageDialog(jPanel1, 
-                        "Object not found!", 
-                        "Object not found", JOptionPane.WARNING_MESSAGE);
+                else{
+                    Gameplay.append(o.getName() + "'s current state is: " 
+                            + o.getCurrentState().getName() + "\n");
+                }
+            }
+            else if(att.inRoom()){
+                if(game.findObjectInRoomByName(att.getVerb().getAssociatedObject()
+                        .getName()) != null){
+                    if(o instanceof Limited_Use_Object){
+                        if(((Limited_Use_Object) o).use()){
+                            att.modify();
+                            done = true;
+                        }
+                        else{
+                            Gameplay.append(o.getName() + " out of uses\n");
+                        }
+                    }
+                    else{
+                       att.modify(); 
+                       done = true;
+                    } 
+                }
+                else{
+                    Gameplay.append(att.getVerb().getAssociatedObject()
+                            .getName() + " cannot be used here!\n"); 
                 }
             }
             else{
-                Gameplay.append(o.getName() + "'s current state is: " 
-                        + o.getCurrentState().getName() + "\n");
+                if(o instanceof Limited_Use_Object){
+                        if(((Limited_Use_Object) o).use()){
+                            att.modify();
+                            done = true;
+                        }
+                        else{
+                            Gameplay.append(o.getName() + " out of uses\n");
+                        }
+                    }
+                    else{
+                       att.modify(); 
+                       done = true;
+                    } 
             }
-        }
-        else if(att.inRoom()){
-            if(game.findObjectInRoomByName(att.getVerb().getOwnerObject().getName()) != null){
-                att.modify();
+
+            if(done){
+                updateAttribute(att, dep);
             }
-            else{
-                Gameplay.append(att.getVerb().getOwnerObject().getName() + " cannot be used here!"); 
-            }
+            updatePlayerAttribute();
+            updateTree();
         }
         else{
-            att.modify();
+            JLabel label = new JLabel("Object not found!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(jPanel1, 
+                label, 
+                "Object not found", JOptionPane.WARNING_MESSAGE);
         }
+    }
+    
+    /**
+     * Prints out the conditions if the conditions are not met
+     * @param t Transition to print out the conditions
+     */
+    private void conditionNotMet(Transition t){
+        Gameplay.append("Condition not met: \n");
+        for(Condition c: t.getConditions()){
+            switch (c.getType()) {
+                case BOOLEAN:
+                    Gameplay.append(c.getAtt().getName() + 
+                            " needs to be "
+                            + String.valueOf(c.getValueBool()));
+                    break;
+                case NUMERICBT:
+                    Gameplay.append(c.getAtt().getName()
+                            + " needs to be bigger than "
+                            + c.getValueAmt());
+                    break;
+                case NUMERICEQ:
+                    Gameplay.append(c.getAtt().getName()
+                            + " needs to be equal to "
+                            + c.getValueAmt());
+                    break;
+                default:
+                    Gameplay.append(c.getAtt().getName()
+                            + " needs to be smaller than "
+                            + c.getValueAmt());
+                    break;
+            }
+            Gameplay.append("\n");
+        }
+    }
+    
+    /**
+     * Appends the updated attribute to Game play text box
+     * @param att Attribute to output value
+     * @param dep Item associated with attribute
+     */
+    private void updateAttribute(Attribute att, String dep){
         if(att instanceof Boolean_Attribute){
            if(((Boolean_Attribute) att).getCondition()){
                Gameplay.append(dep + " is " + att.getName()); 
@@ -570,14 +643,14 @@ public class Play_Game extends javax.swing.JFrame {
         }
         else if(att instanceof Number_Attribute){
             if(((Number_Attribute) att).isIncrement()){
-                Gameplay.append(att.getName() + " increase by " + ((Number_Attribute) att).getAmount() + "\n"); 
+                Gameplay.append(att.getName() + " increase by " +
+                        ((Number_Attribute) att).getAmount() + "\n"); 
             }
             else{
-                Gameplay.append(att.getName() + "decreased by " + ((Number_Attribute) att).getAmount() + "\n"); 
+                Gameplay.append(att.getName() + "decreased by " + 
+                        ((Number_Attribute) att).getAmount() + "\n"); 
             }
         }
-        updatePlayerAttribute();
-        updateTree();
     }
     
     /**
@@ -621,10 +694,12 @@ public class Play_Game extends javax.swing.JFrame {
         player_attributes.setRowCount(0);
         for(Attribute att: a){
             if(att instanceof Number_Attribute){
-                player_attributes.addRow(new String[]{att.getName(), Double.toString(((Number_Attribute) att).getValue())});
+                player_attributes.addRow(new String[]{att.getName(), 
+                    Double.toString(((Number_Attribute) att).getValue())});
             }
             else{
-                player_attributes.addRow(new String[]{att.getName(), Boolean.toString(((Boolean_Attribute)att).getCondition())});
+                player_attributes.addRow(new String[]{att.getName(), 
+                    Boolean.toString(((Boolean_Attribute)att).getCondition())});
             }
         }
     }

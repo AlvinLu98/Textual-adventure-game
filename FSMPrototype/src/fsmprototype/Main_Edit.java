@@ -17,7 +17,9 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import fsmprototype.Condition.Type;
+import java.awt.Font;
 import java.util.Set;
+import javax.swing.JLabel;
 
 /**
  *
@@ -33,7 +35,8 @@ public class Main_Edit extends javax.swing.JFrame {
         for(Room r:g.getRooms()){
             model.addElement(r.getName());
         }
-        initComponents();  
+        initComponents(); 
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -89,7 +92,10 @@ public class Main_Edit extends javax.swing.JFrame {
         object_Associated_Transition = new javax.swing.JTextField();
         Object_Type = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        Object_Selection = new javax.swing.JComboBox<>();
+        amount_Of_Uses_Label = new javax.swing.JLabel();
+        amount_Of_Use = new javax.swing.JTextField();
+        create_Object = new javax.swing.JButton();
         Add_Condition_Window = new javax.swing.JFrame();
         jLabel10 = new javax.swing.JLabel();
         condition_name_label = new javax.swing.JLabel();
@@ -106,6 +112,12 @@ public class Main_Edit extends javax.swing.JFrame {
         condition_Associated_Object = new javax.swing.JTextField();
         condition_Type = new javax.swing.JComboBox<>();
         condition_value_bool = new javax.swing.JComboBox<>();
+        Object_Type_Player = new javax.swing.JDialog();
+        Object_Type_Label_Player = new javax.swing.JLabel();
+        Object_Selection_Player = new javax.swing.JComboBox<>();
+        amount_Of_Uses_Label_Player = new javax.swing.JLabel();
+        amount_Of_Use_Player = new javax.swing.JTextField();
+        create_Object_Player = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         object = new javax.swing.JButton();
         room = new javax.swing.JButton();
@@ -157,7 +169,7 @@ public class Main_Edit extends javax.swing.JFrame {
         menuEdit = new javax.swing.JMenu();
 
         Add_Attribute_Window.setVisible(false);
-        Add_Attribute_Window.setPreferredSize(new java.awt.Dimension(900, 550));
+        Add_Attribute_Window.setLocationRelativeTo(null);
         Add_Attribute_Window.setSize(new java.awt.Dimension(950, 800));
 
         attribute_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -340,6 +352,7 @@ public class Main_Edit extends javax.swing.JFrame {
 
         Add_Transition_Window.setPreferredSize(new java.awt.Dimension(1390, 1099));
         Add_Transition_Window.setSize(new java.awt.Dimension(1400, 1048));
+        Add_Transition_Window.setLocationRelativeTo(null);
 
         state_window_title.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         state_window_title.setText("Add Transition window");
@@ -524,30 +537,74 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGap(106, 106, 106))
         );
 
+        Object_Type.setSize(new java.awt.Dimension(750, 300));
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("Select Object type");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Container", "Edible", "Human", "Limited use object", "Pickable object", "Player", "Switchable", "Unlimited use", "Wearable", " " }));
+        Object_Selection.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Object_Selection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Container", "Human", "Limited use object", "Pickable object", "Player", "Unlimited use object", " " }));
+        Object_Selection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Object_SelectionActionPerformed(evt);
+            }
+        });
+
+        amount_Of_Uses_Label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        amount_Of_Uses_Label.setText("Amount of uses");
+        amount_Of_Uses_Label.setVisible(false);
+
+        amount_Of_Use.setVisible(false);
+        amount_Of_Use.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        create_Object.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        create_Object.setText("Create");
+        create_Object.setToolTipText("");
+        create_Object.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_ObjectActionPerformed(evt);
+            }
+        });
+
+        Object_Type.setVisible(false);
+        Object_Type.setLocationRelativeTo(null);
 
         javax.swing.GroupLayout Object_TypeLayout = new javax.swing.GroupLayout(Object_Type.getContentPane());
         Object_Type.getContentPane().setLayout(Object_TypeLayout);
         Object_TypeLayout.setHorizontalGroup(
             Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Object_TypeLayout.createSequentialGroup()
+                .addGroup(Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Object_TypeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(Object_TypeLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(Object_Selection, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amount_Of_Uses_Label)
+                    .addComponent(amount_Of_Use, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77))
             .addGroup(Object_TypeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(440, Short.MAX_VALUE))
+                .addGap(308, 308, 308)
+                .addComponent(create_Object)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Object_TypeLayout.setVerticalGroup(
             Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Object_TypeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(45, 45, 45)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(amount_Of_Uses_Label)
+                .addGap(9, 9, 9)
+                .addGroup(Object_TypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Object_Selection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(amount_Of_Use, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(create_Object)
+                .addGap(13, 13, 13))
         );
 
         Add_Condition_Window.setSize(new java.awt.Dimension(1040, 600));
@@ -584,10 +641,20 @@ public class Main_Edit extends javax.swing.JFrame {
 
         condition_Cancel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         condition_Cancel.setText("Cancel");
+        condition_Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                condition_CancelActionPerformed(evt);
+            }
+        });
 
         condition_Save.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         condition_Save.setText("Save");
         condition_Save.setVisible(false);
+        condition_Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                condition_SaveActionPerformed(evt);
+            }
+        });
 
         condition_attribute_object_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         condition_attribute_object_label.setText("Owner of attribute");
@@ -606,6 +673,7 @@ public class Main_Edit extends javax.swing.JFrame {
         condition_value_bool.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "true", "false" }));
 
         Add_Condition_Window.setVisible(false);
+        Add_Condition_Window.setLocationRelativeTo(null);
 
         javax.swing.GroupLayout Add_Condition_WindowLayout = new javax.swing.GroupLayout(Add_Condition_Window.getContentPane());
         Add_Condition_Window.getContentPane().setLayout(Add_Condition_WindowLayout);
@@ -676,6 +744,75 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(condition_Create)
                     .addComponent(condition_Cancel)
                     .addComponent(condition_Save))
+                .addContainerGap())
+        );
+
+        Object_Type_Player.setSize(new java.awt.Dimension(750, 300));
+
+        Object_Type_Label_Player.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        Object_Type_Label_Player.setText("Select Object type");
+
+        Object_Selection_Player.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Object_Selection_Player.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Container", "Human", "Limited use object", "Pickable object", "Unlimited use", " " }));
+        Object_Selection_Player.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Object_Selection_PlayerActionPerformed(evt);
+            }
+        });
+
+        amount_Of_Uses_Label_Player.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        amount_Of_Uses_Label_Player.setText("Amount of uses");
+        amount_Of_Uses_Label_Player.setVisible(false);
+
+        amount_Of_Use_Player.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        amount_Of_Use_Player.setVisible(false);
+
+        create_Object_Player.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        create_Object_Player.setText("Create");
+        create_Object_Player.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_Object_PlayerActionPerformed(evt);
+            }
+        });
+
+        Object_Type_Player.setVisible(false);
+        Object_Type_Player.setLocationRelativeTo(null);
+
+        javax.swing.GroupLayout Object_Type_PlayerLayout = new javax.swing.GroupLayout(Object_Type_Player.getContentPane());
+        Object_Type_Player.getContentPane().setLayout(Object_Type_PlayerLayout);
+        Object_Type_PlayerLayout.setHorizontalGroup(
+            Object_Type_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Object_Type_PlayerLayout.createSequentialGroup()
+                .addGroup(Object_Type_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Object_Type_PlayerLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Object_Type_Label_Player))
+                    .addGroup(Object_Type_PlayerLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(Object_Selection_Player, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGroup(Object_Type_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amount_Of_Uses_Label_Player)
+                    .addComponent(amount_Of_Use_Player, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77))
+            .addGroup(Object_Type_PlayerLayout.createSequentialGroup()
+                .addGap(303, 303, 303)
+                .addComponent(create_Object_Player)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Object_Type_PlayerLayout.setVerticalGroup(
+            Object_Type_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Object_Type_PlayerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Object_Type_Label_Player)
+                .addGap(10, 10, 10)
+                .addComponent(amount_Of_Uses_Label_Player)
+                .addGap(9, 9, 9)
+                .addGroup(Object_Type_PlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Object_Selection_Player, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(amount_Of_Use_Player, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(create_Object_Player)
                 .addContainerGap())
         );
 
@@ -853,16 +990,22 @@ public class Main_Edit extends javax.swing.JFrame {
         Exits.setRowHeight(24);
         jScrollPane6.setViewportView(Exits);
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setText("Add Exit");
 
+        exit_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         exit_name.setText("Exit name");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel6.setText("Exit name");
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setText("Exit room");
 
+        exit_room.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         exit_room.setText("Exit room");
 
+        create_exit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         create_exit.setText("Create exit");
         create_exit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -912,12 +1055,16 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("Remove Exit");
 
+        remove_exit_name.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         remove_exit_name.setText("Exit name");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel9.setText("Exit name");
 
+        remove_exit.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         remove_exit.setText("Remove exit");
         remove_exit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -977,7 +1124,7 @@ public class Main_Edit extends javax.swing.JFrame {
             exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(exitLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(exitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(create_exit_form, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1105,6 +1252,8 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        menuBar.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+
         menuFile.setText("File");
 
         menu_File_Save.setText("Save");
@@ -1153,114 +1302,37 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(0, 0, 1637, 919);
     }// </editor-fold>//GEN-END:initComponents
     
     private void objectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectMouseClicked
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         if(selectedNode == null){
+            JLabel label = new JLabel("Please select a room to create Object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
             JOptionPane.showMessageDialog(Main_Panel, 
-                    "Please select a room to create Object!", 
-                    "Inane warning", JOptionPane.WARNING_MESSAGE);
+                    label, "Inane warning", JOptionPane.WARNING_MESSAGE);
         }
         else if(selectedNode.getUserObject() instanceof Room){
-            String[] possibilities = {"Player", "Human", "Pickable object", "Container"};
-            String s = (String)JOptionPane.showInputDialog(
-                    Main_Panel,
-                    "Type of item:\n",
-                    "Choose item type",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    possibilities,
-                    possibilities[2]);
-            Room r = (Room)selectedNode.getUserObject();
-            if(s != null){
-                switch(s){
-                    case "Player":
-                        if(g.getPlayer() == null){
-                            Player p = new Player("Player", r);
-                            g.addPlayer(p);
-                            g.addObjectToRoom(r, p);
-                            updateTree();
-                            break;
-                        } 
-                    case "Human":
-                        Human h = new Human("Human");
-                        g.addObjectToRoom(r, h);
-                        updateTree();
-                        break;
-
-                    case "Pickable object":
-                        Pick_Able_Object o = new Pick_Able_Object("Object");
-                        g.addObjectToRoom(r, o);
-                        updateTree();
-                        break;
-
-                    case "Container":
-                        Container c = new Container("Object");
-                        g.addObjectToRoom(r, c);
-                        updateTree();
-                        break;
-                }
-            }
+            Object_Type.setVisible(true);
+            Object_Type_Player.setVisible(false);
         }
         else if(selectedNode.getUserObject() instanceof Container){
-            String[] possibilities = {"Pickable object", "Container", "Usable object"};
-            String s = (String)JOptionPane.showInputDialog(
-                    Main_Panel,
-                    "Type of item:\n",
-                    "Choose item type",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    possibilities,
-                    "Pickable object");
-            Container con = (Container)selectedNode.getUserObject();
-            if(s != null){
-                switch(s){
-                    case "Pickable object":
-                        Pick_Able_Object o = new Pick_Able_Object("Object");
-                        con.addObjects(o);
-                        updateTree();
-                        break;
-
-                    case "Container":
-                        Container c = new Container("Container");
-                        con.addObjects(c);
-                        updateTree();
-                        break;           
-                } 
-            }
+            Object_Type.setVisible(false);
+            Object_Type_Player.setVisible(true);
         }
         
         else if(selectedNode.getUserObject() instanceof Player){
-            String[] possibilities = {"Pickable object", "Container", "Usable object"};
-            String s = (String)JOptionPane.showInputDialog(
-                    Main_Panel,
-                    "Type of item:\n",
-                    "Choose item type",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    possibilities,
-                    "Pickable object");
-            Player ply = (Player)selectedNode.getUserObject();
-            if(s != null){
-                switch(s){
-                    case "Pickable object":
-                        Pick_Able_Object o = new Pick_Able_Object("Object");
-                        ply.pickup(o);
-                        updateTree();
-                        break;
-
-                    case "Container":
-                        Container c = new Container("Container");
-                        ply.pickup(c);
-                        updateTree();
-                        break;           
-                }   
-            }
+            Object_Type.setVisible(false);
+            Object_Type_Player.setVisible(true);
         }
         else{
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room, container or player to create Object", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel(
+                    "Please select a room, container or player to create"+
+                            "Object");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label, 
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
         } 
     }//GEN-LAST:event_objectMouseClicked
 
@@ -1298,7 +1370,9 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_Current_GameValueChanged
 
     private void objectNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_objectNameFocusLost
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
         if(selectedNode != null){
             if(selectedNode.getUserObject() instanceof Room){
                 Room r = (Room)selectedNode.getUserObject();
@@ -1307,27 +1381,33 @@ public class Main_Edit extends javax.swing.JFrame {
             }
             else if(selectedNode.getUserObject() instanceof Container){
                 info.setEnabledAt(1, false);
-                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                DefaultMutableTreeNode parent = 
+                        (DefaultMutableTreeNode)selectedNode.getParent();
                 if(parent.getUserObject() instanceof Room){
                     Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
+                    g.findRoom((Room)parent.getUserObject()).findObject(o)
+                            .setName(objectName.getText());
                 }
                 else{
                     while(!(parent.getUserObject() instanceof Room)){
                         parent = (DefaultMutableTreeNode)parent.getParent();
                     }
                     Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
+                    g.findRoom((Room)parent.getUserObject()).findObject(o)
+                            .setName(objectName.getText());
                 }
             } 
             else if(selectedNode.getUserObject() instanceof Player){
                 info.setEnabledAt(1, false);
                 g.getPlayer().setName(objectName.getText());
             }
-            else if(((DefaultMutableTreeNode)selectedNode.getParent()).getUserObject() instanceof Room){
-                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+            else if(((DefaultMutableTreeNode)selectedNode.getParent())
+                    .getUserObject() instanceof Room){
+                DefaultMutableTreeNode parent = 
+                        (DefaultMutableTreeNode)selectedNode.getParent();
                 Object o = (Object)selectedNode.getUserObject();
-                g.findRoom((Room)parent.getUserObject()).findObject(o).setName(objectName.getText());
+                g.findRoom((Room)parent.getUserObject()).findObject(o)
+                        .setName(objectName.getText());
             }
             else{
                 Object o = (Object)selectedNode.getUserObject();
@@ -1336,7 +1416,10 @@ public class Main_Edit extends javax.swing.JFrame {
             jScrollPane5.setViewportView(Current_Game);
         }
         else{
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label,
+                    "Inane warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_objectNameFocusLost
 
@@ -1367,7 +1450,9 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_File_OpenActionPerformed
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
-         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+         DefaultMutableTreeNode selectedNode = 
+                 (DefaultMutableTreeNode)Current_Game
+                         .getLastSelectedPathComponent();
          DefaultTreeModel model = (DefaultTreeModel)Current_Game.getModel();
          if(selectedNode != null){
              if(selectedNode.getUserObject() instanceof Room){
@@ -1375,17 +1460,20 @@ public class Main_Edit extends javax.swing.JFrame {
                  g.removeRoom((Room)selectedNode.getUserObject());
              }
              else{
-                    DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                    DefaultMutableTreeNode parent = 
+                            (DefaultMutableTreeNode)selectedNode.getParent();
                     if(parent != null && parent.getUserObject() instanceof Room){
                         Object o = (Object)selectedNode.getUserObject();
-                        g.findRoom((Room)parent.getUserObject()).removeObject(o);
+                        g.findRoom((Room)parent.getUserObject())
+                                .removeObject(o);
                     }
                     else{
                         while(!(parent.getUserObject() instanceof Room)){
                             parent = (DefaultMutableTreeNode)parent.getParent();
                         }
                         Object o = (Object)selectedNode.getUserObject();
-                        g.findRoom((Room)parent.getUserObject()).removeObject(o);
+                        g.findRoom((Room)parent.getUserObject())
+                                .removeObject(o);
                     }
              }
              model.removeNodeFromParent(selectedNode);
@@ -1399,11 +1487,17 @@ public class Main_Edit extends javax.swing.JFrame {
         
         Room r = g.findRoomByName(room);
         if(r == null){
-            JOptionPane.showMessageDialog(Main_Panel, "Room not found!", "Room missing", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Room not found!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label, 
+                    "Room missing", JOptionPane.WARNING_MESSAGE);
         }
         else{
             if(!g.findRoom((Room)selectedNode.getUserObject()).addExit(name, r)){
-                JOptionPane.showMessageDialog(Main_Panel, "Exit already exists!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+                JLabel label = new JLabel("Exit already exists!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Main_Panel, label,
+                        "Inane warning", JOptionPane.WARNING_MESSAGE);
             }
             else{
                 exit_name.setText("");
@@ -1414,14 +1508,18 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_create_exitMouseClicked
 
     private void remove_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_remove_exitMouseClicked
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
         String name = remove_exit_name.getText();
         g.findRoom((Room)selectedNode.getUserObject()).removeExit(name);
         updateExitTable((Room)selectedNode.getUserObject());
     }//GEN-LAST:event_remove_exitMouseClicked
 
     private void descriptionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descriptionFocusLost
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
         if(selectedNode != null){
             if(description.getText() == ""){  }
             else if(selectedNode.getUserObject() instanceof Room){
@@ -1429,10 +1527,12 @@ public class Main_Edit extends javax.swing.JFrame {
                 r.setDesc(description.getText());
             }
             else if(selectedNode.getUserObject() instanceof Container){
-                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+                DefaultMutableTreeNode parent = 
+                        (DefaultMutableTreeNode)selectedNode.getParent();
                 if(parent.getUserObject() instanceof Room){
                     Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject()).findObject(o).setDesc(description.getText());
+                    g.findRoom((Room)parent.getUserObject())
+                            .findObject(o).setDesc(description.getText());
                     info.setEnabledAt(1, false);
                 }
                 else{
@@ -1440,17 +1540,21 @@ public class Main_Edit extends javax.swing.JFrame {
                         parent = (DefaultMutableTreeNode)parent.getParent();
                     }
                     Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject()).findObject(o).setDesc(description.getText());
+                    g.findRoom((Room)parent.getUserObject())
+                            .findObject(o).setDesc(description.getText());
                     info.setEnabledAt(1, false);
                 }
             } 
             else if(selectedNode.getUserObject() instanceof Player){
                 g.getPlayer().setDesc(description.getText());
             }
-            else if(((DefaultMutableTreeNode)selectedNode.getParent()).getUserObject() instanceof Room){
-                DefaultMutableTreeNode parent = (DefaultMutableTreeNode)selectedNode.getParent();
+            else if(((DefaultMutableTreeNode)selectedNode.getParent())
+                    .getUserObject() instanceof Room){
+                DefaultMutableTreeNode parent = 
+                        (DefaultMutableTreeNode)selectedNode.getParent();
                 Object o = (Object)selectedNode.getUserObject();
-                g.findRoom((Room)parent.getUserObject()).findObject(o).setDesc(description.getText());
+                g.findRoom((Room)parent.getUserObject())
+                        .findObject(o).setDesc(description.getText());
             }
             else{
                 Object o = (Object)selectedNode.getUserObject();
@@ -1459,7 +1563,10 @@ public class Main_Edit extends javax.swing.JFrame {
             jScrollPane5.setViewportView(Current_Game);
         }
         else{
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label, 
+                    "Description not added", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_descriptionFocusLost
 
@@ -1468,8 +1575,10 @@ public class Main_Edit extends javax.swing.JFrame {
             new Play_Game().setVisible(true);
         }
         else{
+            JLabel label = new JLabel("Please create a player!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
             JOptionPane.showMessageDialog(Main_Panel, "Please create a player!",
-                    "Inane warning", JOptionPane.WARNING_MESSAGE);
+                    "Game cannot be played", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_play_gameMouseClicked
 
@@ -1479,7 +1588,10 @@ public class Main_Edit extends javax.swing.JFrame {
             Add_Attribute_Window.setVisible(true);
         }
         else{
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Failed to add Attribute", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label,
+                    "Failed to add Attribute", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_add_attributeActionPerformed
 
@@ -1502,9 +1614,10 @@ public class Main_Edit extends javax.swing.JFrame {
            associated = g.findObjectandRoomByName(room, obj); 
         }
         if(associated == null){
+            JLabel label = new JLabel("Can't find associated object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
             JOptionPane.showMessageDialog(Main_Panel, 
-                    "Can't find associated object!", 
-                    "Object not found", JOptionPane.WARNING_MESSAGE);
+                    label, "Object not found", JOptionPane.WARNING_MESSAGE);
         }
         else{
             if(type.equals("Boolean")){
@@ -1515,12 +1628,14 @@ public class Main_Edit extends javax.swing.JFrame {
                 else{
                     defaultVal = false;
                 }
-                Boolean_Attribute b = new Boolean_Attribute(name, verb, defaultVal, associated, o);
+                Boolean_Attribute b = new Boolean_Attribute(name, verb, 
+                        defaultVal, associated, o);
                 if(inRoom){
                     b.usableInSameRoom();;
                 }
                 o.addAttribute(b);
                 g.addVerb(new Verb(verb, associated, o));
+                o.addVerb(new Verb(verb, associated, o));
                 attribute_name.setText("");
                 verb_name.setText("");
                 object_name.setText("");
@@ -1537,20 +1652,26 @@ public class Main_Edit extends javax.swing.JFrame {
                     String amt = num_att_amt.getText();
                     double amount = Double.parseDouble(amt);
                     if(IncDec.equals("Increase")){
-                        Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, true, associated, o);
+                        Number_Attribute a = 
+                                new Number_Attribute(name, 
+                                        verb, defaultVal, amount, true, 
+                                        associated, o);
                         if(inRoom){
                             a.usableInSameRoom();
                         }
                         o.addAttribute(a);
                         g.addVerb(new Verb(verb, associated, o));
+                        o.addVerb(new Verb(verb, associated, o));
                     }
                     else{
-                        Number_Attribute a = new Number_Attribute(name, verb, defaultVal, amount, false, associated, o);
+                        Number_Attribute a = new Number_Attribute(name, verb, 
+                                defaultVal, amount, false, associated, o);
                         if(inRoom){
                             a.usableInSameRoom();
                         }
                         o.addAttribute(a);
                         g.addVerb(new Verb(verb, associated, o));
+                        o.addVerb(new Verb(verb, associated, o));
                     }
                     attribute_name.setText("");
                     verb_name.setText("");
@@ -1561,8 +1682,10 @@ public class Main_Edit extends javax.swing.JFrame {
                     Add_Attribute_Window.setVisible(false);
 
                 }catch(Exception e){
+                    JLabel label = new JLabel("Value not a number!");
+                    label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                     JOptionPane.showMessageDialog(Main_Panel, 
-                            "Value not a number!", "Not a number!", 
+                            label, "Not a number!", 
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -1592,18 +1715,32 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_attribute_typeItemStateChanged
 
     private void delete_attributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_attributeActionPerformed
-        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
-            String s = (String)JOptionPane.showInputDialog(
-                    Main_Panel,
-                    "Enter name\n",
-                    "Attribute name:",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    null);
-        Attribute a = ((Object)selectedNode.getUserObject()).deleteAtrributebyName(s);
-        if(a == null){
-            JOptionPane.showMessageDialog(Main_Panel, "Attribute not found!", "Not found!", JOptionPane.WARNING_MESSAGE);
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        String s = (String)JOptionPane.showInputDialog(
+                Main_Panel,
+                "Enter name\n",
+                "Attribute name:",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                null);
+        
+        if(!(selectedNode.getUserObject() instanceof String)){
+            Object o = (Object)selectedNode.getUserObject();    
+            Attribute a = ((Object)selectedNode.getUserObject())
+                    .deleteAtrributebyName(s);
+            if(a == null){
+                JLabel label = new JLabel("Attribute not found!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Main_Panel, label,
+                        "Not found!", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                o.deleteVerb(a.getVerb());
+                g.getVerbList().remove(a.getVerb());
+            }
         }
         updateAttributeTable();
     }//GEN-LAST:event_delete_attributeActionPerformed
@@ -1621,7 +1758,10 @@ public class Main_Edit extends javax.swing.JFrame {
             delete_condition.setVisible(false);
         }
         else{
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room or object!", "Failed to add Attribute", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label,
+                    "Failed to add Attribute", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_addStateActionPerformed
 
@@ -1629,6 +1769,7 @@ public class Main_Edit extends javax.swing.JFrame {
         String start = start_State.getText();
         String verb = transition_Verb.getText();
         String end = end_State.getText();
+        String prevVerb = previous_Verb.getText();
         DefaultMutableTreeNode selectedNode = 
                 (DefaultMutableTreeNode)Current_Game
                         .getLastSelectedPathComponent();
@@ -1638,20 +1779,43 @@ public class Main_Edit extends javax.swing.JFrame {
             State prev = o.findState(previous_Start.getText());
             State strt = o.findState(start);
             if(strt == null){
+                JLabel label = new JLabel("Please enter an exsiting state "
+                        + "for Start state!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                 JOptionPane.showMessageDialog(Main_Panel, 
-                    "Please enter an exsiting state for Start state!", 
+                    label, 
                     "Failed to edit Transition", JOptionPane.WARNING_MESSAGE);
             }
             else{
-                Transition cur = prev.findTransition(verb, end);
+                Transition cur = prev.findTransition(prevVerb, end);
                 State e = o.findState(end);
                 if(e == null){
-                    strt.addTransition(verb, new State(end));
-                    o.deleteTransition(verb, end);
+                    strt.addTransition(verb, new State(end), 
+                            cur.getConditions());
+                    o.deleteTransition(prevVerb, end);
                 }
                 else{
-                    strt.addTransition(verb, e);
-                    o.deleteTransition(verb, end);
+                    strt.addTransition(verb, e, cur.getConditions());
+                    o.deleteTransition(prevVerb, end);
+                }
+                if(!verb.equalsIgnoreCase(prevVerb)){
+                    Object newO = g.findAssociatedObjinVerb(verb,
+                            object_Associated_Transition.getText());
+                    if(newO != null){
+                        g.deleteVerb(prevVerb);
+                        newO.deleteVerb(prevVerb);
+                        g.addVerb(new Verb(verb, newO, o));
+                        newO.addVerb(new Verb(verb, newO, o));
+                    }
+                    else{
+                        JLabel label = new JLabel("Associated object not found"
+                                + "!");
+                        label.setFont(new Font("Tahoma", Font.PLAIN, 24));    
+                        JOptionPane.showMessageDialog(Main_Panel,
+                                label,
+                                "Failed to edit Transition",
+                                JOptionPane.WARNING_MESSAGE);
+                        }
                 }
             }
            previous_Start.setText("");
@@ -1672,11 +1836,15 @@ public class Main_Edit extends javax.swing.JFrame {
                 add_condition.setVisible(true);
                 delete_condition.setVisible(true);
                 int row = transition_Table.getSelectedRow();
-                Transition t = ((Object)selectedNode.getUserObject())
-                        .findTransition(transition_Table.getValueAt(row, 1)
+                Object o = (Object)selectedNode.getUserObject();
+                Transition t = null;
+                if(row >= 0){
+                    t = o.findTransition(transition_Table.getValueAt(row, 1)
                             .toString(), transition_Table.getValueAt(row, 2)
                             .toString());
-                if(row >= 0 && t != null){
+                    System.out.println(t.getConditions().size());
+                }
+                if(t != null){
                     transition_Verb.setText(transition_Table.getValueAt(row, 1)
                             .toString());
                     end_State.setText(transition_Table.getValueAt(row, 2)
@@ -1687,20 +1855,28 @@ public class Main_Edit extends javax.swing.JFrame {
                             .toString());
                     previous_Verb.setText(transition_Table.getValueAt(row, 1)
                             .toString());
+                    Verb v = o.findVerb(transition_Table.getValueAt(row, 1)
+                            .toString());
+                    if(v != null){
+                        object_Associated_Transition.setText(v.getName());
+                    }
                     updateConditionTable(t);
                 }
                 else{
+                    JLabel label = new JLabel("Please select a transition!");
+                    label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                     JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a transition!",
-                            "Failed to edit Transition",
+                            label,"Failed to edit Transition",
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
         else{
-                JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a room or object!",
-                            "Failed to add Attribute",
-                            JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));    
+            JOptionPane.showMessageDialog(Main_Panel,
+                    label,
+                    "Failed to add Attribute",
+                    JOptionPane.WARNING_MESSAGE);
             }
     }//GEN-LAST:event_edit_StateActionPerformed
 
@@ -1720,8 +1896,24 @@ public class Main_Edit extends javax.swing.JFrame {
             s = o.findState(start_State.getText());
             end = o.findState(end_State.getText());
         }
+        Object associated = null;
+        String obj = object_Associated_Transition.getText();
+        for(Room r: g.getRooms()){
+            if(r.getName().equals(obj)){
+                associated = r;
+            }
+            associated = g.findObjectandRoomByName(r.getName(), obj);
+        }
         
-        if(s != null){
+        if(associated == null){
+            JLabel label = new JLabel("Associated object not found");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));   
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    label, "Failed to add Transition", 
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        
+        else if(s != null){
             if(end != null){
                 s.addTransition(transition_Verb.getText(), end);
             }
@@ -1729,15 +1921,14 @@ public class Main_Edit extends javax.swing.JFrame {
                 s.addTransition(transition_Verb.getText(), 
                         new State(end_State.getText()));
             }
+            
             if(o instanceof Room){
-                o.addVerb(new Verb(transition_Verb.getText(),
-                    g.findRoomByName(object_Associated_Transition.getText()),
-                    o));
+                o.addVerb(new Verb(transition_Verb.getText(),associated, o));
+                g.addVerb(new Verb(transition_Verb.getText(),associated, o));
             }
             else{
-                o.addVerb(new Verb(transition_Verb.getText(), 
-                        g.findObjectInRoomByName(
-                        object_Associated_Transition.getText()), o));
+                o.addVerb(new Verb(transition_Verb.getText(),associated, o));
+                g.addVerb(new Verb(transition_Verb.getText(),associated, o));
             }
         }
         else if(o.getCurrentState() == null){
@@ -1751,26 +1942,29 @@ public class Main_Edit extends javax.swing.JFrame {
                         new State(end_State.getText()));
             }
             if(o instanceof Room){
-                o.addVerb(new Verb(transition_Verb.getText(),
-                    g.findRoomByName(object_Associated_Transition.getText()),
-                    o));
+                o.addVerb(new Verb(transition_Verb.getText(),associated, o));
+                g.addVerb(new Verb(transition_Verb.getText(),associated, o));
             }
             else{
-                o.addVerb(new Verb(transition_Verb.getText(), 
-                        g.findObjectInRoomByName(
-                        object_Associated_Transition.getText()), o));
+                o.addVerb(new Verb(transition_Verb.getText(),associated, o));
+                g.addVerb(new Verb(transition_Verb.getText(),associated, o));
             }
         }
         else{
+            JLabel label = new JLabel("Please enter an exsiting state for Start"
+                    + " state!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));   
             JOptionPane.showMessageDialog(Main_Panel, 
-                    "Please enter an exsiting state for Start state!", 
-                    "Failed to add Transition", JOptionPane.WARNING_MESSAGE);
+                    label, "Failed to add Transition", 
+                    JOptionPane.WARNING_MESSAGE);
         }
         transition_Verb.setText("");
         end_State.setText("");
         start_State.setText("");
-        
         Add_Transition_Window.setVisible(false);
+        for(Verb v: g.getVerbList()){
+            System.out.println(v.getName() + " " + v.getAssociatedObject());
+        }
         updateStateTable();
         updateTransitionTable();
     }//GEN-LAST:event_create_TransitionActionPerformed
@@ -1793,17 +1987,21 @@ public class Main_Edit extends javax.swing.JFrame {
                     updateTransitionTable();
                 }
                 else{
+                    JLabel label = new JLabel("Please select a transition!");
+                    label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                     JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a transition!",
+                            label,
                             "Failed to edit Transition",
                             JOptionPane.WARNING_MESSAGE);
                 }
             }
         else{
-                JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a room or object!",
-                            "Failed to add Attribute",
-                            JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));    
+            JOptionPane.showMessageDialog(Main_Panel,
+                    label,
+                    "Failed to add Attribute",
+                    JOptionPane.WARNING_MESSAGE);
             }
     }//GEN-LAST:event_deleteStateActionPerformed
 
@@ -1833,6 +2031,16 @@ public class Main_Edit extends javax.swing.JFrame {
             condition_Attribute.setVisible(true);
             condition_Associated_Object.setVisible(true);
             Object  o = (Object)selectedNode.getUserObject();
+            if(row < 0){
+                JLabel label = new JLabel("Please select a Transition! "
+                        + "Row value not found!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Main_Panel,
+                            label,
+                            "Failed to find associated object",
+                            JOptionPane.WARNING_MESSAGE);
+            }
+            else{
             Transition t = o.findTransition(transition_Table.getValueAt(row, 1)
                     .toString(), transition_Table.getValueAt(row, 2)
                             .toString());
@@ -1843,66 +2051,77 @@ public class Main_Edit extends javax.swing.JFrame {
             double value;
             Object owner = null;
             for(Room r: g.getRooms()){
-                owner = g.findObject(r, o);
+                owner = g.findObjectandRoomByName(r.getName(), 
+                        condition_Associated_Object.getText());
                 if(owner != null){
                     break;
                 }
             }
             
             if(owner == null){
+                JLabel label = new JLabel("Please re-enter attribute owner!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                 JOptionPane.showMessageDialog(Main_Panel,
-                            "Please re-enter associated object!",
+                            label,
                             "Failed to find associated object",
                             JOptionPane.WARNING_MESSAGE);
             }
             else{
+                System.out.println(owner.getName());    
                 Attribute a = owner.findAttribute(att);
-                if(a == null){
+                    if(a == null){
+                    JLabel label = new JLabel("Please re-enter the attribut"
+                            + "e!");
+                    label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                     JOptionPane.showMessageDialog(Main_Panel,
-                            "Please re-enter the attribute!",
+                            label,
                             "Failed to find attribute",
                             JOptionPane.WARNING_MESSAGE);
                 }
                 else{
-                    Condition.Type con_type;
-                    Condition c = null;
-                    switch(type){
-                        case "Boolean":
-                            con_type = Condition.Type.BOOLEAN;
-                            String bool_con = condition_value_bool
-                                    .getSelectedItem().toString();
-                            if(bool_con.equals("true")){
-                                c = new Condition(name, a, true);
-                            }
-                            else{
-                                c = new Condition(name, a, false);
-                            }
-                            break;
-                            
-                        case "Numeric equal":
-                            value = Double.parseDouble(
-                                condition_Value.getText());
-                            con_type = Condition.Type.NUMERICEQ;
-                            c = new Condition(name, a, value, 0);
-                            break;
-                        case "Numeric bigger than":
-                            value = Double.parseDouble(
-                                condition_Value.getText());
-                            con_type = Condition.Type.NUMERICBT;
-                            c = new Condition(name, a, value, 1);
-                            break;
-                        case "Numeric smaller than":
-                            value = Double.parseDouble(
-                                condition_Value.getText());
-                            con_type = Condition.Type.NUMERICST;
-                            c = new Condition(name, a, value, -1);
-                            break;
-                        default:
-                            JOptionPane.showMessageDialog(Main_Panel,
-                                "Please re-enter the condition type!",
-                                "Failed to recognise type",
-                                JOptionPane.WARNING_MESSAGE);
-                            break;
+                        Condition.Type con_type;
+                        Condition c = null;
+                        switch(type){
+                            case "Boolean":
+                                con_type = Condition.Type.BOOLEAN;
+                                String bool_con = condition_value_bool
+                                        .getSelectedItem().toString();
+                                if(bool_con.equals("true")){
+                                    c = new Condition(name, a, true);
+                                }
+                                else{
+                                    c = new Condition(name, a, false);
+                                }
+                                break;
+
+                            case "Numeric equal":
+                                value = Double.parseDouble(
+                                    condition_Value.getText());
+                                con_type = Condition.Type.NUMERICEQ;
+                                c = new Condition(name, a, value, 0);
+                                break;
+                            case "Numeric bigger than":
+                                value = Double.parseDouble(
+                                    condition_Value.getText());
+                                con_type = Condition.Type.NUMERICBT;
+                                c = new Condition(name, a, value, 1);
+                                break;
+                            case "Numeric smaller than":
+                                value = Double.parseDouble(
+                                    condition_Value.getText());
+                                con_type = Condition.Type.NUMERICST;
+                                c = new Condition(name, a, value, -1);
+                                break;
+                            default:
+                                JLabel label = new JLabel("Please re-enter the "
+                                        + "condition type!");
+                                label.setFont(new Font("Tahoma", Font.PLAIN, 
+                                        24));
+                                JOptionPane.showMessageDialog(Main_Panel,
+                                    label,
+                                    "Failed to recognise type",
+                                    JOptionPane.WARNING_MESSAGE);
+                                break;
                     }
                     t.addCondition(c);
                     updateConditionTable(t);
@@ -1911,13 +2130,15 @@ public class Main_Edit extends javax.swing.JFrame {
                     condition_Value.setText("");
                     condition_Attribute.setText("");
                     condition_Associated_Object.setText("");
+                    }
                 }
             }
-            updateConditionTable(t);
         }
         else{
+            JLabel label = new JLabel("Please select a room or object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
             JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a room or object!",
+                            label,
                             "No object found!",
                             JOptionPane.WARNING_MESSAGE);
         }
@@ -1949,8 +2170,11 @@ public class Main_Edit extends javax.swing.JFrame {
             if(row >= 0 && t != null){
                 if(!t.deleteCondition(condition_Table.getValueAt(row, 0)
                         .toString())){
+                    JLabel label = new JLabel("Please select a condition not"
+                            + " found!");
+                    label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                     JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a condition not found!",
+                            label,
                             "Failed to delete condition",
                             JOptionPane.WARNING_MESSAGE);
                 }
@@ -1959,13 +2183,214 @@ public class Main_Edit extends javax.swing.JFrame {
                 }
             }
             else{
+                JLabel label = new JLabel("Please select a condition to "
+                        + "delete!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                 JOptionPane.showMessageDialog(Main_Panel,
-                            "Please select a condition to delete!",
+                            label,
                             "Failed to delete condition",
                             JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_delete_conditionMouseClicked
+
+    private void Object_SelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Object_SelectionActionPerformed
+        String type = Object_Selection.getSelectedItem().toString();
+        if(type.equalsIgnoreCase("Limited use object")){
+            amount_Of_Uses_Label.setVisible(true);
+            amount_Of_Use.setVisible(true);
+        }
+        else{
+            amount_Of_Uses_Label.setVisible(false);
+            amount_Of_Use.setVisible(false);
+        }
+    }//GEN-LAST:event_Object_SelectionActionPerformed
+
+    private void Object_Selection_PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Object_Selection_PlayerActionPerformed
+        String type = Object_Selection_Player.getSelectedItem().toString();
+        if(type.equalsIgnoreCase("Limited use object")){
+            amount_Of_Uses_Label_Player.setVisible(true);
+            amount_Of_Use_Player.setVisible(true);
+        }
+        else{
+            amount_Of_Uses_Label_Player.setVisible(false);
+            amount_Of_Use_Player.setVisible(false);
+        }
+    }//GEN-LAST:event_Object_Selection_PlayerActionPerformed
+
+    private void create_ObjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_ObjectActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode == null){
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    "Please select a room to create Object!", 
+                    "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(selectedNode.getUserObject() instanceof Room){
+            String s = Object_Selection.getSelectedItem().toString();
+            Room r = (Room)selectedNode.getUserObject();
+            switch(s){
+                case "Player":
+                        if(g.getPlayer() == null){
+                            Player p = new Player("Player", r);
+                            g.addPlayer(p);
+                            g.addObjectToRoom(r, p);
+                            updateTree();
+                            break;
+                        } 
+                        else{
+                            JOptionPane.showMessageDialog(Main_Panel, 
+                                "Player already created!", 
+                                "Failed to create player", 
+                                JOptionPane.WARNING_MESSAGE);
+                        }
+                        
+                case "Human":
+                    Human h = new Human("Human");
+                    g.addObjectToRoom(r, h);
+                    updateTree();
+                    break;
+
+                case "Pickable object":
+                    Pick_Able_Object o = new Pick_Able_Object("Object");
+                    g.addObjectToRoom(r, o);
+                    updateTree();
+                    break;
+
+                case "Container":
+                    Container c = new Container("Object");
+                    g.addObjectToRoom(r, c);
+                    updateTree();
+                    break;
+
+                case "Unlimited use object":
+                    Unlimited_Use_Object u = new 
+                        Unlimited_Use_Object("Object");
+                    g.addObjectToRoom(r, u);
+                    updateTree();
+                    break;
+
+                case "Limited use object":
+                    int num = Integer.parseInt(amount_Of_Use.getText());
+                    Limited_Use_Object l = new 
+                        Limited_Use_Object("Object", num);
+                    g.addObjectToRoom(r, l);
+                    updateTree();
+                    break;
+            }
+            Object_Type.setVisible(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    "Please select a room to create Object", 
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_create_ObjectActionPerformed
+
+    private void create_Object_PlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_Object_PlayerActionPerformed
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        if(selectedNode == null){
+            JOptionPane.showMessageDialog(Main_Panel, 
+                    "Please select a room to create Object!", 
+                    "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else if(selectedNode.getUserObject() instanceof Container){
+            String s = Object_Selection_Player.getSelectedItem().toString();
+            Container con = (Container)selectedNode.getUserObject();
+            switch(s){
+                case "Human":
+                    Human h = new Human("Human");
+                    con.addObjects(h);
+                    updateTree();
+                    break;
+
+                case "Pickable object":
+                    Pick_Able_Object o = new Pick_Able_Object("Object");
+                    con.addObjects(o);
+                    updateTree();
+                    break;
+
+                case "Container":
+                    Container c = new Container("Object");
+                    con.addObjects(c);
+                    updateTree();
+                    break;
+
+                case "Unlimited use object":
+                    Unlimited_Use_Object u = new 
+                        Unlimited_Use_Object("Object");
+                    con.addObjects(u);
+                    updateTree();
+                    break;
+
+                case "Limited use object":
+                    int num = Integer.parseInt(amount_Of_Use.getText());
+                    Limited_Use_Object l = new 
+                        Limited_Use_Object("Object", num);
+                    con.addObjects(l);
+                    updateTree();
+                    break;
+            }
+            Object_Type_Player.setVisible(false);
+        }
+        else if(selectedNode.getUserObject() instanceof Player){
+            String s = Object_Selection_Player.getSelectedItem().toString();
+            Player ply = (Player)selectedNode.getUserObject();
+            switch(s){
+                case "Human":
+                    Human h = new Human("Human");
+                    ply.pickup(h);
+                    updateTree();
+                    break;
+
+                case "Pickable object":
+                    Pick_Able_Object o = new Pick_Able_Object("Object");
+                    ply.pickup(o);
+                    updateTree();
+                    break;
+
+                case "Container":
+                    Container c = new Container("Object");
+                    ply.pickup(c);
+                    updateTree();
+                    break;
+
+                case "Unlimited use object":
+                    Unlimited_Use_Object u = new 
+                        Unlimited_Use_Object("Object");
+                    ply.pickup(u);
+                    updateTree();
+                    break;
+
+                case "Limited use object":
+                    int num = Integer.parseInt(amount_Of_Use.getText());
+                    Limited_Use_Object l = new 
+                        Limited_Use_Object("Object", num);
+                    ply.pickup(l);
+                    updateTree();
+                    break;
+            }
+            Object_Type_Player.setVisible(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(Main_Panel, "Please select a room, container or player to create Object", "Inane warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_create_Object_PlayerActionPerformed
+
+    private void condition_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_condition_SaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_condition_SaveActionPerformed
+
+    private void condition_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_condition_CancelActionPerformed
+        Add_Condition_Window.setVisible(false);
+        condition_Name.setText("");
+        condition_Value.setText("");
+        condition_Attribute.setText("");
+        condition_Associated_Object.setText("");
+    }//GEN-LAST:event_condition_CancelActionPerformed
 
     /**
      * Updates the exit table in the edit screen given the room
@@ -2167,10 +2592,18 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTree Current_Game;
     private javax.swing.JTable Exits;
     private javax.swing.JPanel Main_Panel;
+    private javax.swing.JComboBox<String> Object_Selection;
+    private javax.swing.JComboBox<String> Object_Selection_Player;
     private javax.swing.JDialog Object_Type;
+    private javax.swing.JLabel Object_Type_Label_Player;
+    private javax.swing.JDialog Object_Type_Player;
     private javax.swing.JButton addState;
     private javax.swing.JButton add_attribute;
     private javax.swing.JButton add_condition;
+    private javax.swing.JTextField amount_Of_Use;
+    private javax.swing.JTextField amount_Of_Use_Player;
+    private javax.swing.JLabel amount_Of_Uses_Label;
+    private javax.swing.JLabel amount_Of_Uses_Label_Player;
     private javax.swing.JLabel associated_object_label;
     private javax.swing.JLabel associated_verb_label1;
     private javax.swing.JComboBox<String> att_def_bool;
@@ -2199,6 +2632,8 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JLabel condition_type_label;
     private javax.swing.JComboBox<String> condition_value_bool;
     private javax.swing.JLabel condition_value_label;
+    private javax.swing.JButton create_Object;
+    private javax.swing.JButton create_Object_Player;
     private javax.swing.JButton create_Transition;
     private javax.swing.JButton create_attribute_button;
     private javax.swing.JButton create_exit;
@@ -2216,7 +2651,6 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTextField exit_name;
     private javax.swing.JTextField exit_room;
     private javax.swing.JTabbedPane info;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

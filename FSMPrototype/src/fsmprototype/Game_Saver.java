@@ -157,28 +157,6 @@ public class Game_Saver {
             c.printStackTrace();
             return null;
          }
-        
-        for(Room r:g.getRooms()){
-            System.out.println(r.getName());
-            for(Object o:r.getObject()){
-                System.out.printf("   > ");
-                System.out.println(o.getName());
-                if(o instanceof Container){
-                    Container cont = (Container)o;
-                    for(Object c:cont.getObjects()){
-                        System.out.printf("       > ");
-                        System.out.println(c.getName());
-                    }
-                }
-                else if(o instanceof Player || o instanceof Human){
-                    Player ply = (Player) o;
-                    for(Object p: ply.getItems()){
-                        System.out.printf("       > ");
-                        System.out.println(p.getName());
-                    }
-                }
-            }
-        }
         return g;
     }
     
