@@ -316,26 +316,30 @@ public class Play_Game extends javax.swing.JFrame {
             }
             
             if(isMovement(rel, gov, dep)){
-                Room r = game.findRoomByName(gov);
-                System.out.println(r.getName());
-                if(!r.getCurrentState().allowMovement()){
-                    Gameplay.append("Can't enter room!"+ 
-                            r.getCurrentState().getName() + 
-                            " doesn't allow movement\n");
-                }
-                else{
-                   if(game.getPlayer().move(gov) == null){
-                    Gameplay.append("No such direction!\n");
+                Room r = game.findRoomByName(dep);
+                if(r != null){
+                    if(!r.getCurrentState().allowMovement()){
+                        Gameplay.append("Can't enter room! State "+ 
+                                r.getCurrentState().getName() + 
+                                " doesn't allow movement\n");
                     }
                     else{
-                        roomChange();
-                    } 
+                       if(game.getPlayer().move(dep) == null){
+                        Gameplay.append("No such direction!\n");
+                        }
+                        else{
+                            roomChange();
+                        } 
+                    }
+                }
+                else{
+                    Gameplay.append("No such direction!\n");
                 }
             }
             else if(isMovement_dep(rel, gov, dep)){
                 Room r = game.findRoomByName(gov);
                 if(!r.getCurrentState().allowMovement()){
-                    Gameplay.append("Can't enter room!"+ 
+                    Gameplay.append("Can't enter room! State "+ 
                             r.getCurrentState().getName() + 
                             " doesn't allow movement\n");
                 }
