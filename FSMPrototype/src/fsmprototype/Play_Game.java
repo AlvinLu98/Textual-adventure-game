@@ -286,10 +286,8 @@ public class Play_Game extends javax.swing.JFrame {
                 // this is the NER label of the token
                 String ne = token.get(NamedEntityTagAnnotation.class);
                 nerTags.add(ne);
-//                System.out.println(word + ", " + pos + ", " + ne);
             }
             SemanticGraph dependencies = sentence.get(CollapsedDependenciesAnnotation.class);
-//            System.out.println("Dependencies\n:" + dependencies);
             ArrayList<TypedDependency> dep = (ArrayList)dependencies.typedDependencies();
             processSentence(dep);
         }
@@ -306,7 +304,6 @@ public class Play_Game extends javax.swing.JFrame {
             rel = d.get(i).reln().toString();
             gov = d.get(i).gov().word();
             dep = d.get(i).dep().word();
-            System.out.println(rel + ", "+ gov +", "+ dep);
             
             if(dep.equals("help") && rel.equals("root")){
                Gameplay.append("You can move around by entering 'go' followed "
@@ -520,25 +517,32 @@ public class Play_Game extends javax.swing.JFrame {
         if(o != null){
             Attribute att = game.findAttByAssociatedObject(gov, o);
             if(att == null){
-                if(!o.sendAction(gov)){
-                    boolean found = false;
-                    for(Transition t: o.getCurrentState().getTransition()){
-                        if(t.getAction().equalsIgnoreCase(gov)){
-                            conditionNotMet(t);
-                            found = true;
+                if(att.inRoom() && game.findObjectInRoomByName(att.getVerb()
+                        .getAssociatedObject().getName()) != null){
+                    if(!o.sendAction(gov)){
+                        boolean found = false;
+                        for(Transition t: o.getCurrentState().getTransition()){
+                            if(t.getAction().equalsIgnoreCase(gov)){
+                                conditionNotMet(t);
+                                found = true;
+                            }
+                        }
+                        if(!found){
+                            JLabel label = new JLabel("Object not found!");
+                            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                            JOptionPane.showMessageDialog(jPanel1, 
+                                label, 
+                                "Object not found", JOptionPane.WARNING_MESSAGE);
                         }
                     }
-                    if(!found){
-                        JLabel label = new JLabel("Object not found!");
-                        label.setFont(new Font("Tahoma", Font.PLAIN, 24));
-                        JOptionPane.showMessageDialog(jPanel1, 
-                            label, 
-                            "Object not found", JOptionPane.WARNING_MESSAGE);
+                    else{
+                        Gameplay.append(o.getName() + "'s current state is: " 
+                                + o.getCurrentState().getName() + "\n");
                     }
                 }
                 else{
-                    Gameplay.append(o.getName() + "'s current state is: " 
-                            + o.getCurrentState().getName() + "\n");
+                    Gameplay.append(att.getVerb().getAssociatedObject()
+                            .getName() + " cannot be used here!\n"); 
                 }
             }
             else if(att.inRoom()){

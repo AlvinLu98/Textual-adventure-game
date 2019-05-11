@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.util.Enumeration;
@@ -1444,9 +1439,7 @@ public class Main_Edit extends javax.swing.JFrame {
             g = Game_Saver.load_Created_Game(name);
             updateTree();
         }
-        else if(returnVal == JFileChooser.CANCEL_OPTION){
-            System.out.println("Cancelled");
-        }
+        else if(returnVal == JFileChooser.CANCEL_OPTION){}
     }//GEN-LAST:event_menu_File_OpenActionPerformed
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
@@ -1842,7 +1835,6 @@ public class Main_Edit extends javax.swing.JFrame {
                     t = o.findTransition(transition_Table.getValueAt(row, 1)
                             .toString(), transition_Table.getValueAt(row, 2)
                             .toString());
-                    System.out.println(t.getConditions().size());
                 }
                 if(t != null){
                     transition_Verb.setText(transition_Table.getValueAt(row, 1)
@@ -1962,9 +1954,6 @@ public class Main_Edit extends javax.swing.JFrame {
         end_State.setText("");
         start_State.setText("");
         Add_Transition_Window.setVisible(false);
-        for(Verb v: g.getVerbList()){
-            System.out.println(v.getName() + " " + v.getAssociatedObject());
-        }
         updateStateTable();
         updateTransitionTable();
     }//GEN-LAST:event_create_TransitionActionPerformed
@@ -2066,8 +2055,7 @@ public class Main_Edit extends javax.swing.JFrame {
                             "Failed to find associated object",
                             JOptionPane.WARNING_MESSAGE);
             }
-            else{
-                System.out.println(owner.getName());    
+            else{   
                 Attribute a = owner.findAttribute(att);
                     if(a == null){
                     JLabel label = new JLabel("Please re-enter the attribut"
