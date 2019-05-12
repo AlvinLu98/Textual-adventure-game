@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -11,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- *
+ * Prototype to test object functions
  * @author Alvin Lu
  */
 public class Game_Player implements Serializable{
@@ -26,7 +21,8 @@ public class Game_Player implements Serializable{
         while(play)
         {
             Room current = currentGame.getPlayer().getLocation();
-            System.out.println("You're in " + currentGame.getPlayer().getLocation().getName());
+            System.out.println("You're in " + currentGame.getPlayer()
+                    .getLocation().getName());
             System.out.print("There's...");
             displayItem();
             System.out.print("You can go: ");
@@ -43,7 +39,8 @@ public class Game_Player implements Serializable{
             switch(inp[0])
             {
                 case "take":
-                    Object take = currentGame.getPlayer().getLocation().pickedUp(inp[1]);
+                    Object take = currentGame.getPlayer().getLocation()
+                            .pickedUp(inp[1]);
                     if(take == null){
                         System.out.println("No such item");
                         break;
@@ -60,7 +57,8 @@ public class Game_Player implements Serializable{
                     break;
 
                 case "drop":
-                    Room r = currentGame.getRooms().get(currentGame.getRooms().indexOf(currentGame.getPlayer().getLocation()));
+                    Room r = currentGame.getRooms().get(currentGame.getRooms()
+                            .indexOf(currentGame.getPlayer().getLocation()));
                     Object drop = currentGame.getPlayer().drop(inp[1]);
                     if(drop == null){
                         System.out.println("No such item");
@@ -82,7 +80,8 @@ public class Game_Player implements Serializable{
                         System.out.println("No such room");
                         break;
                     }
-                    System.out.println("You're currently in: " +currentGame.getPlayer().getLocation().getName());
+                    System.out.println("You're currently in: " +currentGame
+                            .getPlayer().getLocation().getName());
                     break;
                     
                 default:

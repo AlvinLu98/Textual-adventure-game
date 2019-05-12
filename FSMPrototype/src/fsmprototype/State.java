@@ -13,6 +13,8 @@ public class State implements Serializable
     private String name;
     private LinkedList<Transition> transitions;
     private boolean allowMovement = true;
+    private String entryEvent;
+    private String exitEvent;
     
     /**
      * Empty constructor for state

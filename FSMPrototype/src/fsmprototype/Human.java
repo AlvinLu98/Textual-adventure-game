@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -17,11 +12,19 @@ public class Human extends Living_Objects implements Serializable{
     ArrayList<Information> informations;
     Container inventory;
     
+    /**
+     * Constructor for human
+     * @param name name of human
+     */
     public Human(String name){
         super(name);
     }
    
-    
+    /**
+     * Given a prompt, return the relevant information
+     * @param prompt
+     * @return 
+     */
     public String ask(String prompt){
         for(Information i: informations){
             if(i.getPrompt().equals(prompt)){

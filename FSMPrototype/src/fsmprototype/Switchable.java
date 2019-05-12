@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -14,17 +9,18 @@ import java.io.Serializable;
 public class Switchable extends Object implements Serializable{
     private boolean is_Switched_On = false;
     
+    /**
+     * Creates and empty switchable object
+     * @param name 
+     */
     public Switchable(String name){
         super(name);
     }
-    
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Switchable s = (Switchable) super.clone();
-        return s;
-    } 
-    
+
+    /**
+     * Switch on the object, changes the boolean value to true
+     * @return true if object is switched on successfully
+     */
     public boolean switchOn(){
         if(this.is_Switched_On){
             return false;
@@ -33,6 +29,10 @@ public class Switchable extends Object implements Serializable{
         return true;
     }
     
+    /**
+     * Switch on the object, changes the boolean value to false
+     * @return true if object is switched off successfully
+     */
     public boolean switchOff(){
         if(!this.is_Switched_On){
             return false;

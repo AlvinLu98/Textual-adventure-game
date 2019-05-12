@@ -20,7 +20,8 @@ import java.util.LinkedList;
 import javax.xml.transform.OutputKeys;
 
 /**
- *
+ * Game saver class to save game, provides saving of game in XML and 
+ * serialisation
  * @author Alvin Lu
  */
 public class Game_Saver {
@@ -113,9 +114,12 @@ public class Game_Saver {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.xml"));
+            StreamResult result = new StreamResult(
+                    new File("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project"
+                            + "\\test.xml"));
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+            transformer.setOutputProperty(
+                    "{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(source, result);
 
             // Output to console for testing
@@ -192,8 +196,10 @@ public class Game_Saver {
         r.add(r2);
         
         Game g = new Game(r,p);
-        save_Created_Game(g, "C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
-        load_Created_Game("C:\\Users\\Alvin Lu\\Desktop\\3rd Year Project\\test.ser");
+        save_Created_Game(g, "C:\\Users\\Alvin Lu\\Desktop\\"
+                + "3rd Year Project\\test.ser");
+        load_Created_Game("C:\\Users\\Alvin Lu\\Desktop\\"
+                + "3rd Year Project\\test.ser");
         //saveFile(r);
     }
 }

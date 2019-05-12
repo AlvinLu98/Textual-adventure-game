@@ -18,13 +18,10 @@ public class Living_Objects extends Object implements Serializable{
     private String article;
     private String possesive;
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Living_Objects o = (Living_Objects) super.clone();
-        return o;
-    } 
-    
+    /**
+     * Constructor for living objects
+     * @param name 
+     */
     public Living_Objects(String name){
         super(name);
     }

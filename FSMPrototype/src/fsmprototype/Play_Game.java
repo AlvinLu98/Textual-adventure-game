@@ -402,6 +402,9 @@ public class Play_Game extends javax.swing.JFrame {
             else if(isAction(rel, gov, dep)){
                 processVerbs(rel, gov, dep);
             }
+            else{
+                Gameplay.append("Command not recognised!");
+            }
         }
     }
     
@@ -562,7 +565,8 @@ public class Play_Game extends javax.swing.JFrame {
             }
             else if(att.inRoom()){
                 Verb v = att.getVerb();
-                if(game.findObjectInRoomByName(att.getVerb().getAssociatedObject()
+                if(game.findObjectInRoomByName(att.getVerb()
+                        .getAssociatedObject()
                         .getName()) != null){
                     if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
@@ -592,6 +596,7 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                         else{
                             Gameplay.append(o.getName() + " out of uses\n");
+                            game.removeObjectFromCurrentRoom(o);
                         }
                     }
                     else{

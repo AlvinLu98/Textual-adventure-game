@@ -3,6 +3,10 @@ package fsmprototype;
 import java.io.Serializable;
 import java.util.Scanner;
 
+/**
+ * Prototype class to test primitive functions
+ * @author Alvin Lu
+ */
 public class FSMPrototype implements Serializable{
 
     static Game g = new Game();

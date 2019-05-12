@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -14,19 +9,27 @@ import java.io.Serializable;
 public abstract class Usable_Object extends Object implements Serializable{
     private boolean is_Usable = true;
     
+    /**
+     * Constructor for usable object
+     * @param name 
+     */
     public Usable_Object(String name){
         super(name);
     }
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Usable_Object u = (Usable_Object) super.clone();
-        return u;
-    } 
-    
+    /**
+     * Make the object unusable
+     */
     public void make_Unusable(){
         this.is_Usable = false;
+    }
+    
+    /**
+     * Return if the object is usable
+     * @return true if object is usable
+     */
+    public boolean isUsable(){
+        return this.is_Usable;
     }
     
     public abstract boolean use();

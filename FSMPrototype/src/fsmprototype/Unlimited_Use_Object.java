@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -14,20 +9,29 @@ import java.io.Serializable;
 public class Unlimited_Use_Object extends Usable_Object implements Serializable{
     private int use_Count = 0;
     
+    /**
+     * Constructor for unlimited use object
+     * @param name 
+     */
     public Unlimited_Use_Object(String name){
         super(name);
     }
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Unlimited_Use_Object u = (Unlimited_Use_Object) super.clone();
-        return u;
-    } 
-    
+    /**
+     * Increments the amount of times the object is used
+     * @return true when the object is used
+     */
     @Override
     public boolean use(){
         use_Count++;
         return true;
+    }
+    
+    /**
+     * Returns the amount of times it has been used
+     * @return number of times it has been used in int
+     */
+    public int getUseAmt(){
+        return this.use_Count;
     }
 }

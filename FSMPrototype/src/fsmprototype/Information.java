@@ -1,31 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
 
 /**
- *
+ * Information contained in human objects
  * @author Alvin Lu
  */
 public class Information implements Serializable {
     private String prompt;
     private String answer;
     
-    @Override
-    protected java.lang.Object clone() throws CloneNotSupportedException
-    {
-        Information i = (Information) super.clone();
-        return i;
-    } 
-    
+    /**
+     * Returns the prompt for information
+     * @return prompt in string
+     */
     public String getPrompt(){
         return this.prompt;
     }
     
+    /**
+     * Returns the answer from the prompt
+     * @return the answer in string
+     */
     public String getAnswer(){
         return this.answer;
     }
