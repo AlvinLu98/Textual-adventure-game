@@ -161,6 +161,7 @@ public class Play_Game extends javax.swing.JFrame {
 
         Gameplay.setColumns(20);
         Gameplay.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        Gameplay.setEditable(false);
         Gameplay.setRows(5);
         jScrollPane2.setViewportView(Gameplay);
 
@@ -265,7 +266,7 @@ public class Play_Game extends javax.swing.JFrame {
     private void CommandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CommandActionPerformed
         String text = Command.getText();
         Command.setText("   ");
-        
+        Gameplay.append(text + "\n");
         Annotation document = new Annotation(text);
         pipeline.annotate(document);
         
@@ -560,11 +561,12 @@ public class Play_Game extends javax.swing.JFrame {
                 }
             }
             else if(att.inRoom()){
+                Verb v = att.getVerb();
                 if(game.findObjectInRoomByName(att.getVerb().getAssociatedObject()
                         .getName()) != null){
                     if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
-                            att.modify(true);
+                            att.modify(v.getEffect());
                             done = true;
                         }
                         else{
@@ -572,7 +574,7 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                     }
                     else{
-                       att.modify(true); 
+                       att.modify(v.getEffect()); 
                        done = true;
                     } 
                 }
@@ -582,9 +584,10 @@ public class Play_Game extends javax.swing.JFrame {
                 }
             }
             else{
+                Verb v = att.getVerb();
                 if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
-                            att.modify(true);
+                            att.modify(v.getEffect());
                             done = true;
                         }
                         else{
@@ -592,7 +595,7 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                     }
                     else{
-                       att.modify(true); 
+                       att.modify(v.getEffect()); 
                        done = true;
                     } 
             }

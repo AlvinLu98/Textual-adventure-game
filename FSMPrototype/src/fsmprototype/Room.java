@@ -146,6 +146,9 @@ public class Room extends Object implements Serializable{
             else if(obj instanceof Container){
                 return ((Container) obj).removeObject(o);
             }
+            else if(obj instanceof Player){
+                return ((Player)obj).removeObject(o);
+            }
         }
         return false;
     }
@@ -180,6 +183,9 @@ public class Room extends Object implements Serializable{
             }    
             else if(obj instanceof Container){
                 return ((Container) obj).findObject(o);
+            }
+            else if(obj instanceof Player){
+                return ((Player) obj).findObject(o);
             }
         }
         return null;

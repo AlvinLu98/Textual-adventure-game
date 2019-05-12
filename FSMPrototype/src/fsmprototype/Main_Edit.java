@@ -1387,45 +1387,8 @@ public class Main_Edit extends javax.swing.JFrame {
                 (DefaultMutableTreeNode)Current_Game
                         .getLastSelectedPathComponent();
         if(selectedNode != null){
-            if(selectedNode.getUserObject() instanceof Room){
-                Room r = (Room)selectedNode.getUserObject();
-                g.findRoom(r).setName(objectName.getText());
-                info.setEnabledAt(1, true);
-            }
-            else if(selectedNode.getUserObject() instanceof Container){
-                info.setEnabledAt(1, false);
-                DefaultMutableTreeNode parent = 
-                        (DefaultMutableTreeNode)selectedNode.getParent();
-                if(parent.getUserObject() instanceof Room){
-                    Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject()).findObject(o)
-                            .setName(objectName.getText());
-                }
-                else{
-                    while(!(parent.getUserObject() instanceof Room)){
-                        parent = (DefaultMutableTreeNode)parent.getParent();
-                    }
-                    Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject()).findObject(o)
-                            .setName(objectName.getText());
-                }
-            } 
-            else if(selectedNode.getUserObject() instanceof Player){
-                info.setEnabledAt(1, false);
-                g.getPlayer().setName(objectName.getText());
-            }
-            else if(((DefaultMutableTreeNode)selectedNode.getParent())
-                    .getUserObject() instanceof Room){
-                DefaultMutableTreeNode parent = 
-                        (DefaultMutableTreeNode)selectedNode.getParent();
-                Object o = (Object)selectedNode.getUserObject();
-                g.findRoom((Room)parent.getUserObject()).findObject(o)
-                        .setName(objectName.getText());
-            }
-            else{
-                Object o = (Object)selectedNode.getUserObject();
-                g.getPlayer().findObject(o).setName(objectName.getText());
-            }
+            Object o = (Object)selectedNode.getUserObject();
+            o.setName(objectName.getText());
             jScrollPane5.setViewportView(Current_Game);
         }
         else{
@@ -1469,25 +1432,25 @@ public class Main_Edit extends javax.swing.JFrame {
              if(selectedNode.getUserObject() instanceof Room){
                  info.setEnabledAt(1, true);
                  g.removeRoom((Room)selectedNode.getUserObject());
+                 jScrollPane5.setViewportView(Current_Game);
              }
              else{
-                    DefaultMutableTreeNode parent = 
-                            (DefaultMutableTreeNode)selectedNode.getParent();
-                    if(parent != null && parent.getUserObject() instanceof Room){
-                        Object o = (Object)selectedNode.getUserObject();
-                        g.findRoom((Room)parent.getUserObject())
-                                .removeObject(o);
+                Object o = (Object)selectedNode.getUserObject();
+                Object remove = null;
+                for(Room r: g.getRooms()){
+                    remove = r.findObject(o);
+                    if(remove != null){
+                        r.removeObject(o);
+                        jScrollPane5.setViewportView(Current_Game);
                     }
-                    else{
-                        while(!(parent.getUserObject() instanceof Room)){
-                            parent = (DefaultMutableTreeNode)parent.getParent();
-                        }
-                        Object o = (Object)selectedNode.getUserObject();
-                        g.findRoom((Room)parent.getUserObject())
-                                .removeObject(o);
-                    }
+                }
              }
-             model.removeNodeFromParent(selectedNode);
+         }
+         else{
+             JLabel label = new JLabel("Object not found!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Main_Panel, label,
+                        "Failed to delete Object", JOptionPane.WARNING_MESSAGE);
          }
     }//GEN-LAST:event_deleteMouseClicked
 
@@ -1508,7 +1471,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 JLabel label = new JLabel("Exit already exists!");
                 label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                 JOptionPane.showMessageDialog(Main_Panel, label,
-                        "Inane warning", JOptionPane.WARNING_MESSAGE);
+                        "Exit not created", JOptionPane.WARNING_MESSAGE);
             }
             else{
                 exit_name.setText("");
@@ -1531,46 +1494,10 @@ public class Main_Edit extends javax.swing.JFrame {
         DefaultMutableTreeNode selectedNode = 
                 (DefaultMutableTreeNode)Current_Game
                         .getLastSelectedPathComponent();
-        if(selectedNode != null){
-            if(description.getText() == ""){  }
-            else if(selectedNode.getUserObject() instanceof Room){
-                Room r = (Room)selectedNode.getUserObject();
-                r.setDesc(description.getText());
-            }
-            else if(selectedNode.getUserObject() instanceof Container){
-                DefaultMutableTreeNode parent = 
-                        (DefaultMutableTreeNode)selectedNode.getParent();
-                if(parent.getUserObject() instanceof Room){
-                    Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject())
-                            .findObject(o).setDesc(description.getText());
-                    info.setEnabledAt(1, false);
-                }
-                else{
-                    while(!(parent.getUserObject() instanceof Room)){
-                        parent = (DefaultMutableTreeNode)parent.getParent();
-                    }
-                    Object o = (Object)selectedNode.getUserObject();
-                    g.findRoom((Room)parent.getUserObject())
-                            .findObject(o).setDesc(description.getText());
-                    info.setEnabledAt(1, false);
-                }
-            } 
-            else if(selectedNode.getUserObject() instanceof Player){
-                g.getPlayer().setDesc(description.getText());
-            }
-            else if(((DefaultMutableTreeNode)selectedNode.getParent())
-                    .getUserObject() instanceof Room){
-                DefaultMutableTreeNode parent = 
-                        (DefaultMutableTreeNode)selectedNode.getParent();
-                Object o = (Object)selectedNode.getUserObject();
-                g.findRoom((Room)parent.getUserObject())
-                        .findObject(o).setDesc(description.getText());
-            }
-            else{
-                Object o = (Object)selectedNode.getUserObject();
-                g.getPlayer().findObject(o).setDesc(description.getText());
-            }
+        if(selectedNode != null &&
+                !(selectedNode.getUserObject() instanceof String)){
+            Object o = (Object)selectedNode.getUserObject();
+            o.setDesc(description.getText());
             jScrollPane5.setViewportView(Current_Game);
         }
         else{
