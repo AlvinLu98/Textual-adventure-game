@@ -121,6 +121,15 @@ public class Room extends Object implements Serializable{
         return false;
     }
     
+    public Exit findExit(String n){
+        for(Exit e: this.exits){
+            if(e.getName().equalsIgnoreCase(n)){
+                return e;
+            }
+        }
+        return null;
+    }
+    
     /**
      * Remove an exit given the name
      * @param n name of the exit

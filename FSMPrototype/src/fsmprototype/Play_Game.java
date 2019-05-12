@@ -301,6 +301,7 @@ public class Play_Game extends javax.swing.JFrame {
     private void processSentence(ArrayList<TypedDependency> d){
         String rel, gov, dep;
         String compund;
+        Boolean commandFound = false;
         for(int i = 0; i < d.size(); i++){
             rel = d.get(i).reln().toString();
             gov = d.get(i).gov().word();
@@ -314,10 +315,18 @@ public class Play_Game extends javax.swing.JFrame {
                Gameplay.append("You can interact with different objects with "
                        + "their specific verbs, enter 'look' to learn what you "
                        + "can do with them!\n");
+               commandFound = true;
             }
             
             if(isMovement(rel, gov, dep)){
-                Room r = game.findRoomByName(dep);
+                int count = 0;
+                Room r = null;
+                while(count < game.getRooms().size() || r != null){
+                    if(game.getRooms().get(i).findExit(dep) != null){
+                        r = game.getRooms().get(i);
+                    }
+                    count++;
+                }
                 if(r != null){
                     if(!r.getCurrentState().allowMovement()){
                         Gameplay.append("Can't enter room! State "+ 
@@ -332,13 +341,22 @@ public class Play_Game extends javax.swing.JFrame {
                             roomChange();
                         } 
                     }
+                    commandFound = true;
                 }
                 else{
                     Gameplay.append("No such direction!\n");
+                    commandFound = true;
                 }
             }
             else if(isMovement_dep(rel, gov, dep)){
-                Room r = game.findRoomByName(gov);
+                int count = 0;
+                Room r = null;
+                while(count < game.getRooms().size() || r != null){
+                    if(game.getRooms().get(i).findExit(gov) != null){
+                        r = game.getRooms().get(i);
+                    }
+                    count++;
+                }
                 if(!r.getCurrentState().allowMovement()){
                     Gameplay.append("Can't enter room! State "+ 
                             r.getCurrentState().getName() + 
@@ -352,6 +370,7 @@ public class Play_Game extends javax.swing.JFrame {
                         roomChange();
                     } 
                 }
+                commandFound = true;
             }
             else if(isObserving(rel, gov, dep)){
                 Gameplay.append(game.findObjectInRoomByName(dep).getDesc());
@@ -360,6 +379,7 @@ public class Play_Game extends javax.swing.JFrame {
                     Gameplay.append(v.getName() + ", ");
                 }
                 Gameplay.append("\n");
+                commandFound = true;
             }
             else if(isTaking(rel, gov, dep)){
                 Object o = game.findObjectInRoomByName(dep);
@@ -376,6 +396,7 @@ public class Play_Game extends javax.swing.JFrame {
                 else{
                     Gameplay.append("No such object!\n");
                 }
+                commandFound = true;
             }
             else if(isDropping(rel, gov, dep)){
                 Object o = game.getPlayer().drop(dep);
@@ -387,6 +408,7 @@ public class Play_Game extends javax.swing.JFrame {
                 else{
                     Gameplay.append("No such object!\n");
                 }
+                commandFound = true;
             }
             else if(isDropping_dep(rel, gov, dep)){
                 Object o = game.getPlayer().drop(gov);
@@ -398,13 +420,15 @@ public class Play_Game extends javax.swing.JFrame {
                 else{
                     Gameplay.append("No such object!\n");
                 }
+                commandFound = true;
             }
             else if(isAction(rel, gov, dep)){
-                processVerbs(rel, gov, dep);
+                commandFound = processVerbs(rel, gov, dep);
+                
             }
-            else{
-                Gameplay.append("Command not recognised!");
-            }
+        }
+        if(commandFound){
+            Gameplay.append("Command not recognised!\n");
         }
     }
     
@@ -536,7 +560,7 @@ public class Play_Game extends javax.swing.JFrame {
      * @param gov government word
      * @param dep dependent word
      */
-    private void processVerbs(String rel, String gov, String dep){
+    private boolean processVerbs(String rel, String gov, String dep){
         Object o = game.findAssociatedObjinVerb(gov, dep);
         boolean done = false;
         if(o != null){
@@ -610,6 +634,7 @@ public class Play_Game extends javax.swing.JFrame {
             }
             updatePlayerAttribute();
             updateTree();
+            return true;
         }
         else{
             JLabel label = new JLabel("Object not found!");
@@ -618,6 +643,7 @@ public class Play_Game extends javax.swing.JFrame {
                 label, 
                 "Object not found", JOptionPane.WARNING_MESSAGE);
         }
+        return false;
     }
     
     /**

@@ -2306,7 +2306,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     updateTree();
                     break;
 
-                case "Unlimited use object":
+                case "Unlimited use":
                     Unlimited_Use_Object u = new 
                         Unlimited_Use_Object("Object");
                     con.addObjects(u);
@@ -2345,7 +2345,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     updateTree();
                     break;
 
-                case "Unlimited use object":
+                case "Unlimited use":
                     Unlimited_Use_Object u = new 
                         Unlimited_Use_Object("Object");
                     ply.pickup(u);
@@ -2430,12 +2430,15 @@ public class Main_Edit extends javax.swing.JFrame {
             LinkedList<Attribute> a = r.getAttributes();
             for(Attribute att: a){
                 if(att instanceof Number_Attribute){
-                    attributes.addRow(new String[]{att.getName(), "Number", "0",
+                    attributes.addRow(new String[]{att.getName(), "Number", 
+                        String.valueOf(((Number_Attribute) att).getValue()),
                         att.getVerb().getName()});
                 }
                 else{
                     attributes.addRow(new String[]{att.getName(), 
-                        "Boolean", "0", att.getVerb().getName()});
+                        "Boolean", 
+                        String.valueOf(((Boolean_Attribute)att).getCondition()), 
+                        att.getVerb().getName()});
                 }
             }
         }
