@@ -35,5 +35,5 @@ public abstract class Attribute implements Serializable
         return this.inRoom;
     }
     
-    public abstract boolean modify();
+    public abstract boolean modify(boolean b);
 }

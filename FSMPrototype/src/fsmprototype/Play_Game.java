@@ -519,7 +519,8 @@ public class Play_Game extends javax.swing.JFrame {
      * @return true if the verb is observing word
      */
     private boolean isAction(String rel, String gov, String dep){
-        if(rel.contains("dobj") || rel.contains("nmod:npmod") || rel.contains("nmod:on")){
+        if(rel.contains("dobj") || rel.contains("nmod:npmod") || 
+                rel.contains("nmod:on")){
             return true;
         }
         return false;
@@ -532,7 +533,6 @@ public class Play_Game extends javax.swing.JFrame {
      * @param dep dependent word
      */
     private void processVerbs(String rel, String gov, String dep){
-        System.out.println(gov + " " + dep);
         Object o = game.findAssociatedObjinVerb(gov, dep);
         boolean done = false;
         if(o != null){
@@ -564,7 +564,7 @@ public class Play_Game extends javax.swing.JFrame {
                         .getName()) != null){
                     if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
-                            att.modify();
+                            att.modify(true);
                             done = true;
                         }
                         else{
@@ -572,7 +572,7 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                     }
                     else{
-                       att.modify(); 
+                       att.modify(true); 
                        done = true;
                     } 
                 }
@@ -584,7 +584,7 @@ public class Play_Game extends javax.swing.JFrame {
             else{
                 if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
-                            att.modify();
+                            att.modify(true);
                             done = true;
                         }
                         else{
@@ -592,7 +592,7 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                     }
                     else{
-                       att.modify(); 
+                       att.modify(true); 
                        done = true;
                     } 
             }
@@ -653,10 +653,10 @@ public class Play_Game extends javax.swing.JFrame {
     private void updateAttribute(Attribute att, String dep){
         if(att instanceof Boolean_Attribute){
            if(((Boolean_Attribute) att).getCondition()){
-               Gameplay.append(dep + " is " + att.getName()); 
+               Gameplay.append(dep + " is " + att.getName() + "\n"); 
            }
            else{
-               Gameplay.append(dep + " is not " + att.getName()); 
+               Gameplay.append(dep + " is not " + att.getName() + "\n"); 
            }
         }
         else if(att instanceof Number_Attribute){
@@ -665,7 +665,7 @@ public class Play_Game extends javax.swing.JFrame {
                         ((Number_Attribute) att).getAmount() + "\n"); 
             }
             else{
-                Gameplay.append(att.getName() + "decreased by " + 
+                Gameplay.append(att.getName() + " decreased by " + 
                         ((Number_Attribute) att).getAmount() + "\n"); 
             }
         }

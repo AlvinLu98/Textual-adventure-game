@@ -68,15 +68,16 @@ public class Player extends Living_Objects implements Serializable{
     }
      
      public Object findObjectByName(String o){
-        for(Object obj: this.inventory.getObjects()){
+        Object f = null;
+         for(Object obj: this.inventory.getObjects()){
             if(obj.getName().equalsIgnoreCase(o)){
-                return obj;
+                f = obj;
             }    
             else if(obj instanceof Container){
-                return ((Container) obj).findObjectByName(o);
+                f = ((Container) obj).findObjectByName(o);
             }
         }
-        return null;
+        return f;
     }
     
     public Room move(String direction){

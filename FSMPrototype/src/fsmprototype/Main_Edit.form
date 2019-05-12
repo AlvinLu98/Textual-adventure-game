@@ -4,7 +4,6 @@
   <NonVisualComponents>
     <Container class="javax.swing.JFrame" name="Add_Attribute_Window">
       <Properties>
-        <Property name="preferredSize" postCode="Add_Attribute_Window.setLocationRelativeTo(null);"/>
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[950, 800]"/>
         </Property>
@@ -360,6 +359,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cancel"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancel_AttributeActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

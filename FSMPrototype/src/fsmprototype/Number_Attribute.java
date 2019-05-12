@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fsmprototype;
 
 import java.io.Serializable;
@@ -18,7 +13,8 @@ public class Number_Attribute extends Attribute implements Serializable
     private boolean incDec = true;
     
     
-    public Number_Attribute(String s, String v, double def, double val, boolean incDec, Object o, Object own){
+    public Number_Attribute(String s, String v, double def, double val, 
+            boolean incDec, Object o, Object own){
         super(s,v,o, own);
         this.value = def;
         this.amtChange = val;
@@ -33,6 +29,10 @@ public class Number_Attribute extends Attribute implements Serializable
         return this.amtChange;
     }
     
+    /**
+     * Check if the attribute is increment of decrement
+     * @return true if it's incrementing
+     */
     public boolean isIncrement(){
         return this.incDec;
     }
@@ -43,9 +43,9 @@ public class Number_Attribute extends Attribute implements Serializable
     }
     
     @Override
-    public boolean modify()
+    public boolean modify(boolean b)
     {
-        if(this.incDec){
+        if(b){
             this.value += this.amtChange;
             return true;
         }

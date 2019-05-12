@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Verb implements Serializable
 {
     private String name;
+    private boolean effect;
     private Object associated;
     private Object owner;
     
@@ -22,6 +23,13 @@ public class Verb implements Serializable
         this.name = name;
         this.associated = o;
         this.owner = own;
+    }
+    
+    public Verb(String name, Object o, Object own, boolean b){
+        this.name = name;
+        this.associated = o;
+        this.owner = own;
+        this.effect = b;
     }
     
     public String getName(){
@@ -34,5 +42,9 @@ public class Verb implements Serializable
     
     public Object getOwnerObject(){
         return this.owner;
+    }
+    
+    public boolean getEffect(){
+        return this.effect;
     }
 }

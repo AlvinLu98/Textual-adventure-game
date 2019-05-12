@@ -166,7 +166,6 @@ public class Main_Edit extends javax.swing.JFrame {
         menuEdit = new javax.swing.JMenu();
 
         Add_Attribute_Window.setVisible(false);
-        Add_Attribute_Window.setLocationRelativeTo(null);
         Add_Attribute_Window.setSize(new java.awt.Dimension(950, 800));
 
         attribute_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -241,6 +240,11 @@ public class Main_Edit extends javax.swing.JFrame {
 
         cancel_Attribute.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         cancel_Attribute.setText("Cancel");
+        cancel_Attribute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancel_AttributeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Add_Attribute_WindowLayout = new javax.swing.GroupLayout(Add_Attribute_Window.getContentPane());
         Add_Attribute_Window.getContentPane().setLayout(Add_Attribute_WindowLayout);
@@ -1641,8 +1645,8 @@ public class Main_Edit extends javax.swing.JFrame {
                     b.usableInSameRoom();;
                 }
                 o.addAttribute(b);
-                g.addVerb(new Verb(verb, associated, o));
-                o.addVerb(new Verb(verb, associated, o));
+                g.addVerb(new Verb(verb, associated, o, true));
+                o.addVerb(new Verb(verb, associated, o, true));
                 attribute_name.setText("");
                 verb_name.setText("");
                 object_name.setText("");
@@ -1667,8 +1671,8 @@ public class Main_Edit extends javax.swing.JFrame {
                             a.usableInSameRoom();
                         }
                         o.addAttribute(a);
-                        g.addVerb(new Verb(verb, associated, o));
-                        o.addVerb(new Verb(verb, associated, o));
+                        g.addVerb(new Verb(verb, associated, o, true));
+                        o.addVerb(new Verb(verb, associated, o, true));
                     }
                     else{
                         Number_Attribute a = new Number_Attribute(name, verb, 
@@ -1677,8 +1681,8 @@ public class Main_Edit extends javax.swing.JFrame {
                             a.usableInSameRoom();
                         }
                         o.addAttribute(a);
-                        g.addVerb(new Verb(verb, associated, o));
-                        o.addVerb(new Verb(verb, associated, o));
+                        g.addVerb(new Verb(verb, associated, o, false));
+                        o.addVerb(new Verb(verb, associated, o, false));
                     }
                     attribute_name.setText("");
                     verb_name.setText("");
@@ -1829,10 +1833,11 @@ public class Main_Edit extends javax.swing.JFrame {
                     Object newO = g.findAssociatedObjinVerb(verb,
                             object_Associated_Transition.getText());
                     if(newO != null){
+                        Verb oldV = o.findVerb(prevVerb);
                         g.deleteVerb(prevVerb);
                         newO.deleteVerb(prevVerb);
-                        g.addVerb(new Verb(verb, newO, o));
-                        newO.addVerb(new Verb(verb, newO, o));
+                        g.addVerb(new Verb(verb, newO, o, oldV.getEffect()));
+                        newO.addVerb(new Verb(verb, newO, o, oldV.getEffect()));
                     }
                     else{
                         JLabel label = new JLabel("Associated object not found"
@@ -2446,6 +2451,14 @@ public class Main_Edit extends javax.swing.JFrame {
         condition_Attribute.setText("");
         condition_Associated_Object.setText("");
     }//GEN-LAST:event_condition_CancelActionPerformed
+
+    private void cancel_AttributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_AttributeActionPerformed
+        Add_Condition_Window.setVisible(false);
+        condition_Name.setText("");
+        condition_Value.setText("");
+        condition_Attribute.setText("");
+        condition_Associated_Object.setText("");
+    }//GEN-LAST:event_cancel_AttributeActionPerformed
 
     /**
      * Updates the exit table in the edit screen given the room

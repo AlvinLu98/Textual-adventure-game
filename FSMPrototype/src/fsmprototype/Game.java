@@ -232,18 +232,22 @@ public class Game implements Serializable{
      * @return Object that matches given name
      */
     public Object findObjectInRoomByName(String o){
+        Object f = null;
         for(Object obj: player.getLocation().getObject()){
+            if(f != null){
+                break;
+            }
             if(obj.getName().equalsIgnoreCase(o)){
                 return obj;
             }    
             else if(obj instanceof Container){
-                return ((Container) obj).findObjectByName(o);
+                f  = ((Container) obj).findObjectByName(o);
             }
             else{
-                return player.findObjectByName(o);
+                f =  player.findObjectByName(o);
             }
         }
-        return null;
+        return f;
     }
     
     /**

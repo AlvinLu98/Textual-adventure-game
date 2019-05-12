@@ -37,7 +37,7 @@ public class Boolean_Attribute extends Attribute implements Serializable
         return this.condition;
     }
     
-    public boolean modify(){
+    public boolean modify(boolean b){
         this.condition = !this.condition;
         return this.condition;
     }
