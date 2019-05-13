@@ -215,15 +215,19 @@ public class Game implements Serializable{
      */
     public Object findObject(Room r, Object o){
         Room room = findRoom(r);
+        Object f = null;
         for(Object obj: room.getObject()){
             if(obj.getName().equalsIgnoreCase(o.getName())){
-                return obj;
+                f = obj;
             }    
             else if(obj instanceof Container){
-                return ((Container) obj).findObject(o);
+                f = ((Container) obj).findObject(o);
+            }
+            else if (obj instanceof Player){
+                f = ((Player) obj).findObject(o);
             }
         }
-        return null;
+        return f;
     }
     
     /**
@@ -243,8 +247,8 @@ public class Game implements Serializable{
             else if(obj instanceof Container){
                 f  = ((Container) obj).findObjectByName(o);
             }
-            else{
-                f =  player.findObjectByName(o);
+            else if(obj instanceof Player){
+                f =  ((Player) obj).findObject(f);
             }
         }
         return f;
@@ -258,20 +262,21 @@ public class Game implements Serializable{
      */
     public Object findObjectandRoomByName(String r, String o){
         Room room = findRoomByName(r);
+        Object j = null;
         if(room != null){
             for(Object obj: room.getObject()){
                 if(obj.getName().equalsIgnoreCase(o)){
-                    return obj;
+                    j = obj;
                 }    
                 else if(obj instanceof Container){
-                    return ((Container) obj).findObjectByName(o);
+                    j = ((Container) obj).findObjectByName(o);
                 }
-                else{
-                    player.findObjectByName(o);
+                else if(obj instanceof Player){
+                    j = ((Player) obj).findObjectByName(o);
                 }
             }
         }
-        return null;
+        return j;
     }
     
     /**

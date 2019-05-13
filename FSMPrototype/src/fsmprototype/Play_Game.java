@@ -88,6 +88,7 @@ public class Play_Game extends javax.swing.JFrame {
         
         dropItem.add("drop");
         dropItem.add("throw");
+        dropItem.add("remove");
     }
     
     /**
@@ -319,11 +320,12 @@ public class Play_Game extends javax.swing.JFrame {
             }
             
             if(isMovement(rel, gov, dep)){
+                commandFound = true;
                 int count = 0;
                 Room r = null;
-                while(count < game.getRooms().size() || r != null){
-                    if(game.getRooms().get(i).findExit(dep) != null){
-                        r = game.getRooms().get(i);
+                while(count < game.getRooms().size() && r == null){
+                    if(game.getRooms().get(count).findExit(dep) != null){
+                        r = game.getRooms().get(count);
                     }
                     count++;
                 }
@@ -341,42 +343,46 @@ public class Play_Game extends javax.swing.JFrame {
                             roomChange();
                         } 
                     }
-                    commandFound = true;
                 }
                 else{
-                    Gameplay.append("No such direction!\n");
-                    commandFound = true;
+                    Gameplay.append("No such direction found!\n");
                 }
             }
             else if(isMovement_dep(rel, gov, dep)){
+                commandFound = true;
                 int count = 0;
                 Room r = null;
-                while(count < game.getRooms().size() || r != null){
-                    if(game.getRooms().get(i).findExit(gov) != null){
+                while(count < game.getRooms().size() && r == null){
+                    if(game.getRooms().get(count).findExit(gov) != null){
                         r = game.getRooms().get(i);
                     }
                     count++;
                 }
-                if(!r.getCurrentState().allowMovement()){
-                    Gameplay.append("Can't enter room! State "+ 
-                            r.getCurrentState().getName() + 
-                            " doesn't allow movement\n");
-                }
-                else{
-                   if(game.getPlayer().move(gov) == null){
-                    Gameplay.append("No such direction!\n");
+                if(r != null){
+                    if(!r.getCurrentState().allowMovement()){
+                        Gameplay.append("Can't enter room! State "+ 
+                                r.getCurrentState().getName() + 
+                                " doesn't allow movement\n");
                     }
                     else{
-                        roomChange();
-                    } 
+                       if(game.getPlayer().move(gov) == null){
+                        Gameplay.append("No such direction!\n");
+                        }
+                        else{
+                            roomChange();
+                        } 
+                    }
                 }
-                commandFound = true;
+                else{
+                    Gameplay.append("No such direction found!\n");
+                }
             }
             else if(isObserving(rel, gov, dep)){
                 Gameplay.append(game.findObjectInRoomByName(dep).getDesc());
                 Gameplay.append("You can: ");
                 for(Verb v:game.findObjectInRoomByName(dep).getVerbs()){
-                    Gameplay.append(v.getName() + ", ");
+                    Gameplay.append(v.getName() +" " + v.getAssociatedObject() 
+                            + ", ");
                 }
                 Gameplay.append("\n");
                 commandFound = true;
@@ -427,7 +433,7 @@ public class Play_Game extends javax.swing.JFrame {
                 
             }
         }
-        if(commandFound){
+        if(!commandFound){
             Gameplay.append("Command not recognised!\n");
         }
     }

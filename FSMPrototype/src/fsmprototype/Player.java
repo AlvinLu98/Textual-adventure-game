@@ -95,7 +95,6 @@ public class Player extends Living_Objects implements Serializable{
     public Room move(String direction){
         LinkedList<Exit> exit = this.currentLocation.getExit();
         for(Exit e: exit){
-            System.out.println(e.getName());
             if(e.getName().equals(direction)){
                 this.currentLocation = e.takeExit();
                 return e.takeExit();

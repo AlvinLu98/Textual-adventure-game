@@ -317,7 +317,9 @@ public abstract class Object implements Serializable
         Set<State> states = new HashSet<State>();
         states.add(s);
         for(Transition t: s.getTransition()){
-            states.addAll(getAllStates(t.getEndState()));
+            if(!states.contains(s) && !states.contains(t.getEndState())){
+                states.addAll(getAllStates(t.getEndState()));
+            }  
         }
         return states;
     }

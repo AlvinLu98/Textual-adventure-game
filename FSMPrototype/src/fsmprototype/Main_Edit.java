@@ -1441,7 +1441,6 @@ public class Main_Edit extends javax.swing.JFrame {
                     remove = r.findObject(o);
                     if(remove != null){
                         r.removeObject(o);
-                        jScrollPane5.setViewportView(Current_Game);
                     }
                 }
              }
@@ -1452,6 +1451,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(Main_Panel, label,
                         "Failed to delete Object", JOptionPane.WARNING_MESSAGE);
          }
+         jScrollPane5.setViewportView(Current_Game);
     }//GEN-LAST:event_deleteMouseClicked
 
     private void create_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_create_exitMouseClicked
@@ -1694,6 +1694,12 @@ public class Main_Edit extends javax.swing.JFrame {
             save_Transition.setVisible(false);
             add_condition.setVisible(false);
             delete_condition.setVisible(false);
+            transition_Verb.setText("");
+            end_State.setText("");
+            start_State.setText("");
+            DefaultTableModel conditions = (DefaultTableModel) 
+                condition_Table.getModel();
+            conditions.setRowCount(0);
             if(selectedNode.getUserObject() instanceof Room){
                 start_movement.setVisible(true);
                 end_movement.setVisible(true);
