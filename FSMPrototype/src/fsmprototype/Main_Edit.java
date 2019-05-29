@@ -1459,24 +1459,34 @@ public class Main_Edit extends javax.swing.JFrame {
         String name = exit_name.getText();
         String room = exit_room.getText();
         
-        Room r = g.findRoomByName(room);
-        if(r == null){
-            JLabel label = new JLabel("Room not found!");
-            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
-            JOptionPane.showMessageDialog(Main_Panel, label, 
-                    "Room missing", JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-            if(!g.findRoom((Room)selectedNode.getUserObject()).addExit(name, r)){
-                JLabel label = new JLabel("Exit already exists!");
+        if(name.split(" ").length > 1){
+            JLabel label = new JLabel("Name can only be one word!");
                 label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                 JOptionPane.showMessageDialog(Main_Panel, label,
                         "Exit not created", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        else{
+            Room r = g.findRoomByName(room);
+            if(r == null){
+                JLabel label = new JLabel("Room not found!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Main_Panel, label, 
+                        "Room missing", JOptionPane.WARNING_MESSAGE);
             }
             else{
-                exit_name.setText("");
-                exit_room.setText("");
-                updateExitTable((Room)selectedNode.getUserObject());
+                if(!g.findRoom((Room)selectedNode.getUserObject())
+                        .addExit(name, r)){
+                    JLabel label = new JLabel("Exit already exists!");
+                    label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                    JOptionPane.showMessageDialog(Main_Panel, label,
+                            "Exit not created", JOptionPane.WARNING_MESSAGE);
+                }
+                else{
+                    exit_name.setText("");
+                    exit_room.setText("");
+                    updateExitTable((Room)selectedNode.getUserObject());
+                }
             }
         }
     }//GEN-LAST:event_create_exitMouseClicked

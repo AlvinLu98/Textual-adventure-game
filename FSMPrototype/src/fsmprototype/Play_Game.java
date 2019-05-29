@@ -47,7 +47,8 @@ public class Play_Game extends javax.swing.JFrame {
         game = (Game) deepClone(Main_Edit.g);
         initComponents();
         setLocationRelativeTo(null);
-        JOptionPane.showMessageDialog(jScrollPane1, "Currently creating your game!");
+        JOptionPane.showMessageDialog(jScrollPane1,
+                "Currently creating your game!");
         
         movement = new ArrayList();
         observe = new ArrayList();
@@ -56,7 +57,7 @@ public class Play_Game extends javax.swing.JFrame {
         initWordList();
         
         Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+        props.setProperty("annotators", "tokenize, ssplit, pos, parse");
         pipeline = new StanfordCoreNLP(props);
         if(game != null){
             Gameplay.append("Welcome " + game.getPlayer().getName() + "\n");
@@ -64,7 +65,9 @@ public class Play_Game extends javax.swing.JFrame {
             roomChange();
         }
         else{
-            Gameplay.append("Your game is currently empty! Please insert a player and room!");
+            Gameplay
+                    .append("Your game is currently empty!"
+                            + " Please insert a player and room!");
         }
     }
     
