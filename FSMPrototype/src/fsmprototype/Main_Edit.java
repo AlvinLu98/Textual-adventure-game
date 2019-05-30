@@ -11,7 +11,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import fsmprototype.Condition.Type;
 import java.awt.Font;
 import java.util.Set;
 import javax.swing.JLabel;

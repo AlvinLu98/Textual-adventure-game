@@ -383,9 +383,30 @@ public class Play_Game extends javax.swing.JFrame {
             else if(isObserving(rel, gov, dep)){
                 Gameplay.append(game.findObjectInRoomByName(dep).getDesc());
                 Gameplay.append("You can: ");
-                for(Verb v:game.findObjectInRoomByName(dep).getVerbs()){
-                    Gameplay.append(v.getName() +" " + v.getAssociatedObject() 
+                Object obj = game.findObjectInRoomByName(dep);
+                ArrayList<Verb> verbs = obj.getVerbs();
+                if(verbs.isEmpty()){
+                    Gameplay.append("No action can be done");
+                }
+                else{
+                  for(Verb v:verbs){
+                        Gameplay.append(v.getName() +" " +
+                                v.getAssociatedObject() 
                             + ", ");
+                    }     
+                }
+                Gameplay.append("\n");
+                if(obj instanceof Container){
+                    Gameplay.append("It contains: ");
+                    for(Object items: ((Container) obj).getObjects()){
+                        Gameplay.append(items.getName());
+                    }
+                }
+                else if(obj instanceof Player){
+                    Gameplay.append("It contains: ");
+                    for(Object items: ((Player) obj).getItems()){
+                        Gameplay.append(items.getName());
+                    }
                 }
                 Gameplay.append("\n");
                 commandFound = true;
