@@ -2394,11 +2394,14 @@ public class Main_Edit extends javax.swing.JFrame {
     }//GEN-LAST:event_condition_CancelActionPerformed
 
     private void cancel_AttributeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_AttributeActionPerformed
-        Add_Condition_Window.setVisible(false);
-        condition_Name.setText("");
-        condition_Value.setText("");
-        condition_Attribute.setText("");
-        condition_Associated_Object.setText("");
+        Add_Attribute_Window.setVisible(false);
+        attribute_name.setText("");
+        verb_name.setText("");
+        object_name.setText("");
+        object_room_name.setText("");
+        att_def_num.setText("");
+        num_att_amt.setText("");
+        same_room.setSelected(false);
     }//GEN-LAST:event_cancel_AttributeActionPerformed
 
     /**
