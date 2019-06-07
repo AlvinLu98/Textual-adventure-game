@@ -68,10 +68,10 @@ public class State implements Serializable
     }
     
     /**
-     * Returns whether this state allows movement
-     * @return true if allows movement
+     * Returns whether this state allows access
+     * @return true if allows access
      */
-    public boolean allowMovement(){
+    public boolean allowAccess(){
         return this.allowMovement;
     }
     

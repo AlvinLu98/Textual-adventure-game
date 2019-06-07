@@ -349,7 +349,7 @@ public class Play_Game extends javax.swing.JFrame {
                     count++;
                 }
                 if(r != null){
-                    if(!r.getCurrentState().allowMovement()){
+                    if(!r.getCurrentState().allowAccess()){
                         Gameplay.append("Can't enter room! State "+ 
                                 r.getCurrentState().getName() + 
                                 " doesn't allow movement\n");
@@ -378,7 +378,7 @@ public class Play_Game extends javax.swing.JFrame {
                     count++;
                 }
                 if(r != null){
-                    if(!r.getCurrentState().allowMovement()){
+                    if(!r.getCurrentState().allowAccess()){
                         Gameplay.append("Can't enter room! State "+ 
                                 r.getCurrentState().getName() + 
                                 " doesn't allow movement\n");
@@ -413,10 +413,19 @@ public class Play_Game extends javax.swing.JFrame {
                 }
                 Gameplay.append("\n");
                 if(obj instanceof Container){
-                    Gameplay.append("It contains: ");
-                    for(Object items: ((Container) obj).getObjects()){
-                        Gameplay.append(items.getName());
+                    if(((Container)obj).getCurrentState().allowAccess()){
+                        Gameplay.append("It contains: ");
+                        for(Object items: ((Container) obj).getObjects()){
+                            Gameplay.append(items.getName());
+                        }
+                        Gameplay.append("\n");
                     }
+                    else{
+                        Gameplay.append("You can't see inside the box \n");
+                        Gameplay.append("It's " + 
+                                obj.getCurrentState().getName() + "\n");
+                    }
+                    
                 }
                 else if(obj instanceof Player){
                     Gameplay.append("It contains: ");
