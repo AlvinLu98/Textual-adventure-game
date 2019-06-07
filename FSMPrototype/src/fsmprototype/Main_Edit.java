@@ -1069,10 +1069,10 @@ public class Main_Edit extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(exit_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(create_exit_formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(exit_room, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(exit_room, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(create_exit)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
@@ -1453,14 +1453,14 @@ public class Main_Edit extends javax.swing.JFrame {
         String name = exit_name.getText();
         String room = exit_room.getText();
         
-        if(name.split(" ").length > 1){
-            JLabel label = new JLabel("Name can only be one word!");
-                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
-                JOptionPane.showMessageDialog(Main_Panel, label,
-                        "Exit not created", JOptionPane.WARNING_MESSAGE);
-        }
-        
-        else{
+//        if(name.split(" ").length > 1){
+//            JLabel label = new JLabel("Name can only be one word!");
+//                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+//                JOptionPane.showMessageDialog(Main_Panel, label,
+//                        "Exit not created", JOptionPane.WARNING_MESSAGE);
+//        }
+//        
+//        else{
             Room r = g.findRoomByName(room);
             if(r == null){
                 JLabel label = new JLabel("Room not found!");
@@ -1482,7 +1482,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     updateExitTable((Room)selectedNode.getUserObject());
                 }
             }
-        }
+//        }
     }//GEN-LAST:event_create_exitMouseClicked
 
     private void remove_exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_remove_exitMouseClicked

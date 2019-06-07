@@ -61,7 +61,9 @@ public class Play_Game extends javax.swing.JFrame {
         pipeline = new StanfordCoreNLP(props);
         if(game != null){
             Gameplay.append("Welcome " + game.getPlayer().getName() + "\n");
-            Gameplay.append(game.getPlayer().getDesc()+ "\n");
+            if(game.getPlayer().getDesc() != null){
+                Gameplay.append(game.getPlayer().getDesc()+ "\n");
+            }
             roomChange();
         }
         else{
@@ -168,6 +170,7 @@ public class Play_Game extends javax.swing.JFrame {
         Gameplay.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         Gameplay.setEditable(false);
         Gameplay.setRows(5);
+        Gameplay.setLineWrap(true);
         jScrollPane2.setViewportView(Gameplay);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -320,7 +323,6 @@ public class Play_Game extends javax.swing.JFrame {
      */
     private void processSentence(ArrayList<TypedDependency> d){
         String rel, gov, dep;
-        String compund;
         Boolean commandFound = false;
         for(int i = 0; i < d.size(); i++){
             rel = d.get(i).reln().toString();
@@ -328,13 +330,7 @@ public class Play_Game extends javax.swing.JFrame {
             dep = d.get(i).dep().word();
             
             if(dep.equals("help") && rel.equals("root")){
-               Gameplay.append("You can move around by entering 'go' followed "
-                       + "by the location \n");
-               Gameplay.append("You can look at objects by entering 'look' "
-                       + "followed by the object\n");
-               Gameplay.append("You can interact with different objects with "
-                       + "their specific verbs, enter 'look' to learn what you "
-                       + "can do with them!\n");
+               helpFeature();
                commandFound = true;
             }
             
@@ -342,11 +338,22 @@ public class Play_Game extends javax.swing.JFrame {
                 commandFound = true;
                 int count = 0;
                 Room r = null;
-                while(count < game.getRooms().size() && r == null){
-                    if(game.getRooms().get(count).findExit(dep) != null){
-                        r = game.getRooms().get(count);
+                String result = findAdjectiveSubject(d);
+                if(result != null){
+                   while(count < game.getRooms().size() && r == null){
+                        if(game.getRooms().get(count).findExit(result) != null){
+                            r = game.getRooms().get(count);
+                        }
+                        count++;
+                    } 
+                }
+                else{
+                    while(count < game.getRooms().size() && r == null){
+                        if(game.getRooms().get(count).findExit(dep) != null){
+                            r = game.getRooms().get(count);
+                        }
+                        count++;
                     }
-                    count++;
                 }
                 if(r != null){
                     if(!r.getCurrentState().allowAccess()){
@@ -355,12 +362,22 @@ public class Play_Game extends javax.swing.JFrame {
                                 " doesn't allow movement\n");
                     }
                     else{
-                       if(game.getPlayer().move(dep) == null){
-                        Gameplay.append("No such direction!\n");
-                        }
-                        else{
-                            roomChange();
-                        } 
+                       if(result != null){
+                            if(game.getPlayer().move(result) == null){
+                                Gameplay.append("No such direction!\n");
+                            }
+                            else{
+                                roomChange();
+                            }
+                       }
+                       else{
+                            if(game.getPlayer().move(dep) == null){
+                                Gameplay.append("No such direction!\n");
+                            }
+                            else{
+                                roomChange();
+                            } 
+                       }
                     }
                 }
                 else{
@@ -370,12 +387,23 @@ public class Play_Game extends javax.swing.JFrame {
             else if(isMovement_dep(rel, gov, dep)){
                 commandFound = true;
                 int count = 0;
+                String result = findAdjectiveSubject(d);
                 Room r = null;
-                while(count < game.getRooms().size() && r == null){
-                    if(game.getRooms().get(count).findExit(gov) != null){
-                        r = game.getRooms().get(i);
+                if(result != null){
+                   while(count < game.getRooms().size() && r == null){
+                        if(game.getRooms().get(count).findExit(result) != null){
+                            r = game.getRooms().get(count);
+                        }
+                        count++;
+                    } 
+                }
+                else{
+                    while(count < game.getRooms().size() && r == null){
+                        if(game.getRooms().get(count).findExit(gov) != null){
+                            r = game.getRooms().get(i);
+                        }
+                        count++;
                     }
-                    count++;
                 }
                 if(r != null){
                     if(!r.getCurrentState().allowAccess()){
@@ -384,12 +412,22 @@ public class Play_Game extends javax.swing.JFrame {
                                 " doesn't allow movement\n");
                     }
                     else{
-                       if(game.getPlayer().move(gov) == null){
-                        Gameplay.append("No such direction!\n");
+                        if(result != null){
+                            if(game.getPlayer().move(result) == null){
+                                Gameplay.append("No such direction!\n");
+                            }
+                            else{
+                                roomChange();
+                            }
                         }
                         else{
-                            roomChange();
-                        } 
+                            if(game.getPlayer().move(gov) == null){
+                            Gameplay.append("No such direction!\n");
+                            }
+                            else{
+                                roomChange();
+                            } 
+                        }
                     }
                 }
                 else{
@@ -488,6 +526,38 @@ public class Play_Game extends javax.swing.JFrame {
     }
     
     /**
+     * Outputs the generic help instructions
+     */
+    private void helpFeature(){
+        Gameplay.append("Move around by entering 'go' followed "
+                + "by the location \n");
+        Gameplay.append("Look at objects by entering 'look' "
+                + "followed by the object\n");
+        Gameplay.append("Interact with different objects with "
+                + "their specific verbs, enter 'look' to learn what you "
+                + "can do with them!\n");
+    }
+    
+    /**
+     * Given the list of dependencies, find a subject that contains an adjective
+     * @param d dependency triples
+     * @return 
+     */
+    private String findAdjectiveSubject(ArrayList<TypedDependency> d)
+    {
+        String rel, gov, dep, result;
+        for(int i = 0; i < d.size(); i++){
+            rel = d.get(i).reln().toString();
+            gov = d.get(i).gov().word();
+            dep = d.get(i).dep().word();
+            if(rel.contains("amod")){
+                result = dep + " " + gov;
+                return result;
+            }
+        }
+        return null;
+    }
+    /**
      * Checks if the verb is related to movement
      * @param rel relationship between the words
      * @param gov government word 
@@ -495,7 +565,7 @@ public class Play_Game extends javax.swing.JFrame {
      * @return true if the verb is regarding to movement
      */
     private boolean isMovement(String rel, String gov, String dep){
-        if(rel.contains("advmod")){
+        if(rel.contains("advmod") || rel.contains("nmod:to")){
             if(movement.contains(gov)){
                 return true;
             }

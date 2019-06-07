@@ -105,6 +105,9 @@
                 </Property>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Gameplay.setLineWrap(true);"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
