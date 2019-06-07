@@ -1422,7 +1422,6 @@ public class Main_Edit extends javax.swing.JFrame {
          DefaultMutableTreeNode selectedNode = 
                  (DefaultMutableTreeNode)Current_Game
                          .getLastSelectedPathComponent();
-         DefaultTreeModel model = (DefaultTreeModel)Current_Game.getModel();
          if(selectedNode != null){
              if(selectedNode.getUserObject() instanceof Room){
                  info.setEnabledAt(1, true);
@@ -1446,6 +1445,7 @@ public class Main_Edit extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(Main_Panel, label,
                         "Failed to delete Object", JOptionPane.WARNING_MESSAGE);
          }
+         updateTree();
          jScrollPane5.setViewportView(Current_Game);
     }//GEN-LAST:event_deleteMouseClicked
 
