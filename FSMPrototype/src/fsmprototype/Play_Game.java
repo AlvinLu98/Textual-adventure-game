@@ -486,7 +486,14 @@ public class Play_Game extends javax.swing.JFrame {
                 }
                 Gameplay.append("\n");
                 if(obj instanceof Container){
-                    if(((Container)obj).getCurrentState().allowAccess()){
+                    if(obj.getCurrentState() == null){
+                        Gameplay.append("It contains: ");
+                        for(Object items: ((Container) obj).getObjects()){
+                            Gameplay.append(items.getName());
+                        }
+                        Gameplay.append("\n");
+                    }
+                    else if(((Container)obj).getCurrentState().allowAccess()){
                         Gameplay.append("It contains: ");
                         for(Object items: ((Container) obj).getObjects()){
                             Gameplay.append(items.getName());

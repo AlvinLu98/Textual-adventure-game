@@ -2328,7 +2328,7 @@ public class Main_Edit extends javax.swing.JFrame {
                     break;
 
                 case "Limited use object":
-                    int num = Integer.parseInt(amount_Of_Use.getText());
+                    int num = Integer.parseInt(amount_Of_Use_Player.getText());
                     Limited_Use_Object l = new 
                         Limited_Use_Object("Object", num);
                     con.addObjects(l);
