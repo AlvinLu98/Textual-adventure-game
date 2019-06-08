@@ -37,6 +37,14 @@ public class Limited_Use_Object extends Usable_Object implements Serializable{
     }
     
     /**
+     * Set the amount of uses
+     * @param i amount of uses
+     */
+    public void setUses(int i){
+        this.uses_Left = i;
+    }
+    
+    /**
      * use the object if there are uses left
      * @return true if object is still usable
      */

@@ -137,6 +137,8 @@ public class Main_Edit extends javax.swing.JFrame {
         delete_attribute = new javax.swing.JButton();
         object_Type_Label = new javax.swing.JLabel();
         object_Type = new javax.swing.JLabel();
+        amount_of_uses_label = new javax.swing.JLabel();
+        amount_of_uses = new javax.swing.JTextField();
         exit = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         Exits = new javax.swing.JTable();
@@ -956,6 +958,17 @@ public class Main_Edit extends javax.swing.JFrame {
         object_Type.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         object_Type.setText("Game");
 
+        amount_of_uses_label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        amount_of_uses_label.setText("Amount of uses");
+
+        amount_of_uses.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        amount_of_uses.setText("no");
+        amount_of_uses.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                amount_of_usesFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout Main_PanelLayout = new javax.swing.GroupLayout(Main_Panel);
         Main_Panel.setLayout(Main_PanelLayout);
         Main_PanelLayout.setHorizontalGroup(
@@ -979,6 +992,10 @@ public class Main_Edit extends javax.swing.JFrame {
                         .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(Main_PanelLayout.createSequentialGroup()
                                 .addComponent(object_Type)
+                                .addGap(222, 222, 222)
+                                .addComponent(amount_of_uses_label)
+                                .addGap(18, 18, 18)
+                                .addComponent(amount_of_uses, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane3)
                             .addComponent(jScrollPane2))))
@@ -994,18 +1011,20 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(object_Type_Label)
-                    .addComponent(object_Type))
+                    .addComponent(object_Type)
+                    .addComponent(amount_of_uses_label)
+                    .addComponent(amount_of_uses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(add_attribute)
                     .addComponent(delete_attribute))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1373,17 +1392,31 @@ public class Main_Edit extends javax.swing.JFrame {
             object_class = object_class.split("\\.")[1];
             object_Type.setText(object_class);
            if(selectedNode.getUserObject() instanceof Room){
-               info.setEnabledAt(1, true); 
-               Room r = (Room)selectedNode.getUserObject();
+                amount_of_uses_label.setVisible(false);
+                amount_of_uses.setVisible(false);
+                info.setEnabledAt(1, true); 
+                Room r = (Room)selectedNode.getUserObject();
                 objectName.setText(r.getName());
                 description.setText(r.getDescription());
                 updateExitTable(r);
             }
             else if(selectedNode.getUserObject() instanceof String){
                 objectName.setText((String)selectedNode.getUserObject());
+                amount_of_uses_label.setVisible(false);
+                amount_of_uses.setVisible(false);
             }
             else{
                 Object o = (Object)selectedNode.getUserObject();
+                if(o instanceof Limited_Use_Object){
+                    amount_of_uses_label.setVisible(true);
+                    amount_of_uses.setVisible(true);
+                    amount_of_uses.setText(Integer.toString(
+                            ((Limited_Use_Object) o).uses_Left));
+                }
+                else{
+                    amount_of_uses_label.setVisible(false);
+                    amount_of_uses.setVisible(false);
+                }
                 objectName.setText(o.getName());
                 description.setText(o.getDesc());
                 info.setEnabledAt(1, false);
@@ -2422,6 +2455,15 @@ public class Main_Edit extends javax.swing.JFrame {
         same_room.setSelected(false);
     }//GEN-LAST:event_cancel_AttributeActionPerformed
 
+    private void amount_of_usesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_amount_of_usesFocusLost
+        DefaultMutableTreeNode selectedNode = 
+                (DefaultMutableTreeNode)Current_Game
+                        .getLastSelectedPathComponent();
+        Limited_Use_Object o = (Limited_Use_Object)selectedNode.getUserObject();
+        int i = Integer.parseInt(amount_of_uses.getText());
+        o.setUses(i);
+    }//GEN-LAST:event_amount_of_usesFocusLost
+
     /**
      * Updates the exit table in the edit screen given the room
      * @param r Room to list out the exits
@@ -2637,6 +2679,8 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JTextField amount_Of_Use_Player;
     private javax.swing.JLabel amount_Of_Uses_Label;
     private javax.swing.JLabel amount_Of_Uses_Label_Player;
+    private javax.swing.JTextField amount_of_uses;
+    private javax.swing.JLabel amount_of_uses_label;
     private javax.swing.JLabel associated_object_label;
     private javax.swing.JLabel associated_verb_label1;
     private javax.swing.JComboBox<String> att_def_bool;
