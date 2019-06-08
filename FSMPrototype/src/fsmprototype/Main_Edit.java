@@ -135,6 +135,8 @@ public class Main_Edit extends javax.swing.JFrame {
         att_table = new javax.swing.JTable();
         add_attribute = new javax.swing.JButton();
         delete_attribute = new javax.swing.JButton();
+        object_Type_Label = new javax.swing.JLabel();
+        object_Type = new javax.swing.JLabel();
         exit = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         Exits = new javax.swing.JTable();
@@ -948,6 +950,12 @@ public class Main_Edit extends javax.swing.JFrame {
             }
         });
 
+        object_Type_Label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        object_Type_Label.setText("Type");
+
+        object_Type.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        object_Type.setText("Game");
+
         javax.swing.GroupLayout Main_PanelLayout = new javax.swing.GroupLayout(Main_Panel);
         Main_Panel.setLayout(Main_PanelLayout);
         Main_PanelLayout.setHorizontalGroup(
@@ -956,20 +964,24 @@ public class Main_Edit extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Main_PanelLayout.createSequentialGroup()
-                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(31, 31, 31)
-                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
-                            .addComponent(jScrollPane2)))
-                    .addGroup(Main_PanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(delete_attribute)
                         .addGap(18, 18, 18)
                         .addComponent(add_attribute))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1195, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1195, Short.MAX_VALUE)
+                    .addGroup(Main_PanelLayout.createSequentialGroup()
+                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(object_Type_Label))
+                        .addGap(31, 31, 31)
+                        .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Main_PanelLayout.createSequentialGroup()
+                                .addComponent(object_Type)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3)
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
         Main_PanelLayout.setVerticalGroup(
@@ -977,21 +989,23 @@ public class Main_Edit extends javax.swing.JFrame {
             .addGroup(Main_PanelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addGroup(Main_PanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(9, 9, 9)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(object_Type_Label)
+                    .addComponent(object_Type))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(Main_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(add_attribute)
                     .addComponent(delete_attribute))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1354,6 +1368,10 @@ public class Main_Edit extends javax.swing.JFrame {
     private void Current_GameValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_Current_GameValueChanged
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)Current_Game.getLastSelectedPathComponent();
         if(selectedNode != null){
+            String object_class =selectedNode.getUserObject().getClass()
+                    .toString();
+            object_class = object_class.split("\\.")[1];
+            object_Type.setText(object_class);
            if(selectedNode.getUserObject() instanceof Room){
                info.setEnabledAt(1, true); 
                Room r = (Room)selectedNode.getUserObject();
@@ -2700,6 +2718,8 @@ public class Main_Edit extends javax.swing.JFrame {
     private javax.swing.JButton object;
     private javax.swing.JTextPane objectName;
     private javax.swing.JTextField object_Associated_Transition;
+    private javax.swing.JLabel object_Type;
+    private javax.swing.JLabel object_Type_Label;
     private javax.swing.JLabel object_associated_label_trans;
     private javax.swing.JTextField object_name;
     private javax.swing.JLabel object_room_label;
