@@ -1,6 +1,8 @@
 package fsmprototype;
 
+import java.awt.Font;
 import javax.swing.JFileChooser; //File chooser for saving and opening file
+import javax.swing.JLabel;
 import javax.swing.JOptionPane; //For pop-up windows
 
 /**
@@ -107,10 +109,18 @@ public class MainMenu extends javax.swing.JFrame {
             String name = openFile.getSelectedFile().toString();
             name = name + ".ser";
             game = Game_Saver.load_Created_Game(name);
-            Game_Player gp = new Game_Player(game);
-            this.setVisible(false);
-            new Main_Edit().setVisible(true);
-            new Play_Game().setVisible(true);
+            if(game == null){
+                JLabel label = new JLabel("Invalid file!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Game_Creator, label,
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
+            }
+            else{
+                Game_Player gp = new Game_Player(game);
+                this.setVisible(false);
+                new Main_Edit().setVisible(true);
+                new Play_Game().setVisible(true);
+            }
         }
         else if(returnVal == JOptionPane.CANCEL_OPTION){
             System.out.println("Cancelled");
@@ -127,6 +137,12 @@ public class MainMenu extends javax.swing.JFrame {
             if(game != null){
                 this.setVisible(false);
                 new Main_Edit().setVisible(true);
+            }
+            else{
+                JLabel label = new JLabel("Invalid file!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Game_Creator, label,
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
             }
         }
         else if(returnVal == JOptionPane.CANCEL_OPTION){

@@ -154,11 +154,9 @@ public class Game_Saver {
             in.close();
             fileIn.close();
          } catch (IOException i) {
-            i.printStackTrace();
             return null;
          } catch (ClassNotFoundException c) {
             System.out.println("Not found");
-            c.printStackTrace();
             return null;
          }
         return g;

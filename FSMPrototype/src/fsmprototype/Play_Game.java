@@ -909,7 +909,8 @@ public class Play_Game extends javax.swing.JFrame {
     
     private void updatePlayerAttribute(){
         LinkedList<Attribute> a = game.getPlayer().getAttributes();
-        DefaultTableModel player_attributes = (DefaultTableModel) player_att.getModel();
+        DefaultTableModel player_attributes = 
+                (DefaultTableModel) player_att.getModel();
         player_attributes.setRowCount(0);
         for(Attribute att: a){
             if(att instanceof Number_Attribute){

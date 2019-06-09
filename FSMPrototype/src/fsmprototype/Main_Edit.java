@@ -1469,7 +1469,15 @@ public class Main_Edit extends javax.swing.JFrame {
         if(returnVal == JFileChooser.APPROVE_OPTION){
             String name = openFile.getSelectedFile().toString();
             g = Game_Saver.load_Created_Game(name);
-            updateTree();
+            if(g != null){
+                updateTree();
+            }
+            else{
+                JLabel label = new JLabel("Invalid file!");
+                label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+                JOptionPane.showMessageDialog(Main_Panel, label,
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
+            }
         }
         else if(returnVal == JFileChooser.CANCEL_OPTION){}
     }//GEN-LAST:event_menu_File_OpenActionPerformed
@@ -2351,9 +2359,10 @@ public class Main_Edit extends javax.swing.JFrame {
                 (DefaultMutableTreeNode)Current_Game
                         .getLastSelectedPathComponent();
         if(selectedNode == null){
-            JOptionPane.showMessageDialog(Main_Panel, 
-                    "Please select a room to create Object!", 
-                    "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room to create Object!");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label,
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
         }
         else if(selectedNode.getUserObject() instanceof Container){
             String s = Object_Selection_Player.getSelectedItem().toString();
@@ -2434,7 +2443,11 @@ public class Main_Edit extends javax.swing.JFrame {
             Object_Type_Player.setVisible(false);
         }
         else{
-            JOptionPane.showMessageDialog(Main_Panel, "Please select a room, container or player to create Object", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            JLabel label = new JLabel("Please select a room, container or "
+                    + "player to create Object");
+            label.setFont(new Font("Tahoma", Font.PLAIN, 24));
+            JOptionPane.showMessageDialog(Main_Panel, label,
+                    "Create object failed", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_create_Object_PlayerActionPerformed
 
