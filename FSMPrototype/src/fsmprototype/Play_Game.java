@@ -742,7 +742,7 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                     }
                     if(!found){
-                        JLabel label = new JLabel("Object not found!");
+                        JLabel label = new JLabel("Condition not met!");
                         label.setFont(new Font("Tahoma", Font.PLAIN, 24));
                         JOptionPane.showMessageDialog(jPanel1, 
                             label, 
@@ -804,6 +804,7 @@ public class Play_Game extends javax.swing.JFrame {
             return true;
         }
         else{
+            Gameplay.append("No such object found");
             JLabel label = new JLabel("Object not found!");
             label.setFont(new Font("Tahoma", Font.PLAIN, 24));
             JOptionPane.showMessageDialog(jPanel1, 
