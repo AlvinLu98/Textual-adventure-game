@@ -871,7 +871,7 @@ public class Main_Edit extends javax.swing.JFrame {
         jToolBar1.add(delete);
 
         play_game.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        play_game.setText("      Play");
+        play_game.setText("      Play    ");
         play_game.setFocusable(false);
         play_game.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         play_game.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
