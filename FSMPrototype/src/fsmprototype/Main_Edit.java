@@ -374,6 +374,8 @@ public class Main_Edit extends javax.swing.JFrame {
         end_State_Label.setText("End state");
 
         condition_Table.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        condition_Table.setFocusable(false);
+        condition_Table.setRowSelectionAllowed(false);
         condition_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -457,7 +459,7 @@ public class Main_Edit extends javax.swing.JFrame {
         Add_Transition_WindowLayout.setHorizontalGroup(
             Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
-                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,8 +468,7 @@ public class Main_Edit extends javax.swing.JFrame {
                                 .addGap(177, 177, 177)
                                 .addComponent(previous_Start, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(previous_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 211, Short.MAX_VALUE))
+                                .addComponent(previous_Verb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
                                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(start_State_Label)
@@ -483,8 +484,7 @@ public class Main_Edit extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(start_Access)
-                                    .addComponent(end_Access))))
-                        .addGap(327, 327, 327))
+                                    .addComponent(end_Access)))))
                     .addGroup(Add_Transition_WindowLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -503,7 +503,7 @@ public class Main_Edit extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(create_Transition))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1294, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         Add_Transition_WindowLayout.setVerticalGroup(
             Add_Transition_WindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1031,6 +1031,8 @@ public class Main_Edit extends javax.swing.JFrame {
         info.addTab("Information", Main_Panel);
 
         Exits.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        Exits.setFocusable(false);
+        Exits.setRowSelectionAllowed(false);
         Exits.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -1190,6 +1192,8 @@ public class Main_Edit extends javax.swing.JFrame {
         info.addTab("Exits", exit);
 
         transition_Table.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        transition_Table.setFocusable(false);
+        transition_Table.setRowSelectionAllowed(false);
         transition_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -1229,6 +1233,8 @@ public class Main_Edit extends javax.swing.JFrame {
         });
 
         states_Table.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        states_Table.setFocusable(false);
+        states_Table.setRowSelectionAllowed(false);
         states_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},

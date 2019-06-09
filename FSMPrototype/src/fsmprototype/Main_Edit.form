@@ -380,7 +380,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -390,7 +390,6 @@
                                   <Component id="previous_Start" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="previous_Verb" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="211" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -413,7 +412,6 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
@@ -439,7 +437,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace pref="75" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -557,7 +555,7 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="condition_Table">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="condition_Table.setFocusable(false);&#xa;condition_Table.setRowSelectionAllowed(false);">
                   <Font name="Tahoma" size="24" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
@@ -1734,7 +1732,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="Exits">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="Exits.setFocusable(false);&#xa;Exits.setRowSelectionAllowed(false);">
                           <Font name="Tahoma" size="24" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
@@ -2014,7 +2012,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="transition_Table">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="transition_Table.setFocusable(false);&#xa;transition_Table.setRowSelectionAllowed(false);">
                           <Font name="Tahoma" size="24" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
@@ -2093,7 +2091,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="states_Table">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="states_Table.setFocusable(false);&#xa;states_Table.setRowSelectionAllowed(false);">
                           <Font name="Tahoma" size="24" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
