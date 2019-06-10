@@ -1,6 +1,7 @@
 package fsmprototype;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Verb class to define a verb
@@ -11,6 +12,7 @@ public class Verb implements Serializable
     private String name;
     private boolean effect;
     private Object associated;
+    private ArrayList<Object> associated_obj;
     private Object owner;
     
     /**
@@ -23,6 +25,8 @@ public class Verb implements Serializable
         this.name = name;
         this.associated = o;
         this.owner = own;
+        this.associated_obj = new ArrayList();
+        this.associated_obj.add(o);
     }
     
     /**
@@ -70,5 +74,36 @@ public class Verb implements Serializable
      */
     public boolean getEffect(){
         return this.effect;
+    }
+    
+    /**
+     * Get the list of associated objects
+     * @return list of associated object
+     */
+    public ArrayList<Object> getObjects(){
+        return this.associated_obj;
+    }
+    
+    /**
+     * Find the object in the associated object list
+     * @param name name of the object
+     * @return object if found
+     */
+    public Object findObject(String name){
+        for(Object o: this.associated_obj){
+            if(o.getName().equalsIgnoreCase(name)){
+                return o;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Add an object to the associated list of objects
+     * @param o object to add
+     * @return true if object is added
+     */
+    public boolean addObject(Object o){
+        return this.associated_obj.add(o);
     }
 }
