@@ -107,7 +107,6 @@ public class MainMenu extends javax.swing.JFrame {
         int returnVal =  openFile.showOpenDialog(null);
         if(returnVal == JOptionPane.OK_OPTION){
             String name = openFile.getSelectedFile().toString();
-            name = name + ".ser";
             game = Game_Saver.load_Created_Game(name);
             if(game == null){
                 JLabel label = new JLabel("Invalid file!");
