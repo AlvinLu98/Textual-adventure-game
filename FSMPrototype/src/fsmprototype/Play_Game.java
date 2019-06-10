@@ -345,7 +345,7 @@ public class Play_Game extends javax.swing.JFrame {
         if(returnVal == JFileChooser.APPROVE_OPTION){
             String name = saveFile.getSelectedFile().toString();
             name = name + ".ser";
-            Game_Saver.save_Created_Game(g, name);
+            Game_Saver.save_Created_Game(game, name);
         }
         else if(returnVal == JFileChooser.CANCEL_OPTION){
             saveFile.cancelSelection();
