@@ -346,6 +346,7 @@ public class Play_Game extends javax.swing.JFrame {
             String name = saveFile.getSelectedFile().toString();
             name = name + ".ser";
             Game_Saver.save_Created_Game(game, name);
+            System.out.println(game.getPlayer().getLocation().getName());
         }
         else if(returnVal == JFileChooser.CANCEL_OPTION){
             saveFile.cancelSelection();
@@ -759,16 +760,40 @@ public class Play_Game extends javax.swing.JFrame {
                 if(v.getAssociatedObject() != null){
                     if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
-                            att.modify(v.getEffect());
-                            done = true;
+                            if(att instanceof Number_Attribute){
+                                if(!((Number_Attribute)att)
+                                        .modify(v.getEffect())){
+                                    Gameplay.append("Not enough " + 
+                                            att.getName() + " to " + gov + 
+                                            "!\n");
+                                    done = false;
+                                }
+                            }
+                            else if(att instanceof Boolean_Attribute){
+                                ((Boolean_Attribute)att).modify(v.getEffect());
+                                done = true;
+                            }   
                         }
                         else{
                             Gameplay.append(o.getName() + " out of uses\n");
                         }
                     }
                     else{
-                       att.modify(v.getEffect()); 
-                       done = true;
+                       if(att instanceof Number_Attribute){
+                            if(att instanceof Number_Attribute){
+                                if(!((Number_Attribute)att)
+                                        .modify(v.getEffect())){
+                                    Gameplay.append("Not enough " + 
+                                            att.getName() + " to " + gov + 
+                                            "!\n");
+                                    done = false;
+                                }
+                            }
+                        }
+                        else if(att instanceof Boolean_Attribute){
+                            ((Boolean_Attribute)att).modify(v.getEffect());
+                            done = true;
+                        }
                     } 
                 }
                 else{
@@ -789,18 +814,24 @@ public class Play_Game extends javax.swing.JFrame {
                         }
                     }
                     else{
-                       att.modify(v.getEffect()); 
+                       if(((Limited_Use_Object) o).use()){
+                            att.modify(v.getEffect());
+                            done = true;
+                        }
+                        else{
+                            Gameplay.append(o.getName() + " out of uses\n");
+                            game.removeObjectFromCurrentRoom(o);
+                        } 
                        done = true;
                     } 
             }
 
             if(done){
                 updateAttribute(att, dep);
-            }
-            updatePlayerAttribute();
+                updatePlayerAttribute();
+                jScrollPane3.setViewportView(player_att);
+            }   
             updateTree();
-            jScrollPane3.setViewportView(player_att);
-            jScrollPane1.setViewportView(player_att);
             return true;
         }
         else{
