@@ -756,9 +756,7 @@ public class Play_Game extends javax.swing.JFrame {
             }
             else if(att.inRoom()){
                 Verb v = att.getVerb();
-                if(game.findObjectInRoomByName(att.getVerb()
-                        .getAssociatedObject()
-                        .getName()) != null){
+                if(v.getAssociatedObject() != null){
                     if(o instanceof Limited_Use_Object){
                         if(((Limited_Use_Object) o).use()){
                             att.modify(v.getEffect());
@@ -801,6 +799,8 @@ public class Play_Game extends javax.swing.JFrame {
             }
             updatePlayerAttribute();
             updateTree();
+            jScrollPane3.setViewportView(player_att);
+            jScrollPane1.setViewportView(player_att);
             return true;
         }
         else{
