@@ -125,7 +125,7 @@ public class Game implements Serializable{
      */
     public void givePlayer(Object o){
         this.player.pickup(o);
-        removeObjectFromCurrentRoom(o);
+        this.player.getLocation().pickedUp(o.getName());
     }
     
     /**
@@ -324,12 +324,19 @@ public class Game implements Serializable{
      * @return true if the player has moved
      */
     public boolean movePlayer(String direction){
-        Room r = findRoom(player.getLocation());
-        r.removeObject(player);
-
-        r = findRoom(player.move(direction));
-        if(r.addObject(player)){
-            return true;
+        Room r = player.getLocation();
+        player.move(direction);
+        r.getObject().remove(player);
+        
+        Room dest = player.getLocation();
+        
+        System.out.println(r.getObject());
+        System.out.println(dest.getObject());
+        
+        if(!r.getName().equals(dest.getName())){
+            if(dest.addObject(player)){
+               return true; 
+            }
         }
         return false;
     }

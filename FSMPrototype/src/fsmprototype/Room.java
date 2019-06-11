@@ -149,6 +149,7 @@ public class Room extends Object implements Serializable{
      */
     public boolean removeObject(Object o){
         for(Object obj: this.objects){
+            System.out.println(obj.getName());
             if(obj.getName().equals(o.getName())){
                 return this.objects.remove(o);
             }    

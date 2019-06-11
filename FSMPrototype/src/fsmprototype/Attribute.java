@@ -31,6 +31,19 @@ public abstract class Attribute implements Serializable
     }
     
     /**
+     * Constructor for attribute, creates a full attribute
+     * @param name
+     * @param verb
+     * @param o
+     * @param own 
+     */
+    public Attribute(String name, String verb, Object o, Object own, 
+            boolean val){
+        this.name = name;
+        this.verb = new Verb(verb, o, own, val);
+    }
+    
+    /**
      * Returns the name of the attribute
      * @return name of attribute in String
      */

@@ -23,8 +23,8 @@ public class Number_Attribute extends Attribute implements Serializable
      * @param own object that owns the attribute
      */
     public Number_Attribute(String s, String v, double def, double val, 
-            boolean incDec, Object o, Object own){
-        super(s,v,o, own);
+            boolean incDec, Object o, Object own, boolean effect){
+        super(s,v,o, own, effect);
         this.value = def;
         this.amtChange = val;
         this.incDec = incDec;

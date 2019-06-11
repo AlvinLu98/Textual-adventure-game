@@ -1662,17 +1662,19 @@ public class Main_Edit extends javax.swing.JFrame {
                         Number_Attribute a = 
                                 new Number_Attribute(name, 
                                         verb, defaultVal, amount, true, 
-                                        associated, o);
+                                        associated, o, true);
                         if(inRoom){
                             a.usableInSameRoom();
                         }
                         o.addAttribute(a);
-                        g.addVerb(new Verb(verb, associated, o, true));
-                        o.addVerb(new Verb(verb, associated, o, true));
+                        Verb v = new Verb(verb, associated, o, true);
+                        g.addVerb(v);
+                        o.addVerb(v);
                     }
                     else{
                         Number_Attribute a = new Number_Attribute(name, verb, 
-                                defaultVal, amount, false, associated, o);
+                                defaultVal, amount, false, associated, o
+                                , false);
                         if(inRoom){
                             a.usableInSameRoom();
                         }

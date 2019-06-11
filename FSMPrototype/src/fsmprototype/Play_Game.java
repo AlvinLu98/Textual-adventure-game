@@ -399,7 +399,7 @@ public class Play_Game extends javax.swing.JFrame {
                     }
                     else{
                        if(result != null){
-                            if(game.getPlayer().move(result) == null){
+                            if(!game.movePlayer(result)){
                                 Gameplay.append("No such direction!\n");
                             }
                             else{
@@ -407,7 +407,7 @@ public class Play_Game extends javax.swing.JFrame {
                             }
                        }
                        else{
-                            if(game.getPlayer().move(dep) == null){
+                            if(!game.movePlayer(dep)){
                                 Gameplay.append("No such direction!\n");
                             }
                             else{
@@ -449,7 +449,7 @@ public class Play_Game extends javax.swing.JFrame {
                     }
                     else{
                         if(result != null){
-                            if(game.getPlayer().move(result) == null){
+                            if(!game.movePlayer(result)){
                                 Gameplay.append("No such direction!\n");
                             }
                             else{
@@ -457,7 +457,7 @@ public class Play_Game extends javax.swing.JFrame {
                             }
                         }
                         else{
-                            if(game.getPlayer().move(gov) == null){
+                            if(!game.movePlayer(dep)){
                             Gameplay.append("No such direction!\n");
                             }
                             else{
@@ -756,49 +756,64 @@ public class Play_Game extends javax.swing.JFrame {
                 }
             }
             else if(att.inRoom()){
-                Verb v = att.getVerb();
-                if(v.getAssociatedObject() != null){
-                    if(o instanceof Limited_Use_Object){
-                        if(((Limited_Use_Object) o).use()){
-                            if(att instanceof Number_Attribute){
-                                if(!((Number_Attribute)att)
-                                        .modify(v.getEffect())){
-                                    Gameplay.append("Not enough " + 
-                                            att.getName() + " to " + gov + 
-                                            "!\n");
-                                    done = false;
+                if(game.findObjectInRoomByName(dep) == null){
+                    Gameplay.append("Object not found! \n");
+                }
+                else{
+                    Verb v = att.getVerb();
+                    if(v.getAssociatedObject() != null){
+                        if(o instanceof Limited_Use_Object){
+                            if(((Limited_Use_Object) o).use()){
+                                if(att instanceof Number_Attribute){
+                                    if(!((Number_Attribute)att)
+                                            .modify(v.getEffect())){
+                                        Gameplay.append("Not enough " + 
+                                                att.getName() + " to " + gov + 
+                                                "!\n");
+                                        done = false;
+                                    }
+                                    else{
+                                        done = true;
+                                    }   
+                                }
+                                else if(att instanceof Boolean_Attribute){
+                                    ((Boolean_Attribute)att).modify(
+                                            v.getEffect());
+                                    done = true;
+                                }   
+                            }
+                            else{
+                                Gameplay.append(o.getName() + " out of uses\n");
+                            }
+                        }
+                        else{
+                           if(att instanceof Number_Attribute){
+                                if(att instanceof Number_Attribute){
+                                    if(!((Number_Attribute)att)
+                                            .modify(v.getEffect())){
+                                        Gameplay.append("Not enough " + 
+                                                att.getName() + " to " + gov + 
+                                                "!\n");
+                                        done = false;
+                                    }
+                                    else{
+                                        done = true;
+                                    }
+                                }
+                                else{
+                                    done = true;
                                 }
                             }
                             else if(att instanceof Boolean_Attribute){
                                 ((Boolean_Attribute)att).modify(v.getEffect());
                                 done = true;
-                            }   
-                        }
-                        else{
-                            Gameplay.append(o.getName() + " out of uses\n");
-                        }
+                            }
+                        } 
                     }
                     else{
-                       if(att instanceof Number_Attribute){
-                            if(att instanceof Number_Attribute){
-                                if(!((Number_Attribute)att)
-                                        .modify(v.getEffect())){
-                                    Gameplay.append("Not enough " + 
-                                            att.getName() + " to " + gov + 
-                                            "!\n");
-                                    done = false;
-                                }
-                            }
-                        }
-                        else if(att instanceof Boolean_Attribute){
-                            ((Boolean_Attribute)att).modify(v.getEffect());
-                            done = true;
-                        }
-                    } 
-                }
-                else{
-                    Gameplay.append(att.getVerb().getAssociatedObject()
-                            .getName() + " cannot be used here!\n"); 
+                        Gameplay.append(att.getVerb().getAssociatedObject()
+                                .getName() + " cannot be used here!\n"); 
+                    }
                 }
             }
             else{
